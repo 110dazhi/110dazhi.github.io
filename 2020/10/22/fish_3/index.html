@@ -81,14 +81,14 @@
 
 
 
-<meta name="description" content="摸鱼的第三天学习Git(教程看到P4) Git 有三棵树Working Directory Stage(Index) REpository(HEAD) Git 三种状态Git 管理的文件有三种状态： –已修改（modified） –已暂存（staged） –已提交（committed） Git 工作流程1.在工作目录中添加、修改文件 – git add README.md（文件名） 2.将需要进行">
+<meta name="description" content="摸鱼的第三天学习Git(教程看到P4) Git 有三棵树Working Directory（工作区） Stage(Index)（暂存区） REpository(HEAD)（版本库） 为什么要先执行git add 然后git commit先执行 git add ，然后 git commit。 git add 命令会将做的修改添加到暂存区中。 git commit执行时，会提交暂存区的内容； (可能会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="摸鱼第三天">
 <meta property="og:url" content="http://yoursite.com/2020/10/22/fish_3/index.html">
 <meta property="og:site_name" content="为了学习而毕业">
-<meta property="og:description" content="摸鱼的第三天学习Git(教程看到P4) Git 有三棵树Working Directory Stage(Index) REpository(HEAD) Git 三种状态Git 管理的文件有三种状态： –已修改（modified） –已暂存（staged） –已提交（committed） Git 工作流程1.在工作目录中添加、修改文件 – git add README.md（文件名） 2.将需要进行">
+<meta property="og:description" content="摸鱼的第三天学习Git(教程看到P4) Git 有三棵树Working Directory（工作区） Stage(Index)（暂存区） REpository(HEAD)（版本库） 为什么要先执行git add 然后git commit先执行 git add ，然后 git commit。 git add 命令会将做的修改添加到暂存区中。 git commit执行时，会提交暂存区的内容； (可能会">
 <meta property="article:published_time" content="2020-10-21T22:08:39.000Z">
-<meta property="article:modified_time" content="2020-10-22T21:41:37.376Z">
+<meta property="article:modified_time" content="2020-10-23T21:50:57.752Z">
 <meta property="article:author" content="MZChen">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -382,9 +382,13 @@
 
       
         <h1 id="摸鱼的第三天"><a href="#摸鱼的第三天" class="headerlink" title="摸鱼的第三天"></a>摸鱼的第三天</h1><p>学习Git(教程看到P4)</p>
-<h2 id="Git-有三棵树"><a href="#Git-有三棵树" class="headerlink" title="Git 有三棵树"></a>Git 有三棵树</h2><p>Working Directory</p>
-<p>Stage(Index)</p>
-<p>REpository(HEAD)</p>
+<h2 id="Git-有三棵树"><a href="#Git-有三棵树" class="headerlink" title="Git 有三棵树"></a>Git 有三棵树</h2><p>Working Directory（工作区）</p>
+<p>Stage(Index)（暂存区）</p>
+<p>REpository(HEAD)（版本库）</p>
+<h2 id="为什么要先执行git-add-然后git-commit"><a href="#为什么要先执行git-add-然后git-commit" class="headerlink" title="为什么要先执行git add 然后git commit"></a>为什么要先执行git add 然后git commit</h2><p>先执行 git add ，然后 git commit。</p>
+<p>git add 命令会将做的修改添加到暂存区中。</p>
+<p>git commit执行时，会提交暂存区的内容；</p>
+<p>(可能会出现一个错误，此时 要点击 esc 然后输入 ：wq [注意是 冒号wq])</p>
 <h2 id="Git-三种状态"><a href="#Git-三种状态" class="headerlink" title="Git 三种状态"></a>Git 三种状态</h2><p>Git 管理的文件有三种状态：</p>
 <p>–已修改（modified）</p>
 <p>–已暂存（staged）</p>
@@ -399,6 +403,16 @@
 <p>git reset HEAD 文件名 (反悔，不添加文件名则是将最新一次存放到Git里的文件取出)</p>
 <p>例如：</p>
 <p>git reset HEAD README.md</p>
+<p>reset 命令的选项</p>
+<p>git reset –mixed HEAD~</p>
+<p>(移动HEAD的指向，将其指向上一个快照)</p>
+<p>(将HEAD移动后指向的快照回滚到暂存区域)</p>
+<p>git reset –soft HEAD~</p>
+<p>– 移动HEAD的指向，将其指向上一个快照</p>
+<p>git reset –hard HEAD~</p>
+<p>–移动HEAD的指向，将其指向上一个快照</p>
+<p>–将HEAD移动后指向的快照回滚到暂存区域</p>
+<p>–将暂存区域的文件还原到工作目录</p>
 
       
     </div>
@@ -438,6 +452,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/23/Git_1/" rel="prev" title="Git_1">
+                Git_1 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -518,7 +536,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -583,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸鱼的第三天"><span class="nav-number">1.</span> <span class="nav-text">摸鱼的第三天</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-有三棵树"><span class="nav-number">1.1.</span> <span class="nav-text">Git 有三棵树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-三种状态"><span class="nav-number">1.2.</span> <span class="nav-text">Git 三种状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-工作流程"><span class="nav-number">1.3.</span> <span class="nav-text">Git 工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看状态"><span class="nav-number">1.4.</span> <span class="nav-text">查看状态</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸鱼的第三天"><span class="nav-number">1.</span> <span class="nav-text">摸鱼的第三天</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-有三棵树"><span class="nav-number">1.1.</span> <span class="nav-text">Git 有三棵树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要先执行git-add-然后git-commit"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要先执行git add 然后git commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-三种状态"><span class="nav-number">1.3.</span> <span class="nav-text">Git 三种状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-工作流程"><span class="nav-number">1.4.</span> <span class="nav-text">Git 工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看状态"><span class="nav-number">1.5.</span> <span class="nav-text">查看状态</span></a></li></ol></li></ol></div>
             
 
           </div>
