@@ -20,22 +20,26 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="WSI 简介WSI是Whole Slide Image的缩写，翻译是全幻灯片图像（自己翻译的，可能不准^.^）,他是一种病理组织切片图，其像素是 gigapixel, 亿万像素级别。与寻常用于深度学习的图片大小 256x256 不同。在放入神经网络中进行训练前，需要对图片进行预处理。将其切块，获取补丁，从而达到适合机器学习的大小。">
+  <meta name="description" content="Patch 介绍Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Whole Slide Image(WSI) 介绍">
-<meta property="og:url" content="http://example.com/2021/06/25/WSI%20%E5%9B%BE%E7%89%87%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:title" content="从WSI中获取 Patch">
+<meta property="og:url" content="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/index.html">
 <meta property="og:site_name" content="学习学习">
-<meta property="og:description" content="WSI 简介WSI是Whole Slide Image的缩写，翻译是全幻灯片图像（自己翻译的，可能不准^.^）,他是一种病理组织切片图，其像素是 gigapixel, 亿万像素级别。与寻常用于深度学习的图片大小 256x256 不同。在放入神经网络中进行训练前，需要对图片进行预处理。将其切块，获取补丁，从而达到适合机器学习的大小。">
+<meta property="og:description" content="Patch 介绍Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/WSI_ASAS.PNG">
-<meta property="article:published_time" content="2021-06-25T14:59:28.000Z">
-<meta property="article:modified_time" content="2021-07-26T21:56:59.221Z">
+<meta property="og:image" content="http://example.com/images/pingtu.jpg">
+<meta property="og:image" content="http://example.com/images/patch_image.png">
+<meta property="og:image" content="http://example.com/images/patch_image2.png">
+<meta property="og:image" content="http://example.com/images/patch_image3.png">
+<meta property="article:published_time" content="2021-06-27T17:59:28.000Z">
+<meta property="article:modified_time" content="2021-07-26T22:24:59.065Z">
 <meta property="article:author" content="MZChen">
 <meta property="article:tag" content="Whole Slide Image">
+<meta property="article:tag" content="Patch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/WSI_ASAS.PNG">
+<meta name="twitter:image" content="http://example.com/images/pingtu.jpg">
 
-<link rel="canonical" href="http://example.com/2021/06/25/WSI%20%E5%9B%BE%E7%89%87%E4%BB%8B%E7%BB%8D/">
+<link rel="canonical" href="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/">
 
 
 <script id="page-configurations">
@@ -48,7 +52,7 @@
   };
 </script>
 
-  <title>Whole Slide Image(WSI) 介绍 | 学习学习</title>
+  <title>从WSI中获取 Patch | 学习学习</title>
   
 
 
@@ -159,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/25/WSI%20%E5%9B%BE%E7%89%87%E4%BB%8B%E7%BB%8D/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -172,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Whole Slide Image(WSI) 介绍
+          从WSI中获取 Patch
         </h1>
 
         <div class="post-meta">
@@ -182,14 +186,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-25 16:59:28" itemprop="dateCreated datePublished" datetime="2021-06-25T16:59:28+02:00">2021-06-25</time>
+              <time title="创建时间：2021-06-27 19:59:28" itemprop="dateCreated datePublished" datetime="2021-06-27T19:59:28+02:00">2021-06-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-26 23:56:59" itemprop="dateModified" datetime="2021-07-26T23:56:59+02:00">2021-07-26</time>
+                <time title="修改时间：2021-07-27 00:24:59" itemprop="dateModified" datetime="2021-07-27T00:24:59+02:00">2021-07-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,16 +216,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="WSI-简介"><a href="#WSI-简介" class="headerlink" title="WSI 简介"></a>WSI 简介</h1><p>WSI是Whole Slide Image的缩写，翻译是全幻灯片图像（自己翻译的，可能不准^.^）,他是一种病理组织切片图，其像素是 gigapixel, 亿万像素级别。与寻常用于深度学习的图片大小 256x256 不同。在放入神经网络中进行训练前，需要对图片进行预处理。将其切块，获取补丁，从而达到适合机器学习的大小。</p>
+        <h1 id="Patch-介绍"><a href="#Patch-介绍" class="headerlink" title="Patch 介绍"></a>Patch 介绍</h1><p>Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。</p>
 <span id="more"></span>
-<h1 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h1><p>其格式一般时 tif, 标签格式是 xml。可以参考下面这个网址上的数据集。里面还分不同的level, level 0一般会超内存。</p>
+<p><img src="/images/pingtu.jpg" alt="拼图"></p>
+<h1 id="Patch-获取"><a href="#Patch-获取" class="headerlink" title="Patch 获取"></a>Patch 获取</h1><p>Patch Extraction 获取补丁，看似是个简单的问题，确实也简单，难在 WSI 真的是太大了，使用level 0，在读取时，电脑就会遇到 MemoryError 的问题。所以获取多大等级下level的补丁，就看自己项目的需求了。除了等级，还有 Patch 的大小。网络里需要用的时256 还是500。</p>
+<h2 id="获取方法一"><a href="#获取方法一" class="headerlink" title="获取方法一"></a>获取方法一</h2><p>主要还是从网上找了两种方法，一种是在下面这个Github里采用的。具体的可以看下面链接里提供的代码，但是，其中的txt文件，提供的是生成好的，个人觉得不太合适，因为不知道能不能适用于其他的数据集。<br><img src="/images/patch_image.png" alt="简介"></p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://camelyon17.grand-challenge.org/">https://camelyon17.grand-challenge.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/baidu-research/NCRF">https://github.com/baidu-research/NCRF</a><br>这里再提供一个其他人复现的时候，遇到的问题，供大家参考。因为版本原因，在跑的时候会有问题。<br><a target="_blank" rel="noopener" href="https://www.codenong.com/cs106597256/">https://www.codenong.com/cs106597256/</a></p>
 </blockquote>
-<h1 id="打开方式"><a href="#打开方式" class="headerlink" title="打开方式"></a>打开方式</h1><p>WSI像素十分夸张，一般的图片浏览软件打不开，官网推荐使用 <a target="_blank" rel="noopener" href="https://github.com/computationalpathologygroup/ASAP/releases">ASAP</a> 往下拉，可以找到合适的安装包。</p>
-<p><img src="/images/WSI_ASAS.PNG"></p>
-<p>图片中蓝色框里的就是标记部分。</p>
-<h1 id="Patch-的获取"><a href="#Patch-的获取" class="headerlink" title="Patch 的获取"></a>Patch 的获取</h1><p>Patch的获取网上有很多方法，得找到适合自己用的，之后会重开一章详细讲述。不过有一点是明确的，就是对电脑有点要求，不然会<code>MemoryError</code>。</p>
+<h2 id="获取方法二"><a href="#获取方法二" class="headerlink" title="获取方法二"></a>获取方法二</h2><p>这篇Github 提供的方法，和方法一是一样的，代码作者在issues里也大方回应了参考了第一篇的代码。但是这里提供的就更加全面了。<br><img src="/images/patch_image2.png" alt="简介"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/WilmerWang/SLFCD">https://github.com/WilmerWang/SLFCD</a><br>不过在复现的时候还是会遇到问题，这里挖个坑，之后再去写这些问题。<br>不过也欢迎探讨<code>chenmz0298@163.com</code></p>
+</blockquote>
+<h2 id="获取方法三"><a href="#获取方法三" class="headerlink" title="获取方法三"></a>获取方法三</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction">https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction</a><br>这是目前为止看到的最合适的，最简单的，最容易理解的获取patch的代码了，而且在 8g 内存，核显的笔记本上，也能提取Level1下的256的Patch。Level0 就得去蹭朋友的工作站了。生成的目录是 矩阵坐标形式，但是这里 0 代表纵坐标，1 是横坐标。<br><img src="/images/patch_image3.png"></p>
+</blockquote>
+<p>未完，待续</p>
 
     </div>
 
@@ -232,6 +242,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Whole-Slide-Image/" rel="tag"># Whole Slide Image</a>
+              <a href="/tags/Patch/" rel="tag"># Patch</a>
           </div>
 
         
@@ -239,10 +250,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/06/27/%E8%8E%B7%E5%8F%96Patch/" rel="next" title="从WSI中获取 Patch">
-      从WSI中获取 Patch <i class="fa fa-chevron-right"></i>
+    <a href="/2021/06/25/WSI%20%E5%9B%BE%E7%89%87%E4%BB%8B%E7%BB%8D/" rel="prev" title="Whole Slide Image(WSI) 介绍">
+      <i class="fa fa-chevron-left"></i> Whole Slide Image(WSI) 介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/25/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -302,7 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WSI-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">WSI 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">打开方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="nav-number">4.</span> <span class="nav-text">Patch 的获取</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Patch 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E8%8E%B7%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text">Patch 获取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">2.1.</span> <span class="nav-text">获取方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">获取方法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%B8%89"><span class="nav-number">2.3.</span> <span class="nav-text">获取方法三</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
