@@ -20,26 +20,29 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Patch 介绍Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。">
+  <meta name="description" content="本次学习目的主要是 Carsim基本操作与Simulink的链接，并且复习一下PIDKonstruktion eines spurhaltenden PID-Reglers auf der Grundlage einer gemeinsamen Simulation mit MATLAB&#x2F;Simulink und Carsim">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从WSI中获取 Patch">
-<meta property="og:url" content="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/index.html">
+<meta property="og:title" content="基于MATLAB&#x2F;Simulink与Carsim联合仿真的车道保持PID控制器搭建">
+<meta property="og:url" content="http://example.com/2021/08/01/%E5%9F%BA%E4%BA%8EPID%E7%9A%84%E8%BD%A6%E9%81%93%E5%B1%85%E4%B8%AD%E4%BF%9D%E6%8C%81%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="学习学习">
-<meta property="og:description" content="Patch 介绍Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。">
+<meta property="og:description" content="本次学习目的主要是 Carsim基本操作与Simulink的链接，并且复习一下PIDKonstruktion eines spurhaltenden PID-Reglers auf der Grundlage einer gemeinsamen Simulation mit MATLAB&#x2F;Simulink und Carsim">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/pingtu.jpg">
-<meta property="og:image" content="http://example.com/images/patch_image.png">
-<meta property="og:image" content="http://example.com/images/patch_image2.png">
-<meta property="og:image" content="http://example.com/images/patch_image3.png">
-<meta property="article:published_time" content="2021-06-27T17:59:28.000Z">
-<meta property="article:modified_time" content="2021-07-26T22:24:59.065Z">
+<meta property="og:image" content="http://example.com/images/PID.png">
+<meta property="og:image" content="http://example.com/images/Pid_Gleichung.png">
+<meta property="og:image" content="http://example.com/images/L_DRV_1.png">
+<meta property="og:image" content="http://example.com/images/Simulink1.png">
+<meta property="og:image" content="http://example.com/images/pid2.png">
+<meta property="article:published_time" content="2021-08-01T17:59:28.000Z">
+<meta property="article:modified_time" content="2021-08-03T15:30:40.437Z">
 <meta property="article:author" content="MZChen">
-<meta property="article:tag" content="Whole Slide Image">
-<meta property="article:tag" content="Patch">
+<meta property="article:tag" content="MATLAB&#x2F;Simulink">
+<meta property="article:tag" content="Caarsim">
+<meta property="article:tag" content="自动驾驶">
+<meta property="article:tag" content="PID">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/pingtu.jpg">
+<meta name="twitter:image" content="http://example.com/images/PID.png">
 
-<link rel="canonical" href="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/">
+<link rel="canonical" href="http://example.com/2021/08/01/%E5%9F%BA%E4%BA%8EPID%E7%9A%84%E8%BD%A6%E9%81%93%E5%B1%85%E4%B8%AD%E4%BF%9D%E6%8C%81%E7%B3%BB%E7%BB%9F/">
 
 
 <script id="page-configurations">
@@ -52,7 +55,7 @@
   };
 </script>
 
-  <title>从WSI中获取 Patch | 学习学习</title>
+  <title>基于MATLAB/Simulink与Carsim联合仿真的车道保持PID控制器搭建 | 学习学习</title>
   
 
 
@@ -163,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/01/%E5%9F%BA%E4%BA%8EPID%E7%9A%84%E8%BD%A6%E9%81%93%E5%B1%85%E4%B8%AD%E4%BF%9D%E6%8C%81%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -176,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          从WSI中获取 Patch
+          基于MATLAB/Simulink与Carsim联合仿真的车道保持PID控制器搭建
         </h1>
 
         <div class="post-meta">
@@ -186,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-27 19:59:28" itemprop="dateCreated datePublished" datetime="2021-06-27T19:59:28+02:00">2021-06-27</time>
+              <time title="创建时间：2021-08-01 19:59:28" itemprop="dateCreated datePublished" datetime="2021-08-01T19:59:28+02:00">2021-08-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-27 00:24:59" itemprop="dateModified" datetime="2021-07-27T00:24:59+02:00">2021-07-27</time>
+                <time title="修改时间：2021-08-03 17:30:40" itemprop="dateModified" datetime="2021-08-03T17:30:40+02:00">2021-08-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -201,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WSI%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">WSI处理</span></a>
+                  <a href="/categories/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" itemprop="url" rel="index"><span itemprop="name">自动驾驶</span></a>
                 </span>
             </span>
 
@@ -216,22 +219,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Patch-介绍"><a href="#Patch-介绍" class="headerlink" title="Patch 介绍"></a>Patch 介绍</h1><p>Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。</p>
+        <p>本次学习目的主要是 Carsim基本操作与Simulink的链接，并且复习一下PID<br>Konstruktion eines spurhaltenden PID-Reglers auf der Grundlage einer gemeinsamen Simulation mit MATLAB/Simulink und Carsim</p>
 <span id="more"></span>
-<p><img src="/images/pingtu.jpg" alt="拼图"></p>
-<h1 id="Patch-获取"><a href="#Patch-获取" class="headerlink" title="Patch 获取"></a>Patch 获取</h1><p>Patch Extraction 获取补丁，看似是个简单的问题，确实也简单，难在 WSI 真的是太大了，使用level 0，在读取时，电脑就会遇到 MemoryError 的问题。所以获取多大等级下level的补丁，就看自己项目的需求了。除了等级，还有 Patch 的大小。网络里需要用的时256 还是500。</p>
-<h2 id="获取方法一"><a href="#获取方法一" class="headerlink" title="获取方法一"></a>获取方法一</h2><p>主要还是从网上找了两种方法，一种是在下面这个Github里采用的。具体的可以看下面链接里提供的代码，但是，其中的txt文件，提供的是生成好的，个人觉得不太合适，因为不知道能不能适用于其他的数据集。<br><img src="/images/patch_image.png" alt="简介"></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/baidu-research/NCRF">https://github.com/baidu-research/NCRF</a><br>这里再提供一个其他人复现的时候，遇到的问题，供大家参考。因为版本原因，在跑的时候会有问题。<br><a target="_blank" rel="noopener" href="https://www.codenong.com/cs106597256/">https://www.codenong.com/cs106597256/</a></p>
-</blockquote>
-<h2 id="获取方法二"><a href="#获取方法二" class="headerlink" title="获取方法二"></a>获取方法二</h2><p>这篇Github 提供的方法，和方法一是一样的，代码作者在issues里也大方回应了参考了第一篇的代码。但是这里提供的就更加全面了。<br><img src="/images/patch_image2.png" alt="简介"></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/WilmerWang/SLFCD">https://github.com/WilmerWang/SLFCD</a><br>不过在复现的时候还是会遇到问题，这里挖个坑，之后再去写这些问题。<br>不过也欢迎探讨<code>chenmz0298@163.com</code></p>
-</blockquote>
-<h2 id="获取方法三"><a href="#获取方法三" class="headerlink" title="获取方法三"></a>获取方法三</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction">https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction</a><br>这是目前为止看到的最合适的，最简单的，最容易理解的获取patch的代码了，而且在 8g 内存，核显的笔记本上，也能提取Level1下的256的Patch。Level0 就得去蹭朋友的工作站了。生成的目录是 矩阵坐标形式，但是这里 0 代表纵坐标，1 是横坐标。<br><img src="/images/patch_image3.png"></p>
-</blockquote>
-<p>未完，待续</p>
+<h1 id="PID原理介绍"><a href="#PID原理介绍" class="headerlink" title="PID原理介绍"></a>PID原理介绍</h1><p>Der PID-Controller (proportional-integral-derivative controller) besteht aus den Anteilen des P-Gliedes, des I-Gliedes und des D-Gliedes. </p>
+<p>In dem Blockdiagramm sind die Reihenstruktur (Produktdarstellung) und die Parallelstruktur (Summendarstellung) der Übertragungsfunktionen des realen PID-Reglers dargestellt.<br><img src="/images/PID.png"></p>
+<p><img src="/images/Pid_Gleichung.png"></p>
+<p>P-Parameter, um die Reaktionszeit des Systems zu beschleunigen. Eine zu große Anzahl kann das System jedoch instabil machen.</p>
+<p>I-Parameter, der den Fehler des Systems im stationären Zustand verringert, aber die Zeit bis zum Erreichen des stationären Zustands verlängert.</p>
+<p>D-Parameter, verbessert die Systemstabilität und reduziert das Überschwingen, ist aber empfindlich gegenüber weißem Rauschen.</p>
+<p>干预：Interventionen</p>
+<p>P-Regler接近目标值：Das Ergebnis wird sich dem Zielwert annähern, ihn aber nicht erreichen.</p>
+<p>Es braucht also I-Regler.</p>
+<p>误差，干扰：Störungen</p>
+<p>风： das Wind</p>
+<p>Der Wind nimmt 2 Grad der Temperatur ab.</p>
+<h1 id="Carsim-介绍"><a href="#Carsim-介绍" class="headerlink" title="Carsim 介绍"></a>Carsim 介绍</h1><p>CarSim ist eine Simulationssoftware für die Fahrzeugdynamik. </p>
+<h1 id="车道保持方法介绍"><a href="#车道保持方法介绍" class="headerlink" title="车道保持方法介绍"></a>车道保持方法介绍</h1><h1 id="Einfuhrung-in-das-Methoden-der-Fahrspurhaltung"><a href="#Einfuhrung-in-das-Methoden-der-Fahrspurhaltung" class="headerlink" title="Einführung in das Methoden der Fahrspurhaltung"></a>Einführung in das Methoden der Fahrspurhaltung</h1><p>1.Vorbesichtigungspunkte PID-Regelung</p>
+<p>2.Fuzzy-Steuerung</p>
+<p>3.PID-Regelung auf der Grundlage des neuronalen Netzes BP</p>
+<h1 id="预瞄点-Vorbesichtigungspunkte"><a href="#预瞄点-Vorbesichtigungspunkte" class="headerlink" title="预瞄点 Vorbesichtigungspunkte"></a>预瞄点 Vorbesichtigungspunkte</h1><p><img src="/images/L_DRV_1.png"></p>
+<p><code>L_DRV_1</code> = $d_{la}$</p>
+<p>seitliche Abstandskomponente. </p>
+<p>Fahrervorschaupunkte Definition des seitlichen Abstands zwischen der Entwurfsfahrbahn und dem Fahrervorschaupunkt</p>
+<h1 id="输出-Ausgabe-die-Abweichung-des-Vorschaupunktes-von-der-Seitenlage"><a href="#输出-Ausgabe-die-Abweichung-des-Vorschaupunktes-von-der-Seitenlage" class="headerlink" title="输出 Ausgabe /die Abweichung des Vorschaupunktes von der Seitenlage"></a>输出 Ausgabe /die Abweichung des Vorschaupunktes von der Seitenlage</h1><p>Der vertikale Abstand zwischen dem Vorausschaupunkt und dem Zielpfad ist nicht gleich der Abweichung der seitlichen Position des Vorausschaupunkts vom Pfad.</p>
+<p>Also müssen wir diesen Abstand umrechnen.</p>
+<p>$ \theta = \arcsin \frac{d_{la}}{5} $ </p>
+<p>$\bigtriangleup f = d_{la} {\div}  \cos \theta $</p>
+<h1 id="Gewunschter-Zustand"><a href="#Gewunschter-Zustand" class="headerlink" title="Gewünschter Zustand"></a>Gewünschter Zustand</h1><p><img src="/images/Simulink1.png"><br>Gewünschter Zustand ist 0. Wir erwarten, dass die Fahrzeuge auf der mittleren Fahrspur bleiben.<br><img src="/images/pid2.png"><br>Je geringer die Abweichung des Vorschaupunktes von der Seitenlage, desto besser.</p>
+<p>Der gewünschte Zustand ist also 0.</p>
 
     </div>
 
@@ -241,8 +256,10 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Whole-Slide-Image/" rel="tag"># Whole Slide Image</a>
-              <a href="/tags/Patch/" rel="tag"># Patch</a>
+              <a href="/tags/MATLAB-Simulink/" rel="tag"># MATLAB/Simulink</a>
+              <a href="/tags/Caarsim/" rel="tag"># Caarsim</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+              <a href="/tags/PID/" rel="tag"># PID</a>
           </div>
 
         
@@ -251,13 +268,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/25/WSI%20%E5%9B%BE%E7%89%87%E4%BB%8B%E7%BB%8D/" rel="prev" title="Whole Slide Image(WSI) 介绍">
-      <i class="fa fa-chevron-left"></i> Whole Slide Image(WSI) 介绍
+    <a href="/2021/07/31/%E8%BE%BE%E5%A7%86%E5%A4%9A%E5%8F%98%E7%9A%84%E9%BB%84%E6%98%8F1/" rel="prev" title="达姆多变的黄昏">
+      <i class="fa fa-chevron-left"></i> 达姆多变的黄昏
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/25/hello-world/" rel="next" title="Hello World">
-      Hello World <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -316,7 +330,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Patch 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E8%8E%B7%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text">Patch 获取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">2.1.</span> <span class="nav-text">获取方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">获取方法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%B8%89"><span class="nav-number">2.3.</span> <span class="nav-text">获取方法三</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PID%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">PID原理介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Carsim-%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">Carsim 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%A6%E9%81%93%E4%BF%9D%E6%8C%81%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">车道保持方法介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Einfuhrung-in-das-Methoden-der-Fahrspurhaltung"><span class="nav-number">4.</span> <span class="nav-text">Einführung in das Methoden der Fahrspurhaltung</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E7%9E%84%E7%82%B9-Vorbesichtigungspunkte"><span class="nav-number">5.</span> <span class="nav-text">预瞄点 Vorbesichtigungspunkte</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA-Ausgabe-die-Abweichung-des-Vorschaupunktes-von-der-Seitenlage"><span class="nav-number">6.</span> <span class="nav-text">输出 Ausgabe &#x2F;die Abweichung des Vorschaupunktes von der Seitenlage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gewunschter-Zustand"><span class="nav-number">7.</span> <span class="nav-text">Gewünschter Zustand</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
