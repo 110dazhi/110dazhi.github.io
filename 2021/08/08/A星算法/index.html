@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="A * einführenA*-Algorithmus („A Stern“ oder englisch „a star“, auch *-Suche) gehört zur Klasse der informierten Suchalgorithmen.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A* 算法 介绍">
+<meta property="og:url" content="http://example.com/2021/08/08/A%E6%98%9F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="学习学习">
+<meta property="og:description" content="A * einführenA*-Algorithmus („A Stern“ oder englisch „a star“, auch *-Suche) gehört zur Klasse der informierten Suchalgorithmen.">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/1.png">
+<meta property="og:image" content="http://example.com/images/2.png">
+<meta property="og:image" content="http://example.com/images/3.png">
+<meta property="og:image" content="http://example.com/images/4.png">
+<meta property="og:image" content="http://example.com/images/5.png">
+<meta property="og:image" content="http://example.com/images/6.png">
+<meta property="og:image" content="http://example.com/images/7.png">
+<meta property="article:published_time" content="2021-08-08T17:59:28.000Z">
+<meta property="article:modified_time" content="2021-08-07T22:49:52.601Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="A* 算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/08/A%E6%98%9F%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>A* 算法 介绍 | 学习学习</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">学习学习</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明月楼高休独倚，酒入愁肠，化作相思泪</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/A%E6%98%9F%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="LIve for Love and Love for Food">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习学习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A* 算法 介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-08 19:59:28 / 修改时间：00:49:52" itemprop="dateCreated datePublished" datetime="2021-08-08T19:59:28+02:00">2021-08-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">路径规划</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="A-einfuhren"><a href="#A-einfuhren" class="headerlink" title="A * einführen"></a>A * einführen</h1><p>A*-Algorithmus („A Stern“ oder englisch „a star“, auch *-Suche) gehört zur Klasse der informierten Suchalgorithmen.</p>
+<span id="more"></span>
+<p>A-Star 算法是一种常用的路径查找和图形遍历算法，起初发表于1968年，由Stanford研究院的Peter Hart, Nils Nilsson以及Bertram Raphael发表。它可以被认为是Dijkstra算法的扩展。</p>
+<p>对比Dijkstra 算法的优点，在进行启发式搜索提高算法效率的同时，可以保证找到一条最优路径。基于评估函数。</p>
+<p>Er dient in der Informatik der Berechnung eines kürzesten Pfades zwischen zwei Knoten in einem Graphen mit positiven Kantengewichten.</p>
+<p>两个点： zwei Knoten</p>
+<p>der A*-Algorithmus eine verwendet Schätzfunktion (Heuristik),um zielgerichtet zu suchen und damit die Laufzeit zu verringern. Der Algorithmus ist vollständig und optimal. </p>
+<p>A* 算法总是先研究最可能快速到达目标的节点。</p>
+<p>Der A*-Algorithmus untersucht immer die Knoten zuerst, die wahrscheinlich schnell zum Ziel führen. </p>
+<p>f(x) = g(x)+h(x)</p>
+<p>节点：der Knoten</p>
+<p>x ist ein Knoten, </p>
+<p>g(x) [g von x] ist die bisherigen Kosten vom Startknoten. </p>
+<p>h(x) ist die geschätzten Kosten von x bis zum Zielknoten.</p>
+<p>Die verwendete Heuristik darf die Kosten nie überschätzen. Für das Beispiel der Wegsuche ist die Luftlinie eine geeignete Schätzung: Die tatsächliche Strecke ist nie kürzer als die direkte Verbindung.</p>
+<p>使用的启发方法绝对不能高估成本，对于寻路例子，直线是一个很好的估计，因为实际距离永远不会比直接连接更短。</p>
+<p>Die Knoten werden während der Suche in drei verschiedene Klassen eingeteilt:</p>
+<p>节点在寻找过程中会被分配给三个集合。</p>
+<p>1.unbekannte Knoten ：Diese Knoten wurden während der Suche noch nicht gefunden. </p>
+<p>2.bekannte Knoten ：Zu diesen Knoten ist ein (möglicherweise suboptimaler) Weg bekannt.<br>Alle bekannten Knoten werden zusammen mit ihrem f-Wert in der sogenannten Open List gespeichert. </p>
+<p>3.abschließend untersuchte Knoten：  Zu diesen Knoten ist der kürzeste Weg bekannt. Die abschließend untersuchten Knoten werden in der sogenannten Closed List gespeichert, damit sie nicht mehrfach untersucht werden. </p>
+<p>Jeder bekannte oder abschließend besuchte Knoten enthält einen Zeiger auf seinen (bisher besten) Vorgängerknoten. Mit Hilfe dieser Zeiger kann der Pfad bis zum Startknoten rückverfolgt werden.</p>
+<p>每一个已知的或者结束被寻找的节点，都有一个指向其前一个点的指针，通过这个指针，可以找到一个到达起始点的路径。</p>
+<p>Wird ein Knoten x abschließend untersucht (auch expandiert oder relaxiert), so werden seine Nachfolgeknoten in die Open List eingefügt und x in die Closed List aufgenommen. </p>
+<p>Für neu eingefügte Nachfolgeknoten werden die Vorgängerzeiger auf x gesetzt. Ist ein Nachfolgeknoten bereits auf der Closed List, so wird er nicht erneut in die Open List eingefügt und auch sein Vorgängerzeiger nicht geändert. </p>
+<p>对于新插入的后继节点，先前的指针设置为 x。 如果后继节点已经在关闭列表中，则不会再次将其添加到打开列表中，也不会更改其前驱指针。</p>
+<p>Ist ein Nachfolgeknoten bereits auf der Open List, so wird der Knoten nur aktualisiert (f-Wert und Vorgängerzeiger), wenn der neue Weg dorthin kürzer ist als der bisherige.</p>
+<p>如果继任节点已经在开放列表中，如果那里的新路径比以前的短，该节点才会被更新(f值和继任指针)。</p>
+<p>Es gibt zwei Möglichkeiten, diesen Algorithmus zu terminieren.</p>
+<p>Falls der Zielknoten abschließend untersucht wird, terminiert der Algorithmus. Der gefundene Weg wird mit Hilfe der Vorgängerzeiger rekonstruiert und ausgegeben. </p>
+<p>Falls die Open List leer ist, gibt es keine Knoten mehr, die untersucht werden könnten. In diesem Fall terminiert der Algorithmus, da es keine Lösung gibt.</p>
+<h1 id="Beispiel"><a href="#Beispiel" class="headerlink" title="Beispiel"></a>Beispiel</h1><h2 id="地图介绍-Landkarte-einfuhren"><a href="#地图介绍-Landkarte-einfuhren" class="headerlink" title="地图介绍 Landkarte einführen"></a>地图介绍 Landkarte einführen</h2><p>Landkarte als Graph<br>weiß: noch nicht gefunden</p>
+<p>grau: gefunden, befindet sich auf der Open List</p>
+<p>schwarz: untersucht, befindet sich auf der Closed List<br><img src="/images/1.png"></p>
+<p>其中 h 是每一个城市到目标点的直线距离， 权值是实际距离。</p>
+<p>Das Diagramm zeigt eine kleine Auswahl an Städten und Wegen. Die Kantenbeschriftung entspricht den Kosten, um von einer Stadt zur nächsten zu kommen.  Jeder Knoten enthält die geschätzte Entfernung zum Zielknoten (Wert der h-Funktion). Als Heuristik wird hier die Luftlinie verwendet.</p>
+<p>h: geschätzte Entfernung</p>
+<h2 id="Schritt-1"><a href="#Schritt-1" class="headerlink" title="Schritt 1"></a>Schritt 1</h2><p>从起始点出发，开始计算 f 值, </p>
+<p>$f_{kl}$ = g(Sa)+Gewichtung(70)+h(158) = 228  Kaiserslautern wird in die Open List eingefügt. </p>
+<p>$f_{ka}$ = g(Sa)+Gewichtung(145)+h(140) = 285  Karlsruhe wird in die Open List eingefügt.</p>
+<p>Saarbrücken hat nur zwei Niederlassungen.Und die alle haben auf Saarbrücken hingewiesen.<br>Saarbrücken 只有两个分支，并且全部指向Saarbrücken。 则把Saarbrücken 放入 Closed List。<br>Der Knoten Saarbrücken ist nun abschließend betrachtet und wird auf die Closed List gesetzt.</p>
+<p>openList = [   $f_{kl}$=228   ,  $f_{ka}$=285   ]</p>
+<p>closeList = \left [ Saarbrücken \right ]<br><img src="/images/2.png"></p>
+<h2 id="Schritt-2"><a href="#Schritt-2" class="headerlink" title="Schritt 2"></a>Schritt 2</h2><p>Die Open List enthält nun zwei Punkte. </p>
+<p>openList = [ $f_{kl}$=228  ,  $f_{ka}$=285   ]</p>
+<p>closeList = [ Saarbrücken ]</p>
+<p>$f_{kl}$  ist kleiner. Da Kaiserslautern den geringeren f-Wert hat, wird nun Kaiserslautern als Nächstes untersucht und seine Nachfolgeknoten betrachtet.</p>
+<ol>
+<li>Saarbrücken ist bereits auf der Closed List und wird nicht weiter betrachtet.</li>
+<li>Frankfurt wird mit  $f_{F}$=g(KL)+c(KL,F)+h(F)=70+103+96=269  in die Open List eingefügt. Kaiserslautern wird als Vorgängerknoten gespeichert.</li>
+<li>Ludwigshafen wird mit  $f_{LU}$=g(KL)+c(KL,LU)+h(LU)=70+53+108=231  in die Open List eingefügt. Kaiserslautern wird als Vorgängerknoten gespeichert.</li>
+<li>Kaiserslautern wird auf die Closed List gesetzt.</li>
+</ol>
+<p>openList = [ $f_{ka}$=285  ,iserslautern]<br><img src="/images/3.png"></p>
+<h2 id="Schritt-3"><a href="#Schritt-3" class="headerlink" title="Schritt 3"></a>Schritt 3</h2><p>Der Knoten mit dem geringsten  f-Wert  ist Ludwigshafen.</p>
+<p>openList = [$f_{ka}$=285 , $f_{F}$=269 , $f_{LU}$=231 ]</p>
+<p>closeList =  [ Saarbrücken,Kaiserslautern ]</p>
+<ol>
+<li>Kaiserslautern ist bereits auf der Closed List und wird nicht weiter betrachtet.</li>
+<li>Der Zielknoten Würzburg wird gefunden, aber noch nicht als Lösung ausgegeben, sondern zunächst in die Open List eingefügt. Ludwigshafen wird als Vorgängerknoten gespeichert.</li>
+<li>Ludwigshafen wird auf die Closed List gesetzt.</li>
+</ol>
+<p>openList = [   $f_{ka}$=285 , $f_{F}$=269 , $f_{Wür}$=306 ]</p>
+<p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen]</p>
+<p><img src="/images/4.png"></p>
+<h2 id="Schritt-4"><a href="#Schritt-4" class="headerlink" title="Schritt 4"></a>Schritt 4</h2><p>openList =  [   $f_{ka}$=285 , $f_{F}$=269 , $f_{Wür}$=306  ]</p>
+<p>closeList =   [ Saarbrücken,Kaiserslautern,Ludwigshafen  ]</p>
+<p>Frankfurt wird erkundet. Als einziger Nachfolgeknoten, der sich noch nicht auf der Closed List befindet, wird Würzburg gefunden. Als  f-Wert  wird 289 berechnet, was geringer als der bisherige  f-Wert  für Würzburg ist. Dies bedeutet, dass der Weg über Frankfurt kürzer ist als der zuerst gefundene Weg über Ludwigshafen. Daher wird der  f-Wert  von Würzburg geändert. Außerdem wird als Vorgängerknoten nun Frankfurt gespeichert.</p>
+<p>Frankfurt wird auf die Closed List gesetzt.</p>
+<p>openList =   [   $f_{ka}$=285 , $f_{Wür}$=306  ]</p>
+<p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt ]</p>
+<p><img src="/images/5.png"></p>
+<h2 id="Schritt-5"><a href="#Schritt-5" class="headerlink" title="Schritt 5"></a>Schritt 5</h2><p>openList =  [   $f_{ka}$=285 , $f_{Wür}$=306  ]</p>
+<p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt  ]</p>
+<p>Da Karlsruhe nun den kleinsten  f-Wert  hat, wird dieser Knoten als Nächstes untersucht. Heilbronn wird in die Open List eingefügt und Karlsruhe auf die Closed List gesetzt.</p>
+<p>openList = [   $f_{Wür}$=306 , $f_{Heilbronn}$ =316  ]</p>
+<p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt,Karlsruhe ]</p>
+<p><img src="/images/6.png"></p>
+<h2 id="Schritt-6"><a href="#Schritt-6" class="headerlink" title="Schritt 6"></a>Schritt 6</h2><p>openList =  [   $f_{Wür}$=306 , $f_{Heilbronn}$ =316  ]</p>
+<p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt,Karlsruhe ]</p>
+<p>Jetzt hat Würzburg den geringsten  f-Wert  und wird untersucht: Das Ziel ist gefunden und der kürzeste Weg ist: Saarbrücken–Kaiserslautern–Frankfurt–Würzburg.<br><img src="/images/7.png"></p>
+<p>A wird auf B zeigen: A 将会指向B</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/A*-Algorithmus">https://de.wikipedia.org/wiki/A*-Algorithmus</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/A-%E7%AE%97%E6%B3%95/" rel="tag"># A* 算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/" rel="prev" title="D* 算法 介绍">
+      <i class="fa fa-chevron-left"></i> D* 算法 介绍
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-einfuhren"><span class="nav-number">1.</span> <span class="nav-text">A * einführen</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Beispiel"><span class="nav-number">2.</span> <span class="nav-text">Beispiel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9B%BE%E4%BB%8B%E7%BB%8D-Landkarte-einfuhren"><span class="nav-number">2.1.</span> <span class="nav-text">地图介绍 Landkarte einführen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-1"><span class="nav-number">2.2.</span> <span class="nav-text">Schritt 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-2"><span class="nav-number">2.3.</span> <span class="nav-text">Schritt 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-3"><span class="nav-number">2.4.</span> <span class="nav-text">Schritt 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-4"><span class="nav-number">2.5.</span> <span class="nav-text">Schritt 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-5"><span class="nav-number">2.6.</span> <span class="nav-text">Schritt 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-6"><span class="nav-number">2.7.</span> <span class="nav-text">Schritt 6</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">LIve for Love and Love for Food</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -20,26 +20,25 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Patch 介绍Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。">
+  <meta name="description" content="D * einführenDynamic A StarDer D*-Algorithmus ist ein Suchalgorithmus. Es handelt sich um eine Erweiterung des A*-Algorithmus.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从WSI中获取 Patch">
-<meta property="og:url" content="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/index.html">
+<meta property="og:title" content="D* 算法 介绍">
+<meta property="og:url" content="http://example.com/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="学习学习">
-<meta property="og:description" content="Patch 介绍Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。">
+<meta property="og:description" content="D * einführenDynamic A StarDer D*-Algorithmus ist ein Suchalgorithmus. Es handelt sich um eine Erweiterung des A*-Algorithmus.">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/pingtu.jpg">
-<meta property="og:image" content="http://example.com/images/patch_image.png">
-<meta property="og:image" content="http://example.com/images/patch_image2.png">
-<meta property="og:image" content="http://example.com/images/patch_image3.png">
-<meta property="article:published_time" content="2021-06-27T17:59:28.000Z">
-<meta property="article:modified_time" content="2021-07-26T22:24:59.065Z">
+<meta property="og:image" content="http://example.com/images/d1.jpg">
+<meta property="og:image" content="http://example.com/images/d2.jpg">
+<meta property="og:image" content="http://example.com/images/d3.jpg">
+<meta property="article:published_time" content="2021-08-08T17:59:28.000Z">
+<meta property="article:modified_time" content="2021-08-07T22:45:38.152Z">
 <meta property="article:author" content="MZChen">
-<meta property="article:tag" content="Whole Slide Image">
-<meta property="article:tag" content="Patch">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="D* 算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/pingtu.jpg">
+<meta name="twitter:image" content="http://example.com/images/d1.jpg">
 
-<link rel="canonical" href="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/">
+<link rel="canonical" href="http://example.com/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/">
 
 
 <script id="page-configurations">
@@ -52,7 +51,7 @@
   };
 </script>
 
-  <title>从WSI中获取 Patch | 学习学习</title>
+  <title>D* 算法 介绍 | 学习学习</title>
   
 
 
@@ -163,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/%E8%8E%B7%E5%8F%96Patch/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -176,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          从WSI中获取 Patch
+          D* 算法 介绍
         </h1>
 
         <div class="post-meta">
@@ -185,23 +184,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-06-27 19:59:28" itemprop="dateCreated datePublished" datetime="2021-06-27T19:59:28+02:00">2021-06-27</time>
+              <time title="创建时间：2021-08-08 19:59:28 / 修改时间：00:45:38" itemprop="dateCreated datePublished" datetime="2021-08-08T19:59:28+02:00">2021-08-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-27 00:24:59" itemprop="dateModified" datetime="2021-07-27T00:24:59+02:00">2021-07-27</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WSI%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">WSI处理</span></a>
+                  <a href="/categories/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">路径规划</span></a>
                 </span>
             </span>
 
@@ -216,22 +209,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Patch-介绍"><a href="#Patch-介绍" class="headerlink" title="Patch 介绍"></a>Patch 介绍</h1><p>Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。</p>
+        <h1 id="D-einfuhren"><a href="#D-einfuhren" class="headerlink" title="D * einführen"></a>D * einführen</h1><p>Dynamic A Star<br>Der D*-Algorithmus ist ein Suchalgorithmus. Es handelt sich um eine Erweiterung des A*-Algorithmus.</p>
 <span id="more"></span>
-<p><img src="/images/pingtu.jpg" alt="拼图"></p>
-<h1 id="Patch-获取"><a href="#Patch-获取" class="headerlink" title="Patch 获取"></a>Patch 获取</h1><p>Patch Extraction 获取补丁，看似是个简单的问题，确实也简单，难在 WSI 真的是太大了，使用level 0，在读取时，电脑就会遇到 MemoryError 的问题。所以获取多大等级下level的补丁，就看自己项目的需求了。除了等级，还有 Patch 的大小。网络里需要用的时256 还是500。</p>
-<h2 id="获取方法一"><a href="#获取方法一" class="headerlink" title="获取方法一"></a>获取方法一</h2><p>主要还是从网上找了两种方法，一种是在下面这个Github里采用的。具体的可以看下面链接里提供的代码，但是，其中的txt文件，提供的是生成好的，个人觉得不太合适，因为不知道能不能适用于其他的数据集。<br><img src="/images/patch_image.png" alt="简介"></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/baidu-research/NCRF">https://github.com/baidu-research/NCRF</a><br>这里再提供一个其他人复现的时候，遇到的问题，供大家参考。因为版本原因，在跑的时候会有问题。<br><a target="_blank" rel="noopener" href="https://www.codenong.com/cs106597256/">https://www.codenong.com/cs106597256/</a></p>
-</blockquote>
-<h2 id="获取方法二"><a href="#获取方法二" class="headerlink" title="获取方法二"></a>获取方法二</h2><p>这篇Github 提供的方法，和方法一是一样的，代码作者在issues里也大方回应了参考了第一篇的代码。但是这里提供的就更加全面了。<br><img src="/images/patch_image2.png" alt="简介"></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/WilmerWang/SLFCD">https://github.com/WilmerWang/SLFCD</a><br>不过在复现的时候还是会遇到问题，这里挖个坑，之后再去写这些问题。<br>不过也欢迎探讨<code>chenmz0298@163.com</code></p>
-</blockquote>
-<h2 id="获取方法三"><a href="#获取方法三" class="headerlink" title="获取方法三"></a>获取方法三</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction">https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction</a><br>这是目前为止看到的最合适的，最简单的，最容易理解的获取patch的代码了，而且在 8g 内存，核显的笔记本上，也能提取Level1下的256的Patch。Level0 就得去蹭朋友的工作站了。生成的目录是 矩阵坐标形式，但是这里 0 代表纵坐标，1 是横坐标。<br><img src="/images/patch_image3.png"></p>
-</blockquote>
-<p>未完，待续</p>
+<p>D星算法是一个搜索算法，他可以被视作是A星算法的拓展。</p>
+<p>A* als auch der Dijkstra-Algorithmus sind in ihrer Grundform unflexibel und können auf Veränderungen im Graphen während oder nach der Expansion nicht reagieren. </p>
+<p>A*以及Dijkstra的算法在其基本形式上是不灵活的，不能对扩张过程中或扩张后的图的变化做出反应。</p>
+<p>Wie bei A* wird auch bei D* zunächst der Weg vom Start zum Ziel gewählt. Anders als bei A* wird jedoch die Reihenfolge umgekehrt: vom Ziel zum Start.</p>
+<p>与A* 一样，D* 也是选择从起点到终点的路径。然而，与A*不同的是，顺序是相反的：从终点到起点。</p>
+<p>Das hat den Vorteil, dass jeder expandierte Knoten auf den nächsten zum Ziel führenden Knoten verweist und die exakten Kosten zum Ziel (nach der Expansion) kennt.</p>
+<p>这样做的好处是，每个扩展的节点都指向通往目的地的下一个节点，并知道到目的地的确切成本（扩展后）。</p>
+<p>Wenn sich der Zustand eines Knotens in der Mitte dynamisch ändert, muss der Roboter den Weg neu planen, weshalb es sich um einen dynamischen Suchalgorithmus handelt.</p>
+<p>当中间某节点状态有动态改变，需要重新寻路，所以才是一个动态寻路算法。</p>
+<p>Erstellen wir eine openList und eine CloseLit.</p>
+<p>Knoten werden mit einem der folgenden Zustände gekennzeichnet</p>
+<ol>
+<li>NEU, d.h. es wurde noch nie auf die OPEN-Liste gesetzt</li>
+<li>OPEN, d.h. sie steht derzeit auf der OPEN-Liste</li>
+<li>Closed, d.h. es steht nicht mehr auf der OPEN-Liste</li>
+<li>RAISE, d.h. es kostet mehr als beim letzten Mal, als es auf der OPEN-Liste stand</li>
+<li>LOWER, d.h. es kostet weniger als beim letzten Mal, als es auf der OPEN-Liste stand</li>
+</ol>
+<p>h&gt;k变成了“raise”态，（h=k为lower态）</p>
+<p>h: Der h-Wert jedes Punktes steht für die Kosten des aktuellen Knotens bis zum Endknoten, d. h. dem Zielpunkt G. Bei der ersten Suche nach dem Startknoten werden die h aller Knoten aktualisiert und auf die gleiche Weise wie beim dijkstr-Algorithmus berechnet, indem die Kosten zweier benachbarter Knoten + die Kosten des vorherigen Knotens addiert werden.</p>
+<p>h: 每个点的h值代表当前该点，到终点，也就是目标点G的代价。第一次搜索到起点时时，所有点的h会被更新，计算方式同dijkstr算法，是用相邻两点的代价+上一个点的代价累加得到。</p>
+<p>k: der minimale h-Wert für diesen Knoten. k wird nach der Aktualisierung des h-Wertes dieses Knotens berechnet, wenn dieser Knoten “new” ist, ist k=h; wenn dieser Punkt “open” ist, wird das aktuelle k und das new_h-Minimum genommen, wenn dieser Knoten ‘closed’, nehmen Sie das aktuelle h und new_h Minimum; zusammenfassend wird k auf ein Minimum gehalten, das die minimalen Kosten dieses Knotens zum G-Knoten in der vollständigen Graphenumgebung darstellt.</p>
+<p>Übersetzt mit <a target="_blank" rel="noopener" href="http://www.deepl.com/Translator">www.DeepL.com/Translator</a> (kostenlose Version)<br>k: 该点最小的h值。k的计算在更新过本节点的h后，如果本点‘new’,k=h；如果本点’open’，那就取一下当前k和new_h最小值，如果本点是’closed’，取当前h和new_h最小值； 总而言之，k将会保持到最小，它表示了本点在全图环境中到G点的最小代价。</p>
+<h1 id="Erklarung"><a href="#Erklarung" class="headerlink" title="Erklärung"></a>Erklärung</h1><ol>
+<li>h steht für die Kosten dieses Knotens zum Endknoten, dem Zielknoten G. </li>
+<li>k ist das Minimum aller h, die an diesem Knoten übergeben werden. </li>
+<li>b ist der übergeordnete Knoten.(Vater Knoten)</li>
+</ol>
+<p>h代表该节点到终节点，也就是目标节点G的代价。k是该节点所有过的h的最小值。b是父节点。<br><img src="/images/d1.jpg"></p>
+<p>当机器人走到这个节点： Wenn der Roboter diesen Punkt erreicht hat，</p>
+<p>封锁 Blockade </p>
+<h1 id="出现封锁-Eine-Blockade-tritt-auf"><a href="#出现封锁-Eine-Blockade-tritt-auf" class="headerlink" title="出现封锁 Eine Blockade tritt auf"></a>出现封锁 Eine Blockade tritt auf</h1><p>当机器人走到这个节点： Wenn der Roboter diesen Punkt erreicht hat, tritt eine Blockade auf.</p>
+<p><img src="/images/d2.jpg"><br>Der Roboter sucht nach Knotenpunkten in der Umgebung und findet einen Knoten, der den h-Wert senkt.</p>
+<p>机器人会寻找周边的节点，看哪一个会降低h值。</p>
+<p>Sobald dieser Punkt gefunden wurde, ist es der neue Vater Knoten.Der Pfeil zeigt auf diesen neuen Knoten.箭头会指向这个新的节点</p>
+<h1 id="Endgultige-Pfadplanung"><a href="#Endgultige-Pfadplanung" class="headerlink" title="Endgültige Pfadplanung"></a>Endgültige Pfadplanung</h1><p><img src="/images/d3.jpg"></p>
 
     </div>
 
@@ -241,8 +256,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Whole-Slide-Image/" rel="tag"># Whole Slide Image</a>
-              <a href="/tags/Patch/" rel="tag"># Patch</a>
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/D-%E7%AE%97%E6%B3%95/" rel="tag"># D* 算法</a>
           </div>
 
         
@@ -251,12 +266,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/25/WSI%20%E5%9B%BE%E7%89%87%E4%BB%8B%E7%BB%8D/" rel="prev" title="Whole Slide Image(WSI) 介绍">
-      <i class="fa fa-chevron-left"></i> Whole Slide Image(WSI) 介绍
+    <a href="/2021/08/05/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%951/" rel="prev" title="基于Matlab格栅的最短路径算法简介">
+      <i class="fa fa-chevron-left"></i> 基于Matlab格栅的最短路径算法简介
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/07/25/hello-world/" rel="next" title="Hello World">
-      Hello World <i class="fa fa-chevron-right"></i>
+    <a href="/2021/08/08/A%E6%98%9F%E7%AE%97%E6%B3%95/" rel="next" title="A* 算法 介绍">
+      A* 算法 介绍 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -316,7 +331,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Patch 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Patch-%E8%8E%B7%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text">Patch 获取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">2.1.</span> <span class="nav-text">获取方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">获取方法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E4%B8%89"><span class="nav-number">2.3.</span> <span class="nav-text">获取方法三</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#D-einfuhren"><span class="nav-number">1.</span> <span class="nav-text">D * einführen</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Erklarung"><span class="nav-number">2.</span> <span class="nav-text">Erklärung</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E5%B0%81%E9%94%81-Eine-Blockade-tritt-auf"><span class="nav-number">3.</span> <span class="nav-text">出现封锁 Eine Blockade tritt auf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Endgultige-Pfadplanung"><span class="nav-number">4.</span> <span class="nav-text">Endgültige Pfadplanung</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -331,20 +346,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
