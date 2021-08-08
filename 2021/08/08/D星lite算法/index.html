@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="介绍The D_star Lite algorithm is a path planning algorithm proposed by Koenig S and Likhachev M based on the LPA_star algorithm.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D_star Lite algorithm">
+<meta property="og:url" content="http://example.com/2021/08/08/D%E6%98%9Flite%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="学习学习">
+<meta property="og:description" content="介绍The D_star Lite algorithm is a path planning algorithm proposed by Koenig S and Likhachev M based on the LPA_star algorithm.">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/D_lite1.png">
+<meta property="og:image" content="http://example.com/images/D_lite2.png">
+<meta property="og:image" content="http://example.com/images/D_lite3.png">
+<meta property="og:image" content="http://example.com/images/D_lite4.png">
+<meta property="og:image" content="http://example.com/images/D_lite5.png">
+<meta property="og:image" content="http://example.com/images/D_lite6.png">
+<meta property="og:image" content="http://example.com/images/D_lite7.png">
+<meta property="og:image" content="http://example.com/images/D_lite8.png">
+<meta property="og:image" content="http://example.com/images/D_lite9.png">
+<meta property="article:published_time" content="2021-08-08T21:59:28.000Z">
+<meta property="article:modified_time" content="2021-08-08T21:59:12.635Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="D_star Lite algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/D_lite1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/08/D%E6%98%9Flite%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>D_star Lite algorithm | 学习学习</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">学习学习</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明月楼高休独倚，酒入愁肠，化作相思泪</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/D%E6%98%9Flite%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="LIve for Love and Love for Food">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习学习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          D_star Lite algorithm
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-08 23:59:28 / 修改时间：23:59:12" itemprop="dateCreated datePublished" datetime="2021-08-08T23:59:28+02:00">2021-08-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">路径规划</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>The D_star Lite algorithm is a path planning algorithm proposed by Koenig S and Likhachev M based on the LPA_star algorithm.<br><span id="more"></span><br>LPA_star 算法还是A_star 算法都不能满足移动机器人在未知环境中的路径规划需求</p>
+<p>D_star 算法虽然可以实现未知环境的路径规划，但效率较低</p>
+<p>When the mobile robot proceeds along the planned path, the node it reaches is set as the starting node. Therefore, when the path changes or the key value needs to be updated, the heuristic value and estimated cost from the target node to the new node need to be updated. As the mobile robot keeps approaching the target node, the heuristic value of the node will continue to decrease, and it will not exceed h (start Org, start New). Since the same value must be subtracted each time, the order of opening the list will not change, so this part of the calculation may not be performed, thus avoiding the queue traversal process every time the path changes.</p>
+<p>在移动机器人按照规划的路径进行前进时其所到的节点即设置为起始节点，因此路径变化或者key值需要更新时，需要更新从目标点到新起点的启发值以及估计成本。由于移动机器人不断的靠近目标点，节点的启发值将不断减少，且减少至不会超过h（start Org,start New）。由于每次都要减去相同的值，开启列表的顺序并不会改变，因此可以不进行这部分的计算，这样便避免了每次路径改变时的队列遍历过程。</p>
+<p>If an obstacle is found during the forward process, set the location of the environment map corresponding to the obstacle as the obstacle space, and use it as the starting node to re-plan a path using the “path field” information.<br><img src="/images/D_lite1.png" alt=""></p>
+<h1 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h1><ol>
+<li>g*(s) Record the predecessor node of the grid node<br><img src="/images/D_lite2.png" alt=""></li>
+<li>rhs(s) records the g(s) of the successor node of the grid node, and has the formula:<br><img src="/images/D_lite3.png" alt=""></li>
+<li>When evaluating the estimated value of grid points, D_star Lite also introduces the value of k(s) for comparison, where k(s) contains two values [k(s1); k(s2)], which respectively satisfy the following formulas:<br><img src="/images/D_lite4.png" alt=""><br><img src="/images/D_lite5.png" alt=""></li>
+</ol>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><h2 id="When-the-map-has-not-changed"><a href="#When-the-map-has-not-changed" class="headerlink" title="When the map has not changed"></a>When the map has not changed</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lqzdreamer/article/details/85108310">https://blog.csdn.net/lqzdreamer/article/details/85108310</a></p>
+</blockquote>
+<p>To explain the workflow of the algorithm with a specific example:<br><img src="/images/D_lite6.png" alt=""><br>First, calculate the heuristic value h from the starting node B1 → the target point E3 as shown in the figure above. The value of h approximates the maximum value of the absolute difference between the x and y coordinates of the two grids from the starting grid to the current grid. The specific process of the D*Lite algorithm is shown in the figure below.<br><img src="/images/D_lite7.png" alt=""><br>In the Initialization phase, set g=rhs=∞ in all feasible nodes.</p>
+<ol>
+<li><p>In the first step, step1, the nodes around E3, D2, E2, and D3, are calculated. Taking D3 as an example, calculate rhs(s)=min(g(s’)+c(s,s’))=1 according to the formula, and then calculate k[k_1;k_2]=[3;1]. From this, the D2 and E2 points can be calculated as shown in the figure. Compare the key values and choose the smallest one, which is D2. The g value of D2 is updated to 1 according to the formula min_s(c(s’,s)+g(s’)=0+1=1, and then the calculation is continued.</p>
+</li>
+<li><p>In the second step, step2, you need to take D2 as the center to calculate C1, C2, C3, D1, D2, D3, E1, E2, and E3. According to the calculation method of step1 in the first step, the values are calculated as shown in the figure. Among them, the key of D3 is [3;1] the smallest (optimal), so D3 is selected as the further extension point.</p>
+</li>
+<li><p>In the third step, step3, you need to take D3 as the center to calculate C2, C3, D2, D3, E2, and E3. The calculation of each value is shown in the figure, where the key of C1 is [3;2] the smallest (optimal), so C1 is selected as the further expansion point.</p>
+</li>
+<li><p>In the fourth step, step4, you need to take C1 as the center and perform calculations on B1, B2, C2, D1, and D2. The calculation of each value is shown in the figure, where the key of B1 is [3;3] the smallest (optimal), so B1 is selected as the further expansion point.</p>
+</li>
+<li><p>In the fifth step, step5, you need to calculate A1, A2, B2, C1, and C2 with B1 as the center. The calculation of each value is shown in the figure, A1 is the starting point, and the algorithm ends.</p>
+</li>
+</ol>
+<p>So the path is A1→B1→C1→D2→E3</p>
+<h2 id="When-the-map-changes"><a href="#When-the-map-changes" class="headerlink" title="When the map changes"></a>When the map changes</h2><p>When a point D2 in the map becomes an obstacle, the starting node becomes B1, the position is C1, the target point is still E3, and the heuristic value h becomes the following figure:<br><img src="/images/D_lite8.png" alt=""><br>At this time, k_m=k_m+h(s_last,s_start)=0+1=1, change the heuristic value h of each point. The D*Lite algorithm is updated as shown below.<br><img src="/images/D_lite9.png" alt=""><br>The first is to calculate the cost of change, that is, the Edge Cost Changes step. The change is C1. It is based on the calculation formula rhs(s)=min_s Succ(s)(c(s’,s)+g(s’)=1+3=4. At this time, g(s) is less than rhs(s), which is inconsistent , That is, encounter obstacles, g(u)=∞, update all predecessor nodes (line 19-20 of the algorithm). Therefore, start from step1 and re-search according to the previous path, but there is no need to calculate too many other nodes at this time Grid. So, go back to E2 and start searching (step1), then search at D1 (step2), then search at C1, and then reach the current robot position and terminate the search.</p>
+<p>Therefore, the updated path is C1→D1→E2→E3.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/D-star-Lite-algorithm/" rel="tag"># D_star Lite algorithm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/08/LPA%E6%98%9F%E7%AE%97%E6%B3%95/" rel="prev" title="LPA * einführen">
+      <i class="fa fa-chevron-left"></i> LPA * einführen
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#definition"><span class="nav-number">2.</span> <span class="nav-text">definition</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example"><span class="nav-number">3.</span> <span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#When-the-map-has-not-changed"><span class="nav-number">3.1.</span> <span class="nav-text">When the map has not changed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#When-the-map-changes"><span class="nav-number">3.2.</span> <span class="nav-text">When the map changes</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">LIve for Love and Love for Food</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
