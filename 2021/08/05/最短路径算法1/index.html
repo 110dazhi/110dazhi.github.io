@@ -211,8 +211,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h1><p>DFS首先从某个顶点1出发，一次从它的各个未被访问的邻接点出发深度优先搜索遍历图，直至图中所有和1有路径相通的顶点都被访问到，若此时尚有其他顶点未被访问到，则另选一个未被访问的顶点作为起始点，重复上述过程，直至图中所有顶点都被访问为止。</p>
-<span id="more"></span>
+        <h1 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h1><p>DFS首先从某个顶点1出发，一次从它的各个未被访问的邻接点出发深度优先搜索遍历图，直至图中所有和1有路径相通的顶点都被访问到，若此时尚有其他顶点未被访问到，则另选一个未被访问的顶点作为起始点，重复上述过程，直至图中所有顶点都被访问为止。<br><span id="more"></span></p>
 <h1 id="BFD"><a href="#BFD" class="headerlink" title="BFD"></a>BFD</h1><p>BFS从图中某顶点1出发，依次访问1的各个未曾访问过的邻接点，然后分别从这些邻接点出发，依次访问它们的邻接点，并使得‘先被访问’的顶点先于后被访问的顶点的邻接点被访问，直至图中所有已被访问的顶点的邻接点都被访问到。</p>
 <h1 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h1><p>Dijkstra算法属于典型的广度优先算法解决有权图中的最短路径。</p>
 <h1 id="Floyd-弗洛伊德"><a href="#Floyd-弗洛伊德" class="headerlink" title="Floyd(弗洛伊德)"></a>Floyd(弗洛伊德)</h1><p>Floyd(弗洛伊德)算法是解决给定的加权图中顶点间的最短路径的一种算法，可以正确处理有向图的最短路径问题。</p>
@@ -220,7 +219,7 @@
 <p>优点：容易理解，可以算出任意两个节点之间的最短距离，代码编写简单</p>
 <p>缺点：时间复杂度比较高，对于稀疏图将会生成稀疏矩阵，极大浪费存储空间</p>
 <h1 id="RRT"><a href="#RRT" class="headerlink" title="RRT"></a>RRT</h1><p>快速搜索随机树算法，(RAPID-ExplorationRandomTree,RRT),是一种在完全已知的环境中通过随机采样扩展搜索的算法特点：RRT算法是概率完备的，如果规划时间足够长，如果确实存在一条可行的最优路径，RRT是可以找出这条路径的，但是这里存在限制条件，如果规划时间不够长，迭代次数较少，有可能无法找出实际存在的路径。</p>
-<p>优点，最主要的优点就是快，因此在多自由度机器人的规划问题中发挥着较大的作用，比如机械臂的规划算法基本都是以RRT为基础的<br>缺点;规划的路径通常不最优，路径不平滑，不是最优路径，需要与其他算法结合，进行改进利用matlab自带的<code>randi</code>函数，随机生成一个[1,n]范围的数，代表采样栅格.<br><img src="/images/RRT.png"><br><img src="/images/live3.jpg"></p>
+<p>优点，最主要的优点就是快，因此在多自由度机器人的规划问题中发挥着较大的作用，比如机械臂的规划算法基本都是以RRT为基础的<br>缺点;规划的路径通常不最优，路径不平滑，不是最优路径，需要与其他算法结合，进行改进利用matlab自带的<code>randi</code>函数，随机生成一个[1,n]范围的数，代表采样栅格.<br><img src="/images/RRT.png" alt=""><br><img src="/images/live3.jpg" alt=""></p>
 
     </div>
 
@@ -247,8 +246,8 @@
       <i class="fa fa-chevron-left"></i> 基于MATLAB/Simulink与Carsim联合仿真的车道保持PID控制器搭建
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/" rel="next" title="D* 算法 介绍">
-      D* 算法 介绍 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/" rel="next" title="D_Star 算法 介绍">
+      D_Star 算法 介绍 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -323,7 +322,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -336,7 +335,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -420,6 +419,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

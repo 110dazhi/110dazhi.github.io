@@ -205,12 +205,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Argparse-教程-简略"><a href="#Argparse-教程-简略" class="headerlink" title="Argparse 教程(简略)"></a>Argparse 教程(简略)</h1><p>目前所用到的是新建一个<code>config.py</code>文件，将所需要的固定变量，比如路径，存放进去。</p>
-<span id="more"></span>
+        <h1 id="Argparse-教程-简略"><a href="#Argparse-教程-简略" class="headerlink" title="Argparse 教程(简略)"></a>Argparse 教程(简略)</h1><p>目前所用到的是新建一个<code>config.py</code>文件，将所需要的固定变量，比如路径，存放进去。<br><span id="more"></span></p>
 <h1 id="config-代码模板"><a href="#config-代码模板" class="headerlink" title="config 代码模板"></a>config 代码模板</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">from pathlib import Path</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">#可以添加多个add_argument</span><br><span class="line">parser.add_argument(</span><br><span class="line">    &quot;--all_tif&quot;,# 调用的时候就看这个变量</span><br><span class="line">    type=Path,</span><br><span class="line">    default=Path(&quot;new_tif&quot;),#所存放的内容</span><br><span class="line">    help=&quot;Location of the WSI organized in subfolders by class&quot;)#提示</span><br><span class="line"></span><br><span class="line">parser.add_argument(</span><br><span class="line">    &quot;--all_xml&quot;,</span><br><span class="line">    type=Path,</span><br><span class="line">    default=Path(&quot;new_xml&quot;),</span><br><span class="line">    help=&quot;Location of the WSI organized in subfolders by class&quot;)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()#不可缺少</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="其他文件中调用"><a href="#其他文件中调用" class="headerlink" title="其他文件中调用"></a>其他文件中调用</h1><p>在其他文件中调用的时候，需要<code>import config</code><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import config</span><br><span class="line">path_tif = config.args.all_tif #可以将 config中定义的内容引出default=Path(&quot;new_tif&quot;)</span><br><span class="line">path_xml = config.args.all_xml</span><br></pre></td></tr></table></figure></p>
 
-<h1 id="其他文件中调用"><a href="#其他文件中调用" class="headerlink" title="其他文件中调用"></a>其他文件中调用</h1><p>在其他文件中调用的时候，需要<code>import config</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import config</span><br><span class="line">path_tif = config.args.all_tif #可以将 config中定义的内容引出default=Path(&quot;new_tif&quot;)</span><br><span class="line">path_xml = config.args.all_xml</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -309,7 +307,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -322,7 +320,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -406,6 +404,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -206,12 +206,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="方法一：写摘要"><a href="#方法一：写摘要" class="headerlink" title="方法一：写摘要"></a>方法一：写摘要</h1><p>在文章的<code>front-matter</code>中添加<code>description</code>，其中<code>description</code>中的内容就会被显示在首页上，其余一律不显示。<br>这里需要在主题的_config.yml里打开<code>excerpt_description: true</code>,默认是打开的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: hexo中next 模板首页只显示摘要 或者 部分内容（不显示全文）</span><br><span class="line">date: 2021-07-25 12:59:28</span><br><span class="line">categories: hexo</span><br><span class="line">tags: </span><br><span class="line">- Hexo</span><br><span class="line">- next模板</span><br><span class="line">description: 这是显示在首页的概述，正文内容均会被隐藏。</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>本文使用的是方法一。</p>
-<h1 id="方法二：文章截断"><a href="#方法二：文章截断" class="headerlink" title="方法二：文章截断"></a>方法二：文章截断</h1><p>在需要截断的地方加入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
-<p>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。<br>《Pathlib使用》里运用的这种方法二。</p>
+        <h1 id="方法一：写摘要"><a href="#方法一：写摘要" class="headerlink" title="方法一：写摘要"></a>方法一：写摘要</h1><p>在文章的<code>front-matter</code>中添加<code>description</code>，其中<code>description</code>中的内容就会被显示在首页上，其余一律不显示。<br>这里需要在主题的_config.yml里打开<code>excerpt_description: true</code>,默认是打开的。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: hexo中next 模板首页只显示摘要 或者 部分内容（不显示全文）</span><br><span class="line">date: 2021-07-25 12:59:28</span><br><span class="line">categories: hexo</span><br><span class="line">tags: </span><br><span class="line">- Hexo</span><br><span class="line">- next模板</span><br><span class="line">description: 这是显示在首页的概述，正文内容均会被隐藏。</span><br><span class="line">---</span><br></pre></td></tr></table></figure><br>本文使用的是方法一。</p>
+<h1 id="方法二：文章截断"><a href="#方法二：文章截断" class="headerlink" title="方法二：文章截断"></a>方法二：文章截断</h1><p>在需要截断的地方加入：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure><br>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。<br>《Pathlib使用》里运用的这种方法二。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yueyue200830/article/details/104470646">https://blog.csdn.net/yueyue200830/article/details/104470646</a></p>
 </blockquote>
@@ -314,7 +310,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -327,7 +323,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -411,6 +407,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

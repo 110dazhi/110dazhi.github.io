@@ -216,9 +216,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Patch-介绍"><a href="#Patch-介绍" class="headerlink" title="Patch 介绍"></a>Patch 介绍</h1><p>Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。</p>
-<span id="more"></span>
-<p><img src="/images/pingtu.jpg" alt="拼图"></p>
+        <h1 id="Patch-介绍"><a href="#Patch-介绍" class="headerlink" title="Patch 介绍"></a>Patch 介绍</h1><p>Patch 的翻译是补丁，笔者琢磨了好久，才明白“补丁”的意思，它其实是“块”的意思，简单的说就是整张图片上的一小块，就像一千张的拼图，其中Patch就是拼图块。<br><span id="more"></span><br><img src="/images/pingtu.jpg" alt="拼图"></p>
 <h1 id="Patch-获取"><a href="#Patch-获取" class="headerlink" title="Patch 获取"></a>Patch 获取</h1><p>Patch Extraction 获取补丁，看似是个简单的问题，确实也简单，难在 WSI 真的是太大了，使用level 0，在读取时，电脑就会遇到 MemoryError 的问题。所以获取多大等级下level的补丁，就看自己项目的需求了。除了等级，还有 Patch 的大小。网络里需要用的时256 还是500。</p>
 <h2 id="获取方法一"><a href="#获取方法一" class="headerlink" title="获取方法一"></a>获取方法一</h2><p>主要还是从网上找了两种方法，一种是在下面这个Github里采用的。具体的可以看下面链接里提供的代码，但是，其中的txt文件，提供的是生成好的，个人觉得不太合适，因为不知道能不能适用于其他的数据集。<br><img src="/images/patch_image.png" alt="简介"></p>
 <blockquote>
@@ -229,7 +227,7 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/WilmerWang/SLFCD">https://github.com/WilmerWang/SLFCD</a><br>不过在复现的时候还是会遇到问题，这里挖个坑，之后再去写这些问题。<br>不过也欢迎探讨<code>chenmz0298@163.com</code></p>
 </blockquote>
 <h2 id="获取方法三"><a href="#获取方法三" class="headerlink" title="获取方法三"></a>获取方法三</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction">https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction</a><br>这是目前为止看到的最合适的，最简单的，最容易理解的获取patch的代码了，而且在 8g 内存，核显的笔记本上，也能提取Level1下的256的Patch。Level0 就得去蹭朋友的工作站了。生成的目录是 矩阵坐标形式，但是这里 0 代表纵坐标，1 是横坐标。<br><img src="/images/patch_image3.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction">https://github.com/tcxxxx/WSI-analysis/tree/master/patch_extraction</a><br>这是目前为止看到的最合适的，最简单的，最容易理解的获取patch的代码了，而且在 8g 内存，核显的笔记本上，也能提取Level1下的256的Patch。Level0 就得去蹭朋友的工作站了。生成的目录是 矩阵坐标形式，但是这里 0 代表纵坐标，1 是横坐标。<br><img src="/images/patch_image3.png" alt=""></p>
 </blockquote>
 <p>未完，待续</p>
 
@@ -331,7 +329,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -344,7 +342,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -428,6 +426,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

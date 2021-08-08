@@ -205,18 +205,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Pathlib-介绍"><a href="#Pathlib-介绍" class="headerlink" title="Pathlib 介绍"></a>Pathlib 介绍</h1><p>该模块提供表示文件系统路径的类，其语义适用于不同的操作系统。</p>
-<span id="more"></span>
+        <h1 id="Pathlib-介绍"><a href="#Pathlib-介绍" class="headerlink" title="Pathlib 介绍"></a>Pathlib 介绍</h1><p>该模块提供表示文件系统路径的类，其语义适用于不同的操作系统。<br><span id="more"></span></p>
 <h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><h2 id="引入-pathlib-中的-Path"><a href="#引入-pathlib-中的-Path" class="headerlink" title="引入 pathlib 中的 Path"></a>引入 pathlib 中的 Path</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br></pre></td></tr></table></figure>
-
 <h2 id="Path的使用"><a href="#Path的使用" class="headerlink" title="Path的使用"></a>Path的使用</h2><h3 id="获得当前py文件的绝对路径"><a href="#获得当前py文件的绝对路径" class="headerlink" title="获得当前py文件的绝对路径"></a>获得当前py文件的绝对路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cur_file_path = Path(__file__).absolute()</span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="获得当前py文件的父路径"><a href="#获得当前py文件的父路径" class="headerlink" title="获得当前py文件的父路径"></a>获得当前py文件的父路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cur_file_path.parent</span><br><span class="line">print(cur_file_path.parent)</span><br></pre></td></tr></table></figure>
-
 <h3 id="将文件路径与字符串拼接"><a href="#将文件路径与字符串拼接" class="headerlink" title="将文件路径与字符串拼接"></a>将文件路径与字符串拼接</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add_path = cur_file_path.parent/&#x27;dataset_patches&#x27;</span><br><span class="line">print(add_path)</span><br></pre></td></tr></table></figure>
-
 <h3 id="遍历路径下的子文件夹-文件的路径"><a href="#遍历路径下的子文件夹-文件的路径" class="headerlink" title="遍历路径下的子文件夹/文件的路径"></a>遍历路径下的子文件夹/文件的路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path = Path(add_path) #add_path是PurePath格式，需要转化成Path,</span><br><span class="line">for i in path.iterdir():</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
 <h3 id="遍历读取路径下的结尾是-tif-的文件的路径"><a href="#遍历读取路径下的结尾是-tif-的文件的路径" class="headerlink" title="遍历读取路径下的结尾是 tif 的文件的路径"></a>遍历读取路径下的结尾是 tif 的文件的路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i in add_path.glob(&#x27;*.tif&#x27;):</span><br><span class="line">    print(i) # 注意i的type不是str</span><br><span class="line">    print(str(i)) # 将i的type改成str</span><br></pre></td></tr></table></figure>
     </div>
@@ -317,7 +310,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -330,7 +323,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -414,6 +407,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

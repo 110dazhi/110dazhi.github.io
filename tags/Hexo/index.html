@@ -23,14 +23,14 @@
   <meta name="description" content="LIve for Love and Love for Food">
 <meta property="og:type" content="website">
 <meta property="og:title" content="学习学习">
-<meta property="og:url" content="http://example.com/tags/Hexo/index.html">
+<meta property="og:url" content="http://example.com/tags/hexo/index.html">
 <meta property="og:site_name" content="学习学习">
 <meta property="og:description" content="LIve for Love and Love for Food">
 <meta property="og:locale">
 <meta property="article:author" content="MZChen">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/tags/Hexo/">
+<link rel="canonical" href="http://example.com/tags/hexo/">
 
 
 <script id="page-configurations">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>标签: Hexo | 学习学习</title>
+  <title>标签: hexo | 学习学习</title>
   
 
 
@@ -156,7 +156,7 @@
   <div class="post-block">
     <div class="posts-collapse">
       <div class="collection-title">
-        <h2 class="collection-header">Hexo
+        <h2 class="collection-header">hexo
           <small>标签</small>
         </h2>
       </div>
@@ -171,35 +171,15 @@
 
       <div class="post-meta">
         <time itemprop="dateCreated"
-              datetime="2021-07-25T12:59:28+02:00"
-              content="2021-07-25">
-          07-25
+              datetime="2021-08-09T19:59:28+02:00"
+              content="2021-08-09">
+          08-09
         </time>
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2021/07/25/hexo%E9%A6%96%E9%A1%B5%E6%98%BE%E7%A4%BA%E6%91%98%E8%A6%81%EF%BC%88%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%85%A8%E6%96%87%EF%BC%89/" itemprop="url">
-            <span itemprop="name">hexo中next 模板首页只显示摘要 或者 部分内容（不显示全文）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-07-25T10:58:28+02:00"
-              content="2021-07-25">
-          07-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/07/25/post-titlt/" itemprop="url">
-            <span itemprop="name">post titlt</span>
+          <a class="post-title-link" href="/2021/08/09/%E8%A7%A3%E5%86%B3%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F%E9%97%AE%E9%A2%98/" itemprop="url">
+            <span itemprop="name">解决hexo 公式渲染失败</span>
           </a>
       </div>
 
@@ -278,7 +258,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -291,7 +271,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -375,6 +355,91 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
+target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

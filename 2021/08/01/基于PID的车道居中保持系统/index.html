@@ -219,11 +219,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本次学习目的主要是 Carsim基本操作与Simulink的链接，并且复习一下PID<br>Konstruktion eines spurhaltenden PID-Reglers auf der Grundlage einer gemeinsamen Simulation mit MATLAB/Simulink und Carsim</p>
-<span id="more"></span>
+        <p>本次学习目的主要是 Carsim基本操作与Simulink的链接，并且复习一下PID<br>Konstruktion eines spurhaltenden PID-Reglers auf der Grundlage einer gemeinsamen Simulation mit MATLAB/Simulink und Carsim<br><span id="more"></span></p>
 <h1 id="PID原理介绍"><a href="#PID原理介绍" class="headerlink" title="PID原理介绍"></a>PID原理介绍</h1><p>Der PID-Controller (proportional-integral-derivative controller) besteht aus den Anteilen des P-Gliedes, des I-Gliedes und des D-Gliedes. </p>
-<p>In dem Blockdiagramm sind die Reihenstruktur (Produktdarstellung) und die Parallelstruktur (Summendarstellung) der Übertragungsfunktionen des realen PID-Reglers dargestellt.<br><img src="/images/PID.png"></p>
-<p><img src="/images/Pid_Gleichung.png"></p>
+<p>In dem Blockdiagramm sind die Reihenstruktur (Produktdarstellung) und die Parallelstruktur (Summendarstellung) der Übertragungsfunktionen des realen PID-Reglers dargestellt.<br><img src="/images/PID.png" alt=""></p>
+<p><img src="/images/Pid_Gleichung.png" alt=""></p>
 <p>P-Parameter, um die Reaktionszeit des Systems zu beschleunigen. Eine zu große Anzahl kann das System jedoch instabil machen.</p>
 <p>I-Parameter, der den Fehler des Systems im stationären Zustand verringert, aber die Zeit bis zum Erreichen des stationären Zustands verlängert.</p>
 <p>D-Parameter, verbessert die Systemstabilität und reduziert das Überschwingen, ist aber empfindlich gegenüber weißem Rauschen.</p>
@@ -237,7 +236,7 @@
 <h1 id="车道保持方法介绍"><a href="#车道保持方法介绍" class="headerlink" title="车道保持方法介绍"></a>车道保持方法介绍</h1><h1 id="Einfuhrung-in-das-Methoden-der-Fahrspurhaltung"><a href="#Einfuhrung-in-das-Methoden-der-Fahrspurhaltung" class="headerlink" title="Einführung in das Methoden der Fahrspurhaltung"></a>Einführung in das Methoden der Fahrspurhaltung</h1><p>1.Vorbesichtigungspunkte PID-Regelung</p>
 <p>2.Fuzzy-Steuerung</p>
 <p>3.PID-Regelung auf der Grundlage des neuronalen Netzes BP</p>
-<h1 id="预瞄点-Vorbesichtigungspunkte"><a href="#预瞄点-Vorbesichtigungspunkte" class="headerlink" title="预瞄点 Vorbesichtigungspunkte"></a>预瞄点 Vorbesichtigungspunkte</h1><p><img src="/images/L_DRV_1.png"></p>
+<h1 id="预瞄点-Vorbesichtigungspunkte"><a href="#预瞄点-Vorbesichtigungspunkte" class="headerlink" title="预瞄点 Vorbesichtigungspunkte"></a>预瞄点 Vorbesichtigungspunkte</h1><p><img src="/images/L_DRV_1.png" alt=""></p>
 <p><code>L_DRV_1</code> = $d_{la}$</p>
 <p>seitliche Abstandskomponente. </p>
 <p>Fahrervorschaupunkte Definition des seitlichen Abstands zwischen der Entwurfsfahrbahn und dem Fahrervorschaupunkt</p>
@@ -245,7 +244,7 @@
 <p>Also müssen wir diesen Abstand umrechnen.</p>
 <p>$ \theta = \arcsin \frac{d_{la}}{5} $ </p>
 <p>$\bigtriangleup f = d_{la} {\div}  \cos \theta $</p>
-<h1 id="Gewunschter-Zustand"><a href="#Gewunschter-Zustand" class="headerlink" title="Gewünschter Zustand"></a>Gewünschter Zustand</h1><p><img src="/images/Simulink1.png"><br>Gewünschter Zustand ist 0. Wir erwarten, dass die Fahrzeuge auf der mittleren Fahrspur bleiben.<br><img src="/images/pid2.png"><br>Je geringer die Abweichung des Vorschaupunktes von der Seitenlage, desto besser.</p>
+<h1 id="Gewunschter-Zustand"><a href="#Gewunschter-Zustand" class="headerlink" title="Gewünschter Zustand"></a>Gewünschter Zustand</h1><p><img src="/images/Simulink1.png" alt=""><br>Gewünschter Zustand ist 0. Wir erwarten, dass die Fahrzeuge auf der mittleren Fahrspur bleiben.<br><img src="/images/pid2.png" alt=""><br>Je geringer die Abweichung des Vorschaupunktes von der Seitenlage, desto besser.</p>
 <p>Der gewünschte Zustand ist also 0.</p>
 
     </div>
@@ -348,7 +347,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -361,7 +360,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -445,6 +444,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

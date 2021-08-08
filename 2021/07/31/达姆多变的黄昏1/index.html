@@ -216,9 +216,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="倍感舒适"><a href="#倍感舒适" class="headerlink" title="倍感舒适"></a>倍感舒适</h1><p>今天调了一天的代码，在宿舍待了许久，最终还是觉得出去走走，去了一趟超市，买了一瓶白葡萄酒。黄昏很是好看，拍了两张，一张是出门拍的，一张是归来拍的。</p>
-<span id="more"></span>
-<p><img src="/images/live2.jpg" alt="出门"><br>汉堡王的灯光还在亮着，禁受住了诱惑，不然得吃一个芝士加双层牛肉的巨无霸套餐。<br><img src="/images/live1.jpg" alt="归来"><br>归来的，汉堡王的灯依旧在亮着，黄昏变蓝昏了，依旧很梦幻，期待紫昏的那一天。<br><img src="/images/live3.jpg" alt="双彩虹"><br>这是一个双彩虹，下了太阳雨就能看到。</p>
+        <h1 id="倍感舒适"><a href="#倍感舒适" class="headerlink" title="倍感舒适"></a>倍感舒适</h1><p>今天调了一天的代码，在宿舍待了许久，最终还是觉得出去走走，去了一趟超市，买了一瓶白葡萄酒。黄昏很是好看，拍了两张，一张是出门拍的，一张是归来拍的。<br><span id="more"></span><br><img src="/images/live2.jpg" alt="出门"><br>汉堡王的灯光还在亮着，禁受住了诱惑，不然得吃一个芝士加双层牛肉的巨无霸套餐。<br><img src="/images/live1.jpg" alt="归来"><br>归来的，汉堡王的灯依旧在亮着，黄昏变蓝昏了，依旧很梦幻，期待紫昏的那一天。<br><img src="/images/live3.jpg" alt="双彩虹"><br>这是一个双彩虹，下了太阳雨就能看到。</p>
 
     </div>
 
@@ -319,7 +317,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -332,7 +330,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -416,6 +414,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

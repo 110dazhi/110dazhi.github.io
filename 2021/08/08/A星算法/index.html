@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="A * einführenA*-Algorithmus („A Stern“ oder englisch „a star“, auch *-Suche) gehört zur Klasse der informierten Suchalgorithmen.">
+  <meta name="description" content="A _Star einführenA_Star-Algorithmus („A Stern“ oder englisch „a star“, auch _Star-Suche) gehört zur Klasse der informierten Suchalgorithmen.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A* 算法 介绍">
+<meta property="og:title" content="A_Star 算法 介绍">
 <meta property="og:url" content="http://example.com/2021/08/08/A%E6%98%9F%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="学习学习">
-<meta property="og:description" content="A * einführenA*-Algorithmus („A Stern“ oder englisch „a star“, auch *-Suche) gehört zur Klasse der informierten Suchalgorithmen.">
+<meta property="og:description" content="A _Star einführenA_Star-Algorithmus („A Stern“ oder englisch „a star“, auch _Star-Suche) gehört zur Klasse der informierten Suchalgorithmen.">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/images/1.png">
 <meta property="og:image" content="http://example.com/images/2.png">
@@ -35,10 +35,10 @@
 <meta property="og:image" content="http://example.com/images/6.png">
 <meta property="og:image" content="http://example.com/images/7.png">
 <meta property="article:published_time" content="2021-08-08T17:59:28.000Z">
-<meta property="article:modified_time" content="2021-08-07T22:49:52.601Z">
+<meta property="article:modified_time" content="2021-08-08T10:21:59.299Z">
 <meta property="article:author" content="MZChen">
 <meta property="article:tag" content="路径规划">
-<meta property="article:tag" content="A* 算法">
+<meta property="article:tag" content="A_Star 算法">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/1.png">
 
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>A* 算法 介绍 | 学习学习</title>
+  <title>A_Star 算法 介绍 | 学习学习</title>
   
 
 
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          A* 算法 介绍
+          A_Star 算法 介绍
         </h1>
 
         <div class="post-meta">
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-08 19:59:28 / 修改时间：00:49:52" itemprop="dateCreated datePublished" datetime="2021-08-08T19:59:28+02:00">2021-08-08</time>
+              <time title="创建时间：2021-08-08 19:59:28 / 修改时间：12:21:59" itemprop="dateCreated datePublished" datetime="2021-08-08T19:59:28+02:00">2021-08-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,15 +213,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="A-einfuhren"><a href="#A-einfuhren" class="headerlink" title="A * einführen"></a>A * einführen</h1><p>A*-Algorithmus („A Stern“ oder englisch „a star“, auch *-Suche) gehört zur Klasse der informierten Suchalgorithmen.</p>
-<span id="more"></span>
-<p>A-Star 算法是一种常用的路径查找和图形遍历算法，起初发表于1968年，由Stanford研究院的Peter Hart, Nils Nilsson以及Bertram Raphael发表。它可以被认为是Dijkstra算法的扩展。</p>
+        <h1 id="A-Star-einfuhren"><a href="#A-Star-einfuhren" class="headerlink" title="A _Star einführen"></a>A _Star einführen</h1><p>A_Star-Algorithmus („A Stern“ oder englisch „a star“, auch _Star-Suche) gehört zur Klasse der informierten Suchalgorithmen.<br><span id="more"></span><br>A-Star 算法是一种常用的路径查找和图形遍历算法，起初发表于1968年，由Stanford研究院的Peter Hart, Nils Nilsson以及Bertram Raphael发表。它可以被认为是Dijkstra算法的扩展。</p>
 <p>对比Dijkstra 算法的优点，在进行启发式搜索提高算法效率的同时，可以保证找到一条最优路径。基于评估函数。</p>
 <p>Er dient in der Informatik der Berechnung eines kürzesten Pfades zwischen zwei Knoten in einem Graphen mit positiven Kantengewichten.</p>
 <p>两个点： zwei Knoten</p>
-<p>der A*-Algorithmus eine verwendet Schätzfunktion (Heuristik),um zielgerichtet zu suchen und damit die Laufzeit zu verringern. Der Algorithmus ist vollständig und optimal. </p>
-<p>A* 算法总是先研究最可能快速到达目标的节点。</p>
-<p>Der A*-Algorithmus untersucht immer die Knoten zuerst, die wahrscheinlich schnell zum Ziel führen. </p>
+<p>der A_Star-Algorithmus eine verwendet Schätzfunktion (Heuristik),um zielgerichtet zu suchen und damit die Laufzeit zu verringern. Der Algorithmus ist vollständig und optimal. </p>
+<p>A_Star 算法总是先研究最可能快速到达目标的节点。</p>
+<p>Der A_Star-Algorithmus untersucht immer die Knoten zuerst, die wahrscheinlich schnell zum Ziel führen. </p>
 <p>f(x) = g(x)+h(x)</p>
 <p>节点：der Knoten</p>
 <p>x ist ein Knoten, </p>
@@ -246,7 +244,7 @@
 <p>Falls die Open List leer ist, gibt es keine Knoten mehr, die untersucht werden könnten. In diesem Fall terminiert der Algorithmus, da es keine Lösung gibt.</p>
 <h1 id="Beispiel"><a href="#Beispiel" class="headerlink" title="Beispiel"></a>Beispiel</h1><h2 id="地图介绍-Landkarte-einfuhren"><a href="#地图介绍-Landkarte-einfuhren" class="headerlink" title="地图介绍 Landkarte einführen"></a>地图介绍 Landkarte einführen</h2><p>Landkarte als Graph<br>weiß: noch nicht gefunden</p>
 <p>grau: gefunden, befindet sich auf der Open List</p>
-<p>schwarz: untersucht, befindet sich auf der Closed List<br><img src="/images/1.png"></p>
+<p>schwarz: untersucht, befindet sich auf der Closed List<br><img src="/images/1.png" alt=""></p>
 <p>其中 h 是每一个城市到目标点的直线距离， 权值是实际距离。</p>
 <p>Das Diagramm zeigt eine kleine Auswahl an Städten und Wegen. Die Kantenbeschriftung entspricht den Kosten, um von einer Stadt zur nächsten zu kommen.  Jeder Knoten enthält die geschätzte Entfernung zum Zielknoten (Wert der h-Funktion). Als Heuristik wird hier die Luftlinie verwendet.</p>
 <p>h: geschätzte Entfernung</p>
@@ -255,7 +253,7 @@
 <p>$f_{ka}$ = g(Sa)+Gewichtung(145)+h(140) = 285  Karlsruhe wird in die Open List eingefügt.</p>
 <p>Saarbrücken hat nur zwei Niederlassungen.Und die alle haben auf Saarbrücken hingewiesen.<br>Saarbrücken 只有两个分支，并且全部指向Saarbrücken。 则把Saarbrücken 放入 Closed List。<br>Der Knoten Saarbrücken ist nun abschließend betrachtet und wird auf die Closed List gesetzt.</p>
 <p>openList = [   $f_{kl}$=228   ,  $f_{ka}$=285   ]</p>
-<p>closeList = \left [ Saarbrücken \right ]<br><img src="/images/2.png"></p>
+<p>closeList =  [ Saarbrücken  ]<br><img src="/images/2.png" alt=""></p>
 <h2 id="Schritt-2"><a href="#Schritt-2" class="headerlink" title="Schritt 2"></a>Schritt 2</h2><p>Die Open List enthält nun zwei Punkte. </p>
 <p>openList = [ $f_{kl}$=228  ,  $f_{ka}$=285   ]</p>
 <p>closeList = [ Saarbrücken ]</p>
@@ -266,7 +264,7 @@
 <li>Ludwigshafen wird mit  $f_{LU}$=g(KL)+c(KL,LU)+h(LU)=70+53+108=231  in die Open List eingefügt. Kaiserslautern wird als Vorgängerknoten gespeichert.</li>
 <li>Kaiserslautern wird auf die Closed List gesetzt.</li>
 </ol>
-<p>openList = [ $f_{ka}$=285  ,iserslautern]<br><img src="/images/3.png"></p>
+<p>openList = [ $f_{ka}$=285  ,iserslautern]<br><img src="/images/3.png" alt=""></p>
 <h2 id="Schritt-3"><a href="#Schritt-3" class="headerlink" title="Schritt 3"></a>Schritt 3</h2><p>Der Knoten mit dem geringsten  f-Wert  ist Ludwigshafen.</p>
 <p>openList = [$f_{ka}$=285 , $f_{F}$=269 , $f_{LU}$=231 ]</p>
 <p>closeList =  [ Saarbrücken,Kaiserslautern ]</p>
@@ -277,26 +275,26 @@
 </ol>
 <p>openList = [   $f_{ka}$=285 , $f_{F}$=269 , $f_{Wür}$=306 ]</p>
 <p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen]</p>
-<p><img src="/images/4.png"></p>
+<p><img src="/images/4.png" alt=""></p>
 <h2 id="Schritt-4"><a href="#Schritt-4" class="headerlink" title="Schritt 4"></a>Schritt 4</h2><p>openList =  [   $f_{ka}$=285 , $f_{F}$=269 , $f_{Wür}$=306  ]</p>
 <p>closeList =   [ Saarbrücken,Kaiserslautern,Ludwigshafen  ]</p>
 <p>Frankfurt wird erkundet. Als einziger Nachfolgeknoten, der sich noch nicht auf der Closed List befindet, wird Würzburg gefunden. Als  f-Wert  wird 289 berechnet, was geringer als der bisherige  f-Wert  für Würzburg ist. Dies bedeutet, dass der Weg über Frankfurt kürzer ist als der zuerst gefundene Weg über Ludwigshafen. Daher wird der  f-Wert  von Würzburg geändert. Außerdem wird als Vorgängerknoten nun Frankfurt gespeichert.</p>
 <p>Frankfurt wird auf die Closed List gesetzt.</p>
 <p>openList =   [   $f_{ka}$=285 , $f_{Wür}$=306  ]</p>
 <p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt ]</p>
-<p><img src="/images/5.png"></p>
+<p><img src="/images/5.png" alt=""></p>
 <h2 id="Schritt-5"><a href="#Schritt-5" class="headerlink" title="Schritt 5"></a>Schritt 5</h2><p>openList =  [   $f_{ka}$=285 , $f_{Wür}$=306  ]</p>
 <p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt  ]</p>
 <p>Da Karlsruhe nun den kleinsten  f-Wert  hat, wird dieser Knoten als Nächstes untersucht. Heilbronn wird in die Open List eingefügt und Karlsruhe auf die Closed List gesetzt.</p>
 <p>openList = [   $f_{Wür}$=306 , $f_{Heilbronn}$ =316  ]</p>
 <p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt,Karlsruhe ]</p>
-<p><img src="/images/6.png"></p>
+<p><img src="/images/6.png" alt=""></p>
 <h2 id="Schritt-6"><a href="#Schritt-6" class="headerlink" title="Schritt 6"></a>Schritt 6</h2><p>openList =  [   $f_{Wür}$=306 , $f_{Heilbronn}$ =316  ]</p>
 <p>closeList =  [ Saarbrücken,Kaiserslautern,Ludwigshafen,Frankfurt,Karlsruhe ]</p>
-<p>Jetzt hat Würzburg den geringsten  f-Wert  und wird untersucht: Das Ziel ist gefunden und der kürzeste Weg ist: Saarbrücken–Kaiserslautern–Frankfurt–Würzburg.<br><img src="/images/7.png"></p>
+<p>Jetzt hat Würzburg den geringsten  f-Wert  und wird untersucht: Das Ziel ist gefunden und der kürzeste Weg ist: Saarbrücken–Kaiserslautern–Frankfurt–Würzburg.<br><img src="/images/7.png" alt=""></p>
 <p>A wird auf B zeigen: A 将会指向B</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/A*-Algorithmus">https://de.wikipedia.org/wiki/A*-Algorithmus</a></p>
+<p><a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/A_Star-Algorithmus">https://de.wikipedia.org/wiki/A_Star-Algorithmus</a></p>
 </blockquote>
 
     </div>
@@ -308,7 +306,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
-              <a href="/tags/A-%E7%AE%97%E6%B3%95/" rel="tag"># A* 算法</a>
+              <a href="/tags/A-Star-%E7%AE%97%E6%B3%95/" rel="tag"># A_Star 算法</a>
           </div>
 
         
@@ -317,10 +315,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/" rel="prev" title="D* 算法 介绍">
-      <i class="fa fa-chevron-left"></i> D* 算法 介绍
+    <a href="/2021/08/08/D%E6%98%9F%E7%AE%97%E6%B3%95/" rel="prev" title="D_Star 算法 介绍">
+      <i class="fa fa-chevron-left"></i> D_Star 算法 介绍
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/09/%E8%A7%A3%E5%86%B3%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F%E9%97%AE%E9%A2%98/" rel="next" title="解决hexo 公式渲染失败">
+      解决hexo 公式渲染失败 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -379,7 +380,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-einfuhren"><span class="nav-number">1.</span> <span class="nav-text">A * einführen</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Beispiel"><span class="nav-number">2.</span> <span class="nav-text">Beispiel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9B%BE%E4%BB%8B%E7%BB%8D-Landkarte-einfuhren"><span class="nav-number">2.1.</span> <span class="nav-text">地图介绍 Landkarte einführen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-1"><span class="nav-number">2.2.</span> <span class="nav-text">Schritt 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-2"><span class="nav-number">2.3.</span> <span class="nav-text">Schritt 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-3"><span class="nav-number">2.4.</span> <span class="nav-text">Schritt 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-4"><span class="nav-number">2.5.</span> <span class="nav-text">Schritt 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-5"><span class="nav-number">2.6.</span> <span class="nav-text">Schritt 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-6"><span class="nav-number">2.7.</span> <span class="nav-text">Schritt 6</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Star-einfuhren"><span class="nav-number">1.</span> <span class="nav-text">A _Star einführen</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Beispiel"><span class="nav-number">2.</span> <span class="nav-text">Beispiel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9B%BE%E4%BB%8B%E7%BB%8D-Landkarte-einfuhren"><span class="nav-number">2.1.</span> <span class="nav-text">地图介绍 Landkarte einführen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-1"><span class="nav-number">2.2.</span> <span class="nav-text">Schritt 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-2"><span class="nav-number">2.3.</span> <span class="nav-text">Schritt 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-3"><span class="nav-number">2.4.</span> <span class="nav-text">Schritt 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-4"><span class="nav-number">2.5.</span> <span class="nav-text">Schritt 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-5"><span class="nav-number">2.6.</span> <span class="nav-text">Schritt 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schritt-6"><span class="nav-number">2.7.</span> <span class="nav-text">Schritt 6</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -394,7 +395,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -407,7 +408,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -491,6 +492,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
