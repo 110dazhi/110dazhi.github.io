@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="对象使用对象进行编程是C++的核心，也是我们常说的C++比C“高级”的重要根据之一。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cpp学习11-对象">
+<meta property="og:url" content="http://example.com/2021/10/14/cpp%E5%AD%A6%E4%B9%A011-%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="对象使用对象进行编程是C++的核心，也是我们常说的C++比C“高级”的重要根据之一。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-10-13T23:48:18.000Z">
+<meta property="article:modified_time" content="2021-10-13T23:48:51.739Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="对象">
+<meta property="article:tag" content="class">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/14/cpp%E5%AD%A6%E4%B9%A011-%E5%AF%B9%E8%B1%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>cpp学习11-对象 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/14/cpp%E5%AD%A6%E4%B9%A011-%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cpp学习11-对象
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-14 01:48:18 / 修改时间：01:48:51" itemprop="dateCreated datePublished" datetime="2021-10-14T01:48:18+02:00">2021-10-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>使用对象进行编程是C++的核心，也是我们常说的C++比C“高级”的重要根据之一。<br><span id="more"></span></p>
+<ul>
+<li>对象的内部可以有变量和函数，而结构通常只由各种变量构成</li>
+</ul>
+<p>对象的本质上不过是一种新的数据类型，只不过它拥有无限的潜力</p>
+<h1 id="创建简单的类"><a href="#创建简单的类" class="headerlink" title="创建简单的类"></a>创建简单的类</h1><p>我们首先需要知道的一件事情是如何编写一个简单对象的模型 – 类</p>
+<p>类（Class）就像是一副蓝图，它决定一个对象将是什么样的（具备什么样的属性、功能）</p>
+<p>所以OOP过程的第一步是创建一个类，而每个类跟变量一样都有一个名字，我们就从如何声明一个类说起：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class  MyFirstClass</span><br><span class="line">&#123;</span><br><span class="line">&#125;;//注意这里有分号</span><br></pre></td></tr></table></figure>
+<p>就这样，我们创建了一个类！虽然它什么都干不了，但它是一个起点，一个成功的开始。</p>
+<ul>
+<li><p>注意，类名的第一个字母采用大写是一种习惯的上的标准，但不是硬性规定。还有在类声明末尾，必须有一个分号，这一点跟C++结构情况相同。</p>
+</li>
+<li><p>类由变量和函数组成，对象将使用那些变量来存储信息，调用那些函数来完成操作。所以人们常常会看到一些专门术语：类里边的变量称为属性，函数称为方法。注意，他们的本质没有改变。</p>
+</li>
+</ul>
+<h2 id="对象和结构区别"><a href="#对象和结构区别" class="headerlink" title="对象和结构区别"></a>对象和结构区别</h2><p>对象里有变量也有函数，结构里一般只有变量。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Car&#123;</span><br><span class="line">	public://类的变量称为属性，函数称为方法</span><br><span class="line">		std::string color;</span><br><span class="line">		std::string engine;</span><br><span class="line">		float gas_tank;</span><br><span class="line">		unsigned int Wheel;//unsigned的作用就是将数字类型无符号化， //例如 int 型的范围：-2^31 ~ 2^31 - 1，而unsigned int的范</span><br><span class="line">		//围：0 ~ 2^32。</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在声明公有变量前先写出 单词 “public:”;</p>
+<ul>
+<li><p>给类加方法<br>先在类的声明里创建一个方法的原型，稍后再实现这个方法</p>
+</li>
+<li><p><code>::</code>作用域解析符，作用是告诉编译器这个方法存在于何处，或者说是属于哪一个类。</p>
+</li>
+<li>std::string数据类型其实也是一个对象。我们一直在使用对象，只是自己还不知道罢了</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//方法的定义通常安排在类声明的后面：</span><br><span class="line">void  Car::fillTank(float  liter)</span><br><span class="line">&#123;</span><br><span class="line">gas_tank  +=  liter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>程序扩展一下就会有很大，这里只是写架构<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#define FULL_GAS 85</span><br><span class="line">class Car&#123;</span><br><span class="line">public:</span><br><span class="line">    std::string color;</span><br><span class="line">    std::string engine;</span><br><span class="line">    float gas_tank;</span><br><span class="line">    unsigned int wheel;</span><br><span class="line"></span><br><span class="line">    void fill_tank(float liter);</span><br><span class="line">    //方法声明</span><br><span class="line">    int running(void);</span><br><span class="line">    void setColor(std::string col);	</span><br><span class="line">	void setEngine(std::string eng);</span><br><span class="line">	void setWheel(unsigned int whe);</span><br><span class="line">    void warning(void); </span><br><span class="line">&#125;;</span><br><span class="line">void Car::warning(void) </span><br><span class="line">&#123;</span><br><span class="line">	std::cout &lt;&lt; &quot;WARNING!!&quot; &lt;&lt; &quot;the rest gas&quot; &lt;&lt; 100*gas_tank/FULL_GAS &lt;&lt; &quot;%\n&quot;;	</span><br><span class="line">&#125;</span><br><span class="line">int Car::running(void)&#123;</span><br><span class="line">    std::cout &lt;&lt;&quot;I am running \n&quot;;</span><br><span class="line">    gas_tank--;</span><br><span class="line">    std::cout&lt;&lt;&quot;gas:&quot; &lt;&lt; 100*gas_tank/FULL_GAS&lt;&lt;&quot;%\n&quot;;</span><br><span class="line">    return gas_tank;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Car::fill_tank(float liter)&#123;</span><br><span class="line">    gas_tank += liter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Car::setColor(std::string col)&#123;</span><br><span class="line">    color = col;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Car::setEngine(std::string eng)&#123;</span><br><span class="line">    engine =eng;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Car::setWheel(unsigned int whe)&#123;</span><br><span class="line">    wheel = whe;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">    char i;</span><br><span class="line">    Car mycar;</span><br><span class="line">    mycar.setColor(&quot;white&quot;);</span><br><span class="line">    mycar.setEngine(&quot;V8&quot;);</span><br><span class="line">    mycar.setWheel(12);</span><br><span class="line">    mycar.gas_tank = FULL_GAS;</span><br><span class="line"></span><br><span class="line">    while(mycar.running())&#123;</span><br><span class="line">        if(mycar.running()&lt;10)&#123;</span><br><span class="line">            mycar.warning();</span><br><span class="line">            std::cout&lt;&lt;&quot;continue run?(Y?N)\n&quot;;</span><br><span class="line">            std::cin&gt;&gt;i;</span><br><span class="line">            if(&#x27;Y&#x27;==i||&#x27;y&#x27;==i)&#123;</span><br><span class="line">                mycar.fill_tank(FULL_GAS);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                std::cout &lt;&lt;&quot;car stop&quot;;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li><p>面向对象编程技术（object-oriented programming）可以说是面向过程技术（procedural programming）的替代品</p>
+</li>
+<li><p>面向过程技术关注的是对数据进行处理的过程，OOP技术关注的是对数据进行怎样的处理。</p>
+</li>
+<li><p>对象与结构有很多相似之处，但前者还可以有它们自己的函数。记住这点区别对掌握OOP技术的要领很有帮助。</p>
+</li>
+<li><p>有些程序员喜欢把类的声明和类的函数的定义分别存入两个不同的文件，前者存入.h头文件，后者存入相应的.cpp文件</p>
+</li>
+<li><p>C++允许在类里声明常量，但不允许对它进行赋值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Car</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	const float TANKSIZE  =  85;  // 出错@_@</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决这个方法，就是创建一个静态常量</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Car</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">static const float FULL_GAS = 85;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>一般不这么做；</p>
+<ul>
+<li><p>但是可以说，类里的声明常量不可以赋值，但是静态声明常量可以。</p>
+</li>
+<li><p>声明类的同时，创建该类的对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Car</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	std::string color;</span><br><span class="line"></span><br><span class="line">&#125; car1, car2;</span><br></pre></td></tr></table></figure>
+<p>这种做法在C++里是允许的。但作为一种良好的编程习惯，应该避免这种做法！</p>
+</li>
+<li><p>将对象赋值给另一个对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Car  car1, car2;</span><br><span class="line">car1.setColor(“WHITE”);</span><br><span class="line">。。。。。。</span><br><span class="line">car2 = car1;</span><br></pre></td></tr></table></figure>
+<p>把一个对象赋值给另一个同类的对象将会自动使同名的属性有同样的值</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AF%B9%E8%B1%A1/" rel="tag"># 对象</a>
+              <a href="/tags/class/" rel="tag"># class</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/14/cpp%E5%AD%A6%E4%B9%A010-%E7%BB%93%E6%9E%84/" rel="prev" title="c++学习10-结构">
+      <i class="fa fa-chevron-left"></i> c++学习10-结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/14/cpp%E5%AD%A6%E4%B9%A012-%E6%9E%84%E9%80%A0%E5%99%A8/" rel="next" title="cpp学习12-构造器">
+      cpp学习12-构造器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AE%80%E5%8D%95%E7%9A%84%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">创建简单的类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%BB%93%E6%9E%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">对象和结构区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text">注意</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
