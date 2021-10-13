@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="内存程序在硬盘上以文件的形式存在，但他们的运行却是在计算机的内存里发生的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="指针">
+<meta property="og:url" content="http://example.com/2021/10/13/%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="内存程序在硬盘上以文件的形式存在，但他们的运行却是在计算机的内存里发生的。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/class3/class3_1.png">
+<meta property="article:published_time" content="2021-10-13T00:28:36.000Z">
+<meta property="article:modified_time" content="2021-10-13T00:32:50.422Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="指针">
+<meta property="article:tag" content="寻址">
+<meta property="article:tag" content="星号的作用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/class3/class3_1.png">
+
+<link rel="canonical" href="http://example.com/2021/10/13/%E6%8C%87%E9%92%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>指针 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/13/%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          指针
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-13 02:28:36 / 修改时间：02:32:50" itemprop="dateCreated datePublished" datetime="2021-10-13T02:28:36+02:00">2021-10-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><p>程序在硬盘上以文件的形式存在，但他们的运行却是在计算机的内存里发生的。<br><span id="more"></span><br>整形，浮点型 4 个字节，字符 1个 字节。</p>
+<p>浮点型是从字节8处开始存储。</p>
+<h1 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h1><p>问题：浮点型变量C的值为什么从内存地址8处开始存储，而不是从内存地址5处存储。</p>
+<p>其实在c++里，变量类型是根据他们的自然边界进行对齐，不过这个我们只需要知道即可，不需要太关心，因为编译器会帮我们处理这类的问题。</p>
+<p>对齐问题会因为系统平台不同而不同。</p>
+<h1 id="寻址"><a href="#寻址" class="headerlink" title="寻址"></a>寻址</h1><ul>
+<li>变量名索引 </li>
+<li>另一种通过地址</li>
+</ul>
+<p>这里引出一个新的操作符，取址操作符 &amp; 这个叫 and。作用是获取变量的地址。</p>
+<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int var = 123;</span><br><span class="line">std::cout&lt;&lt;&quot;Address is: &quot; &lt;&lt; &amp;var;</span><br></pre></td></tr></table></figure>
+<p>32位对应 4位字节，64位对应8位字节。</p>
+<h1 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h1><p>地址在程序执行期间不会发生变化。</p>
+<p>不过同一个程序不同时间加载到内存中，同一个变量的地址是会改变的。</p>
+<h1 id="使用指针"><a href="#使用指针" class="headerlink" title="使用指针"></a>使用指针</h1><ul>
+<li>地址是计算机内存中的某个位置，指针是专门用来存放地址的特殊类型变量</li>
+<li>一般用这种形式<code>type *pointerName;</code> 来声明指针变量</li>
+<li><code>int *p;</code></li>
+<li><code>int pp = 123;</code></li>
+<li><code>p = &amp;pp;</code></li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p><code>int *p1,p2,p3;</code></p>
+<p>这里只表示 将p1申请为指针，p2,p3是整形</p>
+<h1 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h1><p>空格放在哪里都是可以接受的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int *p1;</span><br><span class="line">int * p1;</span><br><span class="line">int* p1;</span><br></pre></td></tr></table></figure>
+<p>指针变量前的类型，必须配对使用；</p>
+<h1 id="为什么要指针变量"><a href="#为什么要指针变量" class="headerlink" title="为什么要指针变量"></a>为什么要指针变量</h1><ol>
+<li>直接访问硬件</li>
+<li>快速访问数据</li>
+<li>返回一个以上的值（返回数组或者结构体的指针）</li>
+<li>表示复杂的数据结构</li>
+<li>方便处理字符串</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>创建变量时，系统将分配一些内存块用来保存它们的值；</li>
+<li>每个内存块拥有一个独一无二的地址；</li>
+<li>变量的地址可以用 &amp;variablename 语法来取得；（注：&amp; 我们称为 ”取地址” 操作符）</li>
+<li>可以把地址赋值给一种称为指针的特殊变量；</li>
+<li>指针的类型必须与由它保存其地址的变量的类型一致。</li>
+</ul>
+<h1 id="利用指针改变值"><a href="#利用指针改变值" class="headerlink" title="利用指针改变值"></a>利用指针改变值</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a = 456;</span><br><span class="line">char b = ‘C’;</span><br><span class="line">int *aPointer = &amp;a;//阿斯科马</span><br><span class="line">Char *bPointer = &amp;b;</span><br></pre></td></tr></table></figure>
+<p>这会让程序保留4个内存块，两个为变量保留，两个为指针保留。变量a 和变量b 里边存放的是变量的值; 两个指针变量存放着指针的值，这些值是其他变量的地址</p>
+<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p><img src="/class3/class3_1.png" alt=""></p>
+<p>指针只需要存放地址的第一个数就行，因为知道变量类型，变量类型有固定的字节个数，所以知道地址的第一个数，向后推就可以得到全部的地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a = 123;</span><br><span class="line">	float b = 3.14;</span><br><span class="line">	char c = &#x27;C&#x27;;</span><br><span class="line">	unsigned long d = 19880808;</span><br><span class="line">	std::string e = &quot;I love FishC!&quot;;</span><br><span class="line">	</span><br><span class="line">	std::cout &lt;&lt; &quot; a 的值是: &quot; &lt;&lt; a &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; b 的值是: &quot; &lt;&lt; b &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; c 的值是: &quot; &lt;&lt; c &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; d 的值是: &quot; &lt;&lt; d &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; e 的值是: &quot; &lt;&lt; e &lt;&lt; &quot;\n\n&quot;;</span><br><span class="line">	</span><br><span class="line">	int *aPointer = &amp;a;</span><br><span class="line">	float *bPointer = &amp;b;</span><br><span class="line">	char *cPointer = &amp;c;</span><br><span class="line">	unsigned long *dPointer = &amp;d;</span><br><span class="line">	std::string *ePointer = &amp;e;</span><br><span class="line">	</span><br><span class="line">	*aPointer = 456;</span><br><span class="line">	*bPointer = 4.13;</span><br><span class="line">	*cPointer = &#x27;F&#x27;;</span><br><span class="line">	*dPointer = 20111124;</span><br><span class="line">	*ePointer = &quot;I love Beauty!&quot;;</span><br><span class="line">	</span><br><span class="line">	std::cout &lt;&lt; &quot; a 的值是: &quot; &lt;&lt; a &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; b 的值是: &quot; &lt;&lt; b &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; c 的值是: &quot; &lt;&lt; c &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; d 的值是: &quot; &lt;&lt; d &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	std::cout &lt;&lt; &quot; e 的值是: &quot; &lt;&lt; e &lt;&lt; &quot;\n\n&quot;; </span><br><span class="line">	</span><br><span class="line">	return 0; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="号的作用"><a href="#号的作用" class="headerlink" title="*号的作用"></a>*号的作用</h1><ul>
+<li>第一种用于创建指针<br><code>int *myPointer = &amp;myInt;</code></li>
+<li>第二种是对指针进行解引用<br><code>*myPointer = 3998;</code></li>
+<li>乘号</li>
+</ul>
+<h1 id="指针群p"><a href="#指针群p" class="headerlink" title="指针群p"></a>指针群p</h1><p>C++ 允许指针群 P，就是多个指针有同样的值<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int *p1 = &amp;myInt;</span><br><span class="line">int *p2 = &amp;myInt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="C-支持无类型（void）指针，就是没有被声明为某种特定类型的指针"><a href="#C-支持无类型（void）指针，就是没有被声明为某种特定类型的指针" class="headerlink" title="C++ 支持无类型（void）指针，就是没有被声明为某种特定类型的指针"></a>C++ 支持无类型（void）指针，就是没有被声明为某种特定类型的指针</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void *vPointer</span><br></pre></td></tr></table></figure>
+<p>对一个无类型指针进行解引用前，必须先把它转换为一种适当的数据类型.</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"># 指针</a>
+              <a href="/tags/%E5%AF%BB%E5%9D%80/" rel="tag"># 寻址</a>
+              <a href="/tags/%E6%98%9F%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" rel="tag"># 星号的作用</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E9%87%8D%E8%BD%BD/" rel="prev" title="重载">
+      <i class="fa fa-chevron-left"></i> 重载
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/13/%E6%8C%87%E9%92%88%E4%B8%8E%E6%95%B0%E7%BB%84/" rel="next" title="指针与数组">
+      指针与数组 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90"><span class="nav-number">2.</span> <span class="nav-text">对齐</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BB%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">寻址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80"><span class="nav-number">5.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88"><span class="nav-number">6.</span> <span class="nav-text">使用指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC"><span class="nav-number">8.</span> <span class="nav-text">空格</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F"><span class="nav-number">9.</span> <span class="nav-text">为什么要指针变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%8C%87%E9%92%88%E6%94%B9%E5%8F%98%E5%80%BC"><span class="nav-number">11.</span> <span class="nav-text">利用指针改变值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E8%A7%A3"><span class="nav-number">11.1.</span> <span class="nav-text">图解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">12.</span> <span class="nav-text">*号的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%BE%A4p"><span class="nav-number">13.</span> <span class="nav-text">指针群p</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E6%94%AF%E6%8C%81%E6%97%A0%E7%B1%BB%E5%9E%8B%EF%BC%88void%EF%BC%89%E6%8C%87%E9%92%88%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%B2%A1%E6%9C%89%E8%A2%AB%E5%A3%B0%E6%98%8E%E4%B8%BA%E6%9F%90%E7%A7%8D%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%87%E9%92%88"><span class="nav-number">14.</span> <span class="nav-text">C++ 支持无类型（void）指针，就是没有被声明为某种特定类型的指针</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
