@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. array数组定义的时候需要同时定义数据长度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hack cpp introduction2">
+<meta property="og:url" content="http://example.com/2022/01/06/hack_cpp_introduction2/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="1. array数组定义的时候需要同时定义数据长度">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-06T22:35:57.000Z">
+<meta property="article:modified_time" content="2022-01-06T22:40:38.526Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="array">
+<meta property="article:tag" content="vector">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/06/hack_cpp_introduction2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Hack cpp introduction2 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/06/hack_cpp_introduction2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hack cpp introduction2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-06 23:35:57 / 修改时间：23:40:38" itemprop="dateCreated datePublished" datetime="2022-01-06T23:35:57+01:00">2022-01-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-array"><a href="#1-array" class="headerlink" title="1. array"></a>1. array</h2><p>数组定义的时候需要同时定义数据长度<br><span id="more"></span><br><code>int arr[n];</code></p>
+<p><code>type arrayName [ arraySize ];</code></p>
+<p><code>double balance[5] = &#123;1000.0, 2.0, 3.4, 7.0, 50.0&#125;;</code></p>
+<p><code>double balance[] = &#123;1000.0, 2.0, 3.4, 7.0, 50.0&#125;;</code></p>
+<p>数组的长度不可以调节；向量vector是可以自动调节大小</p>
+<h2 id="2-vector"><a href="#2-vector" class="headerlink" title="2.vector"></a>2.vector</h2><p><code>vector&lt;int&gt;values&#123;1,2,3,4,5&#125;</code></p>
+<p>向量里可以放入任意数据类型：<br><code>vector&lt;int&gt; vec;</code></p>
+<p>也可以放进向量：<br><code>vector&lt;vector&lt;int&gt;&gt; nvec;</code></p>
+<p>创建一个vector，元素个数为nSize,且值均为t：<br><code>vector(int nSize,const t&amp; t)</code></p>
+<p>复制构造函数：<br><code>vector(const vector&amp;)</code></p>
+<p>复制[begin,end)区间内另一个数组的元素到vector中:<br><code>vector(begin,end)</code></p>
+<p><code>vector</code>需要在另一个函数里引用，需要在函数变量里使用<code>&amp;</code></p>
+<p>例如： <code>void define_arr(vector&lt;int&gt; &amp;arr,int num);</code></p>
+<h3 id="迭代器-STL迭代器-这个会在STL里再讲"><a href="#迭代器-STL迭代器-这个会在STL里再讲" class="headerlink" title="迭代器(STL迭代器) [这个会在STL里再讲]"></a>迭代器(STL迭代器) [这个会在STL里再讲]</h3><p><code>vector&lt;int&gt;::iterator it;</code></p>
+<p>用迭代器遍历容器<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (i = v.begin(); i != v.end(); ++i) &#123;  //用迭代器遍历容器</span><br><span class="line">    cout &lt;&lt; *i &lt;&lt; &quot; &quot;;  //*i 就是迭代器i指向的元素</span><br><span class="line">    *i *= 2;  //每个元素变为原来的2倍</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>反向迭代器<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for (vector&lt;int&gt;::reverse_iterator j = v.rbegin(); j != v.rend(); ++j)</span><br><span class="line">    cout &lt;&lt; *j &lt;&lt; &quot; &quot;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="基本函数"><a href="#基本函数" class="headerlink" title="基本函数"></a>基本函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt; vector&gt; </span><br><span class="line">using namespace std;</span><br></pre></td></tr></table></figure>
+<h4 id="增加函数："><a href="#增加函数：" class="headerlink" title="增加函数："></a>增加函数：</h4><p>1.push_back 在数组的最后添加一个数据(vector里没有push_front)</p>
+<p>iterator insert(iterator it,const T&amp; x):向量中迭代器指向元素前增加一个元素x</p>
+<p>iterator insert(iterator it,int n,const T&amp; x):向量中迭代器指向元素前增加n个相同的元素x</p>
+<p>iterator insert(iterator it,const_iterator first,const_iterator last):向量中迭代器指向元素前插入另一个相同类型向量的[first,last)间的数据</p>
+<h4 id="删除函数"><a href="#删除函数" class="headerlink" title="删除函数"></a>删除函数</h4><p>2.pop_back 去掉数组的最后一个数据(vector里没有pop_front)</p>
+<p>iterator erase(iterator it):删除向量中迭代器指向元素</p>
+<p>iterator erase(iterator first,iterator last):删除向量中[first,last)中元素</p>
+<p>void clear():清空向量中所有元素</p>
+<h4 id="遍历函数"><a href="#遍历函数" class="headerlink" title="遍历函数"></a>遍历函数</h4><p>3.at 得到编号位置的数据</p>
+<p>4.begin 得到数组头的指针</p>
+<p>5.end 得到数组的最后一个单元+1的指针(如果找不到，就会返回end())</p>
+<p>6．front 得到数组头的引用</p>
+<p>7.back 得到数组的最后一个单元的引用</p>
+<p>15.rbegin 将vector反转后的开始指针返回(其实就是原来的end-1)反向迭代器，指向最后一个元素</p>
+<p>16.rend 将vector反转构的结束指针返回(其实就是原来的begin-1)反向迭代器，指向第一个元素之前的位置</p>
+<h4 id="判断函数"><a href="#判断函数" class="headerlink" title="判断函数"></a>判断函数</h4><p>17.empty 判断vector是否为空</p>
+<h4 id="大小函数"><a href="#大小函数" class="headerlink" title="大小函数"></a>大小函数</h4><p>8.max_size 得到vector最大可以是多大</p>
+<p>9.capacity 当前vector分配的大小</p>
+<p>10.size 当前使用数据的大小</p>
+<p>11.resize 改变当前使用数据的大小，如果它比当前使用的大，者填充默认值</p>
+<p>12.reserve 改变当前vecotr所分配空间的大小</p>
+<h4 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h4><p>18.swap 与另一个vector交换数据;void swap(vector&amp;):交换两个同类型向量的数据</p>
+<p>void assign(int n,const T&amp; x):设置向量中前n个元素的值为x</p>
+<p>void assign(const_iterator first,const_iterator last):向量中[first,last)中元素设置成当前向量元素</p>
+<p>sort(obj.begin(),obj.end());//从小到大</p>
+<p>sort 需要头文件 #include <algorithm></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/array/" rel="tag"># array</a>
+              <a href="/tags/vector/" rel="tag"># vector</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/06/hack_cpp_introduction1/" rel="prev" title="Hack cpp introduction">
+      <i class="fa fa-chevron-left"></i> Hack cpp introduction
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/06/hack_cpp_string1/" rel="next" title="Hack cpp String">
+      Hack cpp String <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-array"><span class="nav-number">1.</span> <span class="nav-text">1. array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-vector"><span class="nav-number">2.</span> <span class="nav-text">2.vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8-STL%E8%BF%AD%E4%BB%A3%E5%99%A8-%E8%BF%99%E4%B8%AA%E4%BC%9A%E5%9C%A8STL%E9%87%8C%E5%86%8D%E8%AE%B2"><span class="nav-number">2.1.</span> <span class="nav-text">迭代器(STL迭代器) [这个会在STL里再讲]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">基本函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="nav-number">2.2.1.</span> <span class="nav-text">增加函数：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">删除函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%8D%E5%8E%86%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">遍历函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.4.</span> <span class="nav-text">判断函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E5%B0%8F%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.5.</span> <span class="nav-text">大小函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.6.</span> <span class="nav-text">其他函数</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
