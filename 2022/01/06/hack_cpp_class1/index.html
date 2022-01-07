@@ -28,7 +28,7 @@
 <meta property="og:description" content="Class 和 StructsStructs结构和类的区别： 结构体的参数默认访问为public； 类的参数默认访问是private">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-01-06T22:35:57.000Z">
-<meta property="article:modified_time" content="2022-01-06T22:40:44.559Z">
+<meta property="article:modified_time" content="2022-01-07T22:18:19.332Z">
 <meta property="article:author" content="MZChen">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="Class">
@@ -182,10 +182,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-06 23:35:57 / 修改时间：23:40:44" itemprop="dateCreated datePublished" datetime="2022-01-06T23:35:57+01:00">2022-01-06</time>
+              <time title="创建时间：2022-01-06 23:35:57" itemprop="dateCreated datePublished" datetime="2022-01-06T23:35:57+01:00">2022-01-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-07 23:18:19" itemprop="dateModified" datetime="2022-01-07T23:18:19+01:00">2022-01-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -211,6 +217,7 @@
 <p>结构体的参数默认访问为public； 类的参数默认访问是private<br><span id="more"></span><br>结构体继承默认是public继承；类的继承默认是private</p>
 <p>都可以有成员变量和成员函数</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct Student&#123;</span><br><span class="line">    string age;</span><br><span class="line">    string first_name;</span><br><span class="line">    string last_name;</span><br><span class="line">    string standard;</span><br><span class="line">&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">    Student st;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>struct里也可以重载运算符<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct Workshops&#123;</span><br><span class="line">    int start_time;</span><br><span class="line">    int duration;</span><br><span class="line">    int end_time;</span><br><span class="line">    bool operator&lt;(const Workshops &amp;rhs)&#123;</span><br><span class="line">        return (this-&gt;end_time &lt; rhs.end_time);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>c++ 是面向对象设计的程序语言</p>
 <ol>
 <li>public: Public members (variables, methods) can be accessed from anywhere the code is visible.</li>
@@ -362,7 +369,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -375,7 +382,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

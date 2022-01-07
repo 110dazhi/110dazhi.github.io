@@ -20,22 +20,23 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="字典map与pair一对字典map是键和键值一起出现的 使用字典 map 需要头文件定义#include &lt;map&gt;  map&lt;数据类型1，数据类型2&gt; mp map&lt;int,string&gt; mp;">
+  <meta name="description" content="Inheritance同时继承多个class">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hack cpp Map and pair">
-<meta property="og:url" content="http://example.com/2022/01/06/hach_cpp_map_pair/index.html">
+<meta property="og:title" content="Hack cpp STL Inheritance">
+<meta property="og:url" content="http://example.com/2022/01/07/hack_cpp_STL_Inheritance/index.html">
 <meta property="og:site_name" content="长安的花">
-<meta property="og:description" content="字典map与pair一对字典map是键和键值一起出现的 使用字典 map 需要头文件定义#include &lt;map&gt;  map&lt;数据类型1，数据类型2&gt; mp map&lt;int,string&gt; mp;">
+<meta property="og:description" content="Inheritance同时继承多个class">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-01-06T22:35:57.000Z">
-<meta property="article:modified_time" content="2022-01-06T22:40:46.290Z">
+<meta property="article:published_time" content="2022-01-07T22:35:57.000Z">
+<meta property="article:modified_time" content="2022-01-07T22:27:35.622Z">
 <meta property="article:author" content="MZChen">
 <meta property="article:tag" content="c++">
-<meta property="article:tag" content="map">
-<meta property="article:tag" content="pair">
+<meta property="article:tag" content="虚函数">
+<meta property="article:tag" content="纯虚函数">
+<meta property="article:tag" content="继承">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/01/06/hach_cpp_map_pair/">
+<link rel="canonical" href="http://example.com/2022/01/07/hack_cpp_STL_Inheritance/">
 
 
 <script id="page-configurations">
@@ -48,7 +49,7 @@
   };
 </script>
 
-  <title>Hack cpp Map and pair | 长安的花</title>
+  <title>Hack cpp STL Inheritance | 长安的花</title>
   
 
 
@@ -159,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/06/hach_cpp_map_pair/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/07/hack_cpp_STL_Inheritance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -172,7 +173,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hack cpp Map and pair
+          Hack cpp STL Inheritance
         </h1>
 
         <div class="post-meta">
@@ -183,7 +184,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-01-06 23:35:57 / 修改时间：23:40:46" itemprop="dateCreated datePublished" datetime="2022-01-06T23:35:57+01:00">2022-01-06</time>
+              <time title="创建时间：2022-01-07 23:35:57 / 修改时间：23:27:35" itemprop="dateCreated datePublished" datetime="2022-01-07T23:35:57+01:00">2022-01-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,67 +207,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="字典map与pair一对"><a href="#字典map与pair一对" class="headerlink" title="字典map与pair一对"></a>字典map与pair一对</h2><p>字典map是键和键值一起出现的</p>
-<p>使用字典 map 需要头文件定义<code>#include &lt;map&gt;</code> </p>
-<p><code>map&lt;数据类型1，数据类型2&gt; mp</code></p>
-<p><code>map&lt;int,string&gt; mp;</code><br><span id="more"></span></p>
-<p>对模板进行类型定义后使用会很方便<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef std::map&lt;int , std::string&gt; MAP_INI_STRING;</span><br><span class="line">MAP_INI_STRING person;</span><br></pre></td></tr></table></figure></p>
-<h2 id="map添加数据"><a href="#map添加数据" class="headerlink" title="map添加数据"></a>map添加数据</h2><ol>
-<li><p>数组方式插入<br>mp[1] = “ketti”;</p>
-</li>
-<li><p>insert 插入 pair数据</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">std::map &lt; int , std::string &gt; mpPerson;</span><br><span class="line">mpPerson.insert(pair &lt; int,string &gt; (1,&quot;ketti&quot;));</span><br><span class="line"></span><br><span class="line">mpPerson&lt;int, string&gt;::iterator it = mpPerson.begin();</span><br><span class="line">mpPerson.insert(it, pair&lt;int, string&gt;&#123; 3, &quot;隔壁老王&quot; &#125;); // 会自动排序</span><br></pre></td></tr></table></figure>
-<ol>
-<li>insert 插入 value_type 数据<br>mpPerson.insert(std::map &lt; int, std::string &gt; ::value_type (2, “Tom”));</li>
-</ol>
-<h2 id="pair"><a href="#pair" class="headerlink" title="pair"></a>pair</h2><p>pair是一种模版类型。每个pair 可以存储两个值。这两种值的类型没有限制，也可以将自己写的类放进去</p>
-<p><code>pair&lt;int,int&gt; p;</code> </p>
-<p><code>p-&gt;first = 1;p-&gt;second = 1;</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pair&lt;int ,int &gt;p (5,6);</span><br><span class="line"></span><br><span class="line">pair&lt;int ,int &gt; p1= make_pair(5,6);</span><br></pre></td></tr></table></figure>
-<h2 id="map基本操作"><a href="#map基本操作" class="headerlink" title="map基本操作"></a>map基本操作</h2><p>map 的基本操作函数：</p>
-<pre><code>C++ Maps 是一种关联式容器，包含“关键字/值”对
-
-begin()                  返回指向 map 头部的迭代器
-
-clear(）                 删除所有元素
-
-count()                  返回指定元素出现的次数
-
-empty()                 如果 map 为空则返回 true
-
-end()                     返回指向 map 末尾的迭代器 `mp.find(key)!=mp.end()` 如果相等代表没找到
-
-equal_range()        返回特殊条目的迭代器对
-
-erase()                   删除一个元素
-
-find()                     查找一个元素  
-
-get_allocator()      返回map的配置器
-
-insert()                  插入元素 mp.insert(&#123; 1, &quot;张三&quot; &#125;);
-
-key_comp()          返回比较元素key的函数
-
-lower_bound()     返回键值&gt;=给定元素的第一个位置
-
-max_size()            返回可以容纳的最大元素个数
-
-rbegin()                返回一个指向map尾部的逆向迭代器
-
-rend()                   返回一个指向map头部的逆向迭代器
-
-size()                    返回map中元素的个数
-
-swap()                 交换两个map
-
-upper_bound()    返回键值&gt;给定元素的第一个位置
-
-value_comp()       返回比较元素value的函数
-</code></pre><h2 id="map的遍历"><a href="#map的遍历" class="headerlink" title="map的遍历"></a>map的遍历</h2><p>可以用迭代器，或者数组样式<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">map&lt;int, string&gt;::iterator it = mp.begin();</span><br><span class="line">for (it = mp.begin(); it != mp.end(); it++)</span><br><span class="line">		cout &lt;&lt; it-&gt;first &lt;&lt; &quot; &quot; &lt;&lt; it-&gt;second &lt;&lt; endl;</span><br></pre></td></tr></table></figure></p>
-
+        <h2 id="Inheritance"><a href="#Inheritance" class="headerlink" title="Inheritance"></a>Inheritance</h2><p>同时继承多个class<br><span id="more"></span><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class D :public A, public B, public C</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class HotelRoom &#123;</span><br><span class="line">public:</span><br><span class="line">    HotelRoom(int bedrooms, int bathrooms) </span><br><span class="line">    : bedrooms_(bedrooms), bathrooms_(bathrooms) &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    virtual int get_price() &#123;//这里如果不定义成虚函数，下面get_price就会一直调用普通房的计算函数</span><br><span class="line">        return 50*bedrooms_ + 100*bathrooms_;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    int bedrooms_;</span><br><span class="line">    int bathrooms_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class HotelApartment : public HotelRoom &#123;</span><br><span class="line">public:</span><br><span class="line">    HotelApartment(int bedrooms, int bathrooms) </span><br><span class="line">    : HotelRoom(bedrooms, bathrooms) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    int get_price() &#123;</span><br><span class="line">        return HotelRoom::get_price() + 100;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;HotelRoom*&gt; rooms;//定义一个向量，里面存放的是普通房指针</span><br><span class="line">    for (int i = 0; i &lt; n; ++i) &#123;</span><br><span class="line">        string room_type;</span><br><span class="line">        int bedrooms;</span><br><span class="line">        int bathrooms;</span><br><span class="line">        cin &gt;&gt; room_type &gt;&gt; bedrooms &gt;&gt; bathrooms;</span><br><span class="line">        if (room_type == &quot;standard&quot;) &#123;</span><br><span class="line">            rooms.push_back(new HotelRoom(bedrooms, bathrooms));//这个指针指向 普通房</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            rooms.push_back(new HotelApartment(bedrooms, bathrooms));//这个普通房指针指向派生类，虚函数实现的是派生类的</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int total_profit = 0;</span><br><span class="line">    for (auto room : rooms) &#123;</span><br><span class="line">        total_profit += room-&gt;get_price();</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; total_profit &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    for (auto room : rooms) &#123;</span><br><span class="line">        delete room;</span><br><span class="line">    &#125;</span><br><span class="line">    rooms.clear();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -310,8 +252,9 @@ value_comp()       返回比较元素value的函数
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/c/" rel="tag"># c++</a>
-              <a href="/tags/map/" rel="tag"># map</a>
-              <a href="/tags/pair/" rel="tag"># pair</a>
+              <a href="/tags/%E8%99%9A%E5%87%BD%E6%95%B0/" rel="tag"># 虚函数</a>
+              <a href="/tags/%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0/" rel="tag"># 纯虚函数</a>
+              <a href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag"># 继承</a>
           </div>
 
         
@@ -320,8 +263,8 @@ value_comp()       返回比较元素value的函数
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/06/hack_cpp_class3/" rel="prev" title="virtual functions">
-      <i class="fa fa-chevron-left"></i> virtual functions
+    <a href="/2022/01/07/hack_cpp_STL_Preprocessor/" rel="prev" title="Hack cpp STL Preprocessor">
+      <i class="fa fa-chevron-left"></i> Hack cpp STL Preprocessor
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -382,7 +325,7 @@ value_comp()       返回比较元素value的函数
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8map%E4%B8%8Epair%E4%B8%80%E5%AF%B9"><span class="nav-number">1.</span> <span class="nav-text">字典map与pair一对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">map添加数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pair"><span class="nav-number">3.</span> <span class="nav-text">pair</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">map基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">5.</span> <span class="nav-text">map的遍历</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inheritance"><span class="nav-number">1.</span> <span class="nav-text">Inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">虚函数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -397,7 +340,7 @@ value_comp()       返回比较元素value的函数
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -410,7 +353,7 @@ value_comp()       返回比较元素value的函数
       <div class="site-state-item site-state-tags">
             <a href="/tags">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
