@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="udacity4_Behavior_Planning 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Udacity 4.Behavior_Planning 1">
+<meta property="og:url" content="http://example.com/2022/01/14/udacity4_Behavior_Planning/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="udacity4_Behavior_Planning 1">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-14T11:35:57.000Z">
+<meta property="article:modified_time" content="2022-01-14T23:31:26.851Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="自动驾驶">
+<meta property="article:tag" content="udacity">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/14/udacity4_Behavior_Planning/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Udacity 4.Behavior_Planning 1 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/14/udacity4_Behavior_Planning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Udacity 4.Behavior_Planning 1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-14 12:35:57" itemprop="dateCreated datePublished" datetime="2022-01-14T12:35:57+01:00">2022-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-15 00:31:26" itemprop="dateModified" datetime="2022-01-15T00:31:26+01:00">2022-01-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/udacity-%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" itemprop="url" rel="index"><span itemprop="name">udacity-自动驾驶</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="udacity4-Behavior-Planning-1"><a href="#udacity4-Behavior-Planning-1" class="headerlink" title="udacity4_Behavior_Planning 1"></a>udacity4_Behavior_Planning 1</h2><span id="more"></span>
+<p>行为规划器会的输入有地图，路线，其他静态或动态障碍物的下一步可能动向。之后规划期生成车车辆的下一个动作</p>
+<h3 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h3><p>有限状态机基于有限的离散状态来做决策</p>
+<p>有限状态机中的状态可以通过一个或多个转换关联起来</p>
+<p>也可能会有自转换</p>
+<p>也可能会出现只有接受态的状态</p>
+<p>有限状态机要处理输入状态，然后决定下一个状态应该是什么</p>
+<h3 id="状态量"><a href="#状态量" class="headerlink" title="状态量"></a>状态量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph LR </span><br><span class="line">    A((Ready))</span><br><span class="line">    B((lane&lt;br&gt;keep))</span><br><span class="line">    C((lane&lt;br&gt;change&lt;br&gt;left))</span><br><span class="line">    D((lane&lt;br&gt;change&lt;br&gt;right))</span><br><span class="line">    E((Prepare&lt;br&gt;for lane&lt;br&gt;change left))</span><br><span class="line">    F((Prepare&lt;br&gt;for lane&lt;br&gt;change right))</span><br><span class="line">    A --&gt;A</span><br><span class="line">    A --&gt;B</span><br><span class="line">    B --&gt; B</span><br><span class="line">    B ----&gt;E &amp; F ----&gt;B</span><br><span class="line">    C --&gt;C--&gt;B</span><br><span class="line">    D --&gt;D--&gt;B</span><br><span class="line">    E--&gt;E--&gt;C </span><br><span class="line">    F--&gt;F--&gt;D   </span><br></pre></td></tr></table></figure>
+<h3 id="转换函数的输入"><a href="#转换函数的输入" class="headerlink" title="转换函数的输入"></a>转换函数的输入</h3><ol>
+<li>Predictions</li>
+<li>Map</li>
+<li>Speed Limit</li>
+<li>Localization Data</li>
+<li>Current State</li>
+</ol>
+<h2 id="转换函数的伪码"><a href="#转换函数的伪码" class="headerlink" title="转换函数的伪码"></a>转换函数的伪码</h2><p>fsm：状态机<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">def transition_function(predictions, current_fsm_state, current_pose, cost_functions, weights):</span><br><span class="line">    # only consider states which can be reached from current FSM state.</span><br><span class="line">    possible_successor_states = successor_states(current_fsm_state)</span><br><span class="line"></span><br><span class="line">    # keep track of the total cost of each state.</span><br><span class="line">    costs = []</span><br><span class="line">    for state in possible_successor_states:</span><br><span class="line">        # generate a rough idea of what trajectory we would</span><br><span class="line">        # follow IF we chose this state.</span><br><span class="line">        trajectory_for_state = generate_trajectory(state, current_pose, predictions)</span><br><span class="line"></span><br><span class="line">        # calculate the &quot;cost&quot; associated with that trajectory.</span><br><span class="line">        cost_for_state = 0</span><br><span class="line">        for i in range(len(cost_functions)) :</span><br><span class="line">            # apply each cost function to the generated trajectory</span><br><span class="line">            cost_function = cost_functions[i]</span><br><span class="line">            cost_for_cost_function = cost_function(trajectory_for_state, predictions)</span><br><span class="line"></span><br><span class="line">            # multiply the cost by the associated weight</span><br><span class="line">            weight = weights[i]</span><br><span class="line">            cost_for_state += weight * cost_for_cost_function</span><br><span class="line">         costs.append(&#123;&#x27;state&#x27; : state, &#x27;cost&#x27; : cost_for_state&#125;)</span><br><span class="line"></span><br><span class="line">    # Find the minimum cost state.</span><br><span class="line">    best_next_state = None</span><br><span class="line">    min_cost = 9999999</span><br><span class="line">    for i in range(len(possible_successor_states)):</span><br><span class="line">        state = possible_successor_states[i]</span><br><span class="line">        cost  = costs[i]</span><br><span class="line">        if cost &lt; min_cost:</span><br><span class="line">            min_cost = cost</span><br><span class="line">            best_next_state = state </span><br><span class="line"></span><br><span class="line">    return best_next_state</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+              <a href="/tags/udacity/" rel="tag"># udacity</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/12/udacity3_navie_bayes3/" rel="prev" title="Udacity 3.朴素贝叶斯cpp代码解析 3">
+      <i class="fa fa-chevron-left"></i> Udacity 3.朴素贝叶斯cpp代码解析 3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/14/udacity4_Behavior_Planning1/" rel="next" title="Udacity 4.Behavior_Planning 2">
+      Udacity 4.Behavior_Planning 2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#udacity4-Behavior-Planning-1"><span class="nav-number">1.</span> <span class="nav-text">udacity4_Behavior_Planning 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">有限状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">状态量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">1.3.</span> <span class="nav-text">转换函数的输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0%E7%9A%84%E4%BC%AA%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">转换函数的伪码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

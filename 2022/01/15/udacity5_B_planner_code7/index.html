@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="udacity5_Behavior_Planner 设计7 cost.cpp 代码解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Udacity 5.Behavior_Planning 7">
+<meta property="og:url" content="http://example.com/2022/01/15/udacity5_B_planner_code7/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="udacity5_Behavior_Planner 设计7 cost.cpp 代码解析">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-14T23:16:57.000Z">
+<meta property="article:modified_time" content="2022-01-14T23:35:23.283Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="自动驾驶">
+<meta property="article:tag" content="udacity">
+<meta property="article:tag" content="行为规划器设计">
+<meta property="article:tag" content="cost.cpp 代码解析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/15/udacity5_B_planner_code7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Udacity 5.Behavior_Planning 7 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/15/udacity5_B_planner_code7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Udacity 5.Behavior_Planning 7
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-15 00:16:57 / 修改时间：00:35:23" itemprop="dateCreated datePublished" datetime="2022-01-15T00:16:57+01:00">2022-01-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/udacity-%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" itemprop="url" rel="index"><span itemprop="name">udacity-自动驾驶</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="udacity5-Behavior-Planner-设计7-cost-cpp-代码解析"><a href="#udacity5-Behavior-Planner-设计7-cost-cpp-代码解析" class="headerlink" title="udacity5_Behavior_Planner 设计7 cost.cpp 代码解析"></a>udacity5_Behavior_Planner 设计7 cost.cpp 代码解析</h2><span id="more"></span>
+<h2 id="cost-cpp-头文件代码解析"><a href="#cost-cpp-头文件代码解析" class="headerlink" title="cost.cpp 头文件代码解析"></a>cost.cpp 头文件代码解析</h2><h1 id="include-“cost-h”"><a href="#include-“cost-h”" class="headerlink" title="include “cost.h”"></a>include “cost.h”</h1><h1 id="include"><a href="#include" class="headerlink" title="include "></a>include <cmath></h1><h1 id="include-1"><a href="#include-1" class="headerlink" title="include "></a>include <functional></h1><h1 id="include-2"><a href="#include-2" class="headerlink" title="include "></a>include <iterator></h1><h1 id="include-3"><a href="#include-3" class="headerlink" title="include "></a>include <map></h1><h1 id="include-4"><a href="#include-4" class="headerlink" title="include "></a>include <string></h1><h1 id="include-5"><a href="#include-5" class="headerlink" title="include "></a>include <vector></h1><h1 id="include-“vehicle-h”"><a href="#include-“vehicle-h”" class="headerlink" title="include “vehicle.h”"></a>include “vehicle.h”</h1><p>using std::string;<br>using std::vector;</p>
+<p>/**</p>
+<ul>
+<li>TODO: change weights for cost functions.<br>*/<br>//这里如果修改会怎么样<br>const float REACH_GOAL = pow(10, 6);<br>const float EFFICIENCY = pow(10, 5);</li>
+</ul>
+<p>// Here we have provided two possible suggestions for cost functions, but feel<br>//   free to use your own! The weighted cost over all cost functions is computed<br>//   in calculate_cost. The data from get_helper_data will be very useful in<br>//   your implementation of the cost functions below. Please see get_helper_data<br>//   for details on how the helper data is computed.</p>
+<p>float goal_distance_cost(const Vehicle &amp;vehicle,<br>                         const vector<Vehicle> &amp;trajectory,<br>                         const map<int, vector<Vehicle>&gt; &amp;predictions,<br>                         map<string, float> &amp;data) {<br>  // Cost increases based on distance of intended lane (for planning a lane<br>  //   change) and final lane of trajectory.<br>  // Cost of being out of goal lane also becomes larger as vehicle approaches<br>  //   goal distance.<br>  // This function is very similar to what you have already implemented in the<br>  //   “Implement a Cost Function in C++” quiz.<br>  float cost;<br>  float distance = data[“distance_to_goal”];<br>  if (distance &gt; 0) {<br>    cost = 1 - 2<em>exp(-(abs(2.0</em>vehicle.goal_lane - data[“intended_lane”] </p>
+<pre><code>     - data[&quot;final_lane&quot;]) / distance));
+</code></pre><p>  } else {<br>    cost = 1;<br>  }</p>
+<p>  return cost;<br>}</p>
+<p>float inefficiency_cost(const Vehicle &amp;vehicle,<br>                        const vector<Vehicle> &amp;trajectory,<br>                        const map<int, vector<Vehicle>&gt; &amp;predictions,<br>                        map<string, float> &amp;data) {<br>  // Cost becomes higher for trajectories with intended lane and final lane<br>  //   that have traffic slower than vehicle’s target speed.<br>  // You can use the lane_speed function to determine the speed for a lane.<br>  // This function is very similar to what you have already implemented in<br>  //   the “Implement a Second Cost Function in C++” quiz.<br>  float proposed_speed_intended = lane_speed(predictions, data[“intended_lane”]);<br>  if (proposed_speed_intended &lt; 0) {<br>    proposed_speed_intended = vehicle.target_speed;<br>  }</p>
+<p>  float proposed_speed_final = lane_speed(predictions, data[“final_lane”]);<br>  if (proposed_speed_final &lt; 0) {<br>    proposed_speed_final = vehicle.target_speed;<br>  }</p>
+<p>  float cost = (2.0*vehicle.target_speed - proposed_speed_intended </p>
+<pre><code>         - proposed_speed_final)/vehicle.target_speed;
+</code></pre><p>  return cost;<br>}</p>
+<p>float lane_speed(const map<int, vector<Vehicle>&gt; &amp;predictions, int lane) {<br>  // All non ego vehicles in a lane have the same speed, so to get the speed<br>  //   limit for a lane, we can just find one vehicle in that lane.<br>  for (map<int, vector<Vehicle>&gt;::const_iterator it = predictions.begin();<br>       it != predictions.end(); ++it) {<br>    int key = it-&gt;first;<br>    Vehicle vehicle = it-&gt;second[0];<br>    if (vehicle.lane == lane &amp;&amp; key != -1) {<br>      return vehicle.v;<br>    }<br>  }<br>  // Found no vehicle in the lane<br>  return -1.0;<br>}<br>//两个cost得用权值来相加<br>float calculate_cost(const Vehicle &amp;vehicle,<br>                     const map<int, vector<Vehicle>&gt; &amp;predictions,<br>                     const vector<Vehicle> &amp;trajectory) {<br>  // Sum weighted cost functions to get total cost for trajectory.<br>  map<string, float> trajectory_data = get_helper_data(vehicle, trajectory,<br>                                                       predictions);<br>  float cost = 0.0;</p>
+<p>  // Add additional cost functions here.<br>  vector<std::function<float(const Vehicle &, const vector<Vehicle> &amp;,<br>                             const map<int, vector<Vehicle>&gt; &amp;,<br>                             map<string, float> &amp;)</p>
+<pre><code>&gt;&gt; cf_list = &#123;goal_distance_cost, inefficiency_cost&#125;;
+</code></pre><p>  vector<float> weight_list = {REACH_GOAL, EFFICIENCY};</p>
+<p>  for (int i = 0; i &lt; cf_list.size(); ++i) {<br>    float new_cost = weight_list[i]*cf_list<a href="vehicle, trajectory, predictions, 
+                                               trajectory_data">i</a>;<br>    cost += new_cost;<br>  }</p>
+<p>  return cost;//权值相加的cost<br>}</p>
+<p>map<string, float> get_helper_data(const Vehicle &amp;vehicle,<br>                                   const vector<Vehicle> &amp;trajectory,<br>                                   const map<int, vector<Vehicle>&gt; &amp;predictions) {<br>  // Generate helper data to use in cost functions:<br>  // intended_lane: the current lane +/- 1 if vehicle is planning or<br>  //   executing a lane change.<br>  // final_lane: the lane of the vehicle at the end of the trajectory.<br>  // distance_to_goal: the distance of the vehicle to the goal.</p>
+<p>  // Note that intended_lane and final_lane are both included to help<br>  //   differentiate between planning and executing a lane change in the<br>  //   cost functions.<br>  map<string, float> trajectory_data;<br>  Vehicle trajectory_last = trajectory[1];<br>  float intended_lane;</p>
+<p>  if (trajectory_last.state.compare(“PLCL”) == 0) {<br>    intended_lane = trajectory_last.lane + 1;<br>  } else if (trajectory_last.state.compare(“PLCR”) == 0) {<br>    intended_lane = trajectory_last.lane - 1;<br>  } else {<br>    intended_lane = trajectory_last.lane;<br>  }</p>
+<p>  float distance_to_goal = vehicle.goal_s - trajectory_last.s;<br>  float final_lane = trajectory_last.lane;<br>  trajectory_data[“intended_lane”] = intended_lane;<br>  trajectory_data[“final_lane”] = final_lane;<br>  trajectory_data[“distance_to_goal”] = distance_to_goal;</p>
+<p>  return trajectory_data;<br>}</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+              <a href="/tags/udacity/" rel="tag"># udacity</a>
+              <a href="/tags/%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%88%92%E5%99%A8%E8%AE%BE%E8%AE%A1/" rel="tag"># 行为规划器设计</a>
+              <a href="/tags/cost-cpp-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="tag"># cost.cpp 代码解析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/15/udacity5_B_planner_code6/" rel="prev" title="Udacity 5.Behavior_Planning 6">
+      <i class="fa fa-chevron-left"></i> Udacity 5.Behavior_Planning 6
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#udacity5-Behavior-Planner-%E8%AE%BE%E8%AE%A17-cost-cpp-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">udacity5_Behavior_Planner 设计7 cost.cpp 代码解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cost-cpp-%E5%A4%B4%E6%96%87%E4%BB%B6%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">cost.cpp 头文件代码解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-%E2%80%9Ccost-h%E2%80%9D"><span class="nav-number"></span> <span class="nav-text">include “cost.h”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include"><span class="nav-number"></span> <span class="nav-text">include </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-1"><span class="nav-number"></span> <span class="nav-text">include </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-2"><span class="nav-number"></span> <span class="nav-text">include </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-3"><span class="nav-number"></span> <span class="nav-text">include </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-4"><span class="nav-number"></span> <span class="nav-text">include </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-5"><span class="nav-number"></span> <span class="nav-text">include </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-%E2%80%9Cvehicle-h%E2%80%9D"><span class="nav-number"></span> <span class="nav-text">include “vehicle.h”</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

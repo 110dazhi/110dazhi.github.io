@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="udacity5_Behavior_Planner 设计5 vehicle.cpp 代码解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Udacity 5.Behavior_Planning 5">
+<meta property="og:url" content="http://example.com/2022/01/15/udacity5_B_planner_code5/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="udacity5_Behavior_Planner 设计5 vehicle.cpp 代码解析">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-14T23:13:57.000Z">
+<meta property="article:modified_time" content="2022-01-14T23:35:13.712Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="自动驾驶">
+<meta property="article:tag" content="udacity">
+<meta property="article:tag" content="行为规划器设计">
+<meta property="article:tag" content="vehicle.cpp 代码解析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/15/udacity5_B_planner_code5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Udacity 5.Behavior_Planning 5 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/15/udacity5_B_planner_code5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Udacity 5.Behavior_Planning 5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-15 00:13:57 / 修改时间：00:35:13" itemprop="dateCreated datePublished" datetime="2022-01-15T00:13:57+01:00">2022-01-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/udacity-%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" itemprop="url" rel="index"><span itemprop="name">udacity-自动驾驶</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="udacity5-Behavior-Planner-设计5-vehicle-cpp-代码解析"><a href="#udacity5-Behavior-Planner-设计5-vehicle-cpp-代码解析" class="headerlink" title="udacity5_Behavior_Planner 设计5 vehicle.cpp 代码解析"></a>udacity5_Behavior_Planner 设计5 vehicle.cpp 代码解析</h2><span id="more"></span>
+<h2 id="vehicle-cpp-头文件代码解析"><a href="#vehicle-cpp-头文件代码解析" class="headerlink" title="vehicle.cpp 头文件代码解析"></a>vehicle.cpp 头文件代码解析</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;vehicle.h&quot;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;iterator&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &quot;cost.h&quot;</span><br><span class="line"></span><br><span class="line">using std::string;</span><br><span class="line">using std::vector;</span><br><span class="line"></span><br><span class="line">// Initializes Vehicle</span><br><span class="line">Vehicle::Vehicle()&#123;&#125;</span><br><span class="line"></span><br><span class="line">Vehicle::Vehicle(int lane, float s, float v, float a, string state) &#123;</span><br><span class="line">  this-&gt;lane = lane;</span><br><span class="line">  this-&gt;s = s;</span><br><span class="line">  this-&gt;v = v;</span><br><span class="line">  this-&gt;a = a;</span><br><span class="line">  this-&gt;state = state;</span><br><span class="line">  max_acceleration = -1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vehicle::~Vehicle() &#123;&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::choose_next_state(map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions) &#123;</span><br><span class="line">  /**</span><br><span class="line">   * Here you can implement the transition_function code from the Behavior </span><br><span class="line">   *   Planning Pseudocode classroom concept.</span><br><span class="line">   *</span><br><span class="line">   * @param A predictions map. This is a map of vehicle id keys with predicted</span><br><span class="line">   *   vehicle trajectories as values. Trajectories are a vector of Vehicle </span><br><span class="line">   *   objects representing the vehicle at the current timestep and one timestep</span><br><span class="line">   *   in the future.//里面存放的是对其他车辆的预测信息</span><br><span class="line">   * @output The best (lowest cost) trajectory corresponding to the next ego </span><br><span class="line">   *   vehicle state.下一个自我车辆最好的轨迹，从最低损失函数来考虑</span><br><span class="line">   *</span><br><span class="line">   * Functions that will be useful:</span><br><span class="line">   * 1. successor_states - Uses the current state to return a vector of possible</span><br><span class="line">   *    successor states for the finite state machine. 下一个状态，从状态机里得到</span><br><span class="line">   * 2. generate_trajectory - Returns a vector of Vehicle objects representing </span><br><span class="line">   *    a vehicle trajectory, given a state and predictions. Note that </span><br><span class="line">   *    trajectory vectors might have size 0 if no possible trajectory exists </span><br><span class="line">   *    for the state. 生成轨迹</span><br><span class="line">   * 3. calculate_cost - Included from cost.cpp, computes the cost for a trajectory.</span><br><span class="line">   *    计算cost函数</span><br><span class="line">   * TODO: Your solution here.</span><br><span class="line">   */</span><br><span class="line">  vector&lt;string&gt; states = successor_states();//获取接下来的状态</span><br><span class="line">  float cost;</span><br><span class="line">  vector&lt;float&gt; costs;</span><br><span class="line">  vector&lt;vector&lt;Vehicle&gt;&gt; final_trajectories;</span><br><span class="line"></span><br><span class="line">  for (vector&lt;string&gt;::iterator it = states.begin(); it != states.end(); ++it) &#123;</span><br><span class="line">    vector&lt;Vehicle&gt; trajectory = generate_trajectory(*it, predictions);//根据其他车辆的预测信息生成一个轨迹</span><br><span class="line">    if (trajectory.size() != 0) &#123;</span><br><span class="line">      cost = calculate_cost(*this, predictions, trajectory);//计算cost</span><br><span class="line">      costs.push_back(cost);</span><br><span class="line">      final_trajectories.push_back(trajectory);//将可能状况都放入</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  vector&lt;float&gt;::iterator best_cost = min_element(begin(costs), end(costs));</span><br><span class="line">  int best_idx = distance(begin(costs), best_cost);求得哪一个idx的轨迹cost最小</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * TODO: Change return value here:</span><br><span class="line">   */</span><br><span class="line">  return final_trajectories[best_idx];//将最小的轨迹返回</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;string&gt; Vehicle::successor_states() &#123;</span><br><span class="line">  // Provides the possible next states given the current state for the FSM </span><br><span class="line">  //   discussed in the course, with the exception that lane changes happen </span><br><span class="line">  //   instantaneously, so LCL and LCR can only transition back to KL.</span><br><span class="line">  vector&lt;string&gt; states;</span><br><span class="line">  states.push_back(&quot;KL&quot;);</span><br><span class="line">  string state = this-&gt;state;</span><br><span class="line">  if(state.compare(&quot;KL&quot;) == 0) &#123;</span><br><span class="line">    states.push_back(&quot;PLCL&quot;);//优先考虑能否左转</span><br><span class="line">    states.push_back(&quot;PLCR&quot;);</span><br><span class="line">  &#125; else if (state.compare(&quot;PLCL&quot;) == 0) &#123;</span><br><span class="line">    if (lane != lanes_available - 1) &#123;</span><br><span class="line">      states.push_back(&quot;PLCL&quot;);</span><br><span class="line">      states.push_back(&quot;LCL&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else if (state.compare(&quot;PLCR&quot;) == 0) &#123;</span><br><span class="line">    if (lane != 0) &#123;</span><br><span class="line">      states.push_back(&quot;PLCR&quot;);</span><br><span class="line">      states.push_back(&quot;LCR&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  // If state is &quot;LCL&quot; or &quot;LCR&quot;, then just return &quot;KL&quot;</span><br><span class="line">  //如果现在状态是转弯，那下一个状态就是直行</span><br><span class="line">  return states;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::generate_trajectory(string state, </span><br><span class="line">                                             map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions) &#123;</span><br><span class="line">  // Given a possible next state, generate the appropriate trajectory to realize</span><br><span class="line">  //   the next state.</span><br><span class="line">  vector&lt;Vehicle&gt; trajectory;</span><br><span class="line">  if (state.compare(&quot;CS&quot;) == 0) &#123;</span><br><span class="line">    trajectory = constant_speed_trajectory();//定速</span><br><span class="line">  &#125; else if (state.compare(&quot;KL&quot;) == 0) &#123;</span><br><span class="line">    trajectory = keep_lane_trajectory(predictions);//保持车道</span><br><span class="line">  &#125; else if (state.compare(&quot;LCL&quot;) == 0 || state.compare(&quot;LCR&quot;) == 0) &#123;</span><br><span class="line">    trajectory = lane_change_trajectory(state, predictions);//返回转弯的轨迹</span><br><span class="line">  &#125; else if (state.compare(&quot;PLCL&quot;) == 0 || state.compare(&quot;PLCR&quot;) == 0) &#123;</span><br><span class="line">    trajectory = prep_lane_change_trajectory(state, predictions);//返回预转弯的轨迹</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return trajectory;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;float&gt; Vehicle::get_kinematics(map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions, </span><br><span class="line">                                      int lane) &#123;//获取当前车辆下一刻的运动学</span><br><span class="line">  // Gets next timestep kinematics (position, velocity, acceleration) </span><br><span class="line">  // 获取下一个时刻的运动学参数</span><br><span class="line">  //   for a given lane. Tries to choose the maximum velocity and acceleration, </span><br><span class="line">  //   given other vehicle positions and accel/velocity constraints.</span><br><span class="line">  float max_velocity_accel_limit = this-&gt;max_acceleration + this-&gt;v;//最大速度加速度限制</span><br><span class="line">  float new_position;//新坐标</span><br><span class="line">  float new_velocity;//新速度</span><br><span class="line">  float new_accel;//新加速度</span><br><span class="line">  Vehicle vehicle_ahead;//自我车辆的前车</span><br><span class="line">  Vehicle vehicle_behind;//自我车辆的后车</span><br><span class="line"></span><br><span class="line">  if (get_vehicle_ahead(predictions, lane, vehicle_ahead)) &#123;//如果发现前面有车辆</span><br><span class="line">    if (get_vehicle_behind(predictions, lane, vehicle_behind)) &#123;//如果发现后面有车辆</span><br><span class="line">      // must travel at the speed of traffic, regardless of preferred buffer</span><br><span class="line">      new_velocity = vehicle_ahead.v;//则必须以交通速度行驶</span><br><span class="line">    &#125; else &#123;//如果后面没发现车</span><br><span class="line">        //前面车的距离，减去缓冲区，减去现在车的s，</span><br><span class="line">        // v+0.5at^2 &lt;=两车之间的距离减去缓冲区，加上前车在单位时间内行驶的距离</span><br><span class="line">      float max_velocity_in_front = (vehicle_ahead.s - this-&gt;s </span><br><span class="line">                                  - this-&gt;preferred_buffer) + vehicle_ahead.v </span><br><span class="line">                                  - 0.5 * (this-&gt;a);</span><br><span class="line">        //新的速度，肯定是三个最大速度里最小的一个</span><br><span class="line">      new_velocity = std::min(std::min(max_velocity_in_front, </span><br><span class="line">                                       max_velocity_accel_limit), </span><br><span class="line">                                       this-&gt;target_speed);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else &#123;//如果前面没车，则需要加速，到限定速度</span><br><span class="line">    new_velocity = std::min(max_velocity_accel_limit, this-&gt;target_speed);</span><br><span class="line">  &#125;</span><br><span class="line">    //新加速度计算</span><br><span class="line">  new_accel = new_velocity - this-&gt;v; // Equation: (v_1 - v_0)/t = acceleration</span><br><span class="line">  //新地点计算</span><br><span class="line">  new_position = this-&gt;s + new_velocity + new_accel / 2.0;</span><br><span class="line">    //返回新的坐标，速度，加速度</span><br><span class="line">  return&#123;new_position, new_velocity, new_accel&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::constant_speed_trajectory() &#123;//返回定常速度的轨迹</span><br><span class="line">  // Generate a constant speed trajectory.</span><br><span class="line">  float next_pos = position_at(1);</span><br><span class="line">  //轨迹里放的是下一时刻车的所有信息，包含速度，车道，坐标，加速度</span><br><span class="line">  vector&lt;Vehicle&gt; trajectory = &#123;Vehicle(this-&gt;lane,this-&gt;s,this-&gt;v,this-&gt;a,this-&gt;state), </span><br><span class="line">                                Vehicle(this-&gt;lane,next_pos,this-&gt;v,0,this-&gt;state)&#125;;</span><br><span class="line">  return trajectory;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::keep_lane_trajectory(map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions) &#123;</span><br><span class="line">  // Generate a keep lane trajectory.保持直行的轨迹 保持直行的轨迹，但是不是定速的</span><br><span class="line">  vector&lt;Vehicle&gt; trajectory = &#123;Vehicle(lane, this-&gt;s, this-&gt;v, this-&gt;a, state)&#125;;</span><br><span class="line">  vector&lt;float&gt; kinematics = get_kinematics(predictions, this-&gt;lane);</span><br><span class="line">  float new_s = kinematics[0];</span><br><span class="line">  float new_v = kinematics[1];</span><br><span class="line">  float new_a = kinematics[2];</span><br><span class="line">  trajectory.push_back(Vehicle(this-&gt;lane, new_s, new_v, new_a, &quot;KL&quot;));</span><br><span class="line">  </span><br><span class="line">  return trajectory;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::prep_lane_change_trajectory(string state, </span><br><span class="line">                                                     map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions) &#123;</span><br><span class="line">  // Generate a trajectory preparing for a lane change.</span><br><span class="line">  //准备转弯的轨迹</span><br><span class="line">  float new_s;</span><br><span class="line">  float new_v;</span><br><span class="line">  float new_a;</span><br><span class="line">  Vehicle vehicle_behind;//定义一个后面的车</span><br><span class="line">  int new_lane = this-&gt;lane + lane_direction[state];//lane_direction[state]这是一个字典，向左是1向右是负一</span><br><span class="line">  vector&lt;Vehicle&gt; trajectory = &#123;Vehicle(this-&gt;lane, this-&gt;s, this-&gt;v, this-&gt;a, </span><br><span class="line">                                        this-&gt;state)&#125;;</span><br><span class="line">    //在这条车道的下一刻的运动关系</span><br><span class="line">  vector&lt;float&gt; curr_lane_new_kinematics = get_kinematics(predictions, this-&gt;lane);</span><br><span class="line"></span><br><span class="line">  if (get_vehicle_behind(predictions, this-&gt;lane, vehicle_behind)) &#123;</span><br><span class="line">      //查看后面是不是有车，如果有车，则不进行动态变换</span><br><span class="line">    // Keep speed of current lane so as not to collide with car behind.</span><br><span class="line">    new_s = curr_lane_new_kinematics[0];</span><br><span class="line">    new_v = curr_lane_new_kinematics[1];</span><br><span class="line">    new_a = curr_lane_new_kinematics[2];    </span><br><span class="line">  &#125; else &#123;//如果现在车辆后面没车</span><br><span class="line">    vector&lt;float&gt; best_kinematics;</span><br><span class="line">    //就进行新道路的状态量</span><br><span class="line">    vector&lt;float&gt; next_lane_new_kinematics = get_kinematics(predictions, new_lane);</span><br><span class="line">    // Choose kinematics with lowest velocity.</span><br><span class="line">    //选择低速度的运动学状态</span><br><span class="line">    if (next_lane_new_kinematics[1] &lt; curr_lane_new_kinematics[1]) &#123;</span><br><span class="line">      best_kinematics = next_lane_new_kinematics;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      best_kinematics = curr_lane_new_kinematics;</span><br><span class="line">    &#125;</span><br><span class="line">    new_s = best_kinematics[0];</span><br><span class="line">    new_v = best_kinematics[1];</span><br><span class="line">    new_a = best_kinematics[2];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  trajectory.push_back(Vehicle(this-&gt;lane, new_s, new_v, new_a, state));</span><br><span class="line">  </span><br><span class="line">  return trajectory;</span><br><span class="line">&#125;</span><br><span class="line">//————————————减速换道 所以需要判断后方有没有车，但是应该判断的是侧后方啊？代码理解错了？</span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::lane_change_trajectory(string state, //换道轨迹</span><br><span class="line">                                                map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions) &#123;</span><br><span class="line">  // Generate a lane change trajectory.</span><br><span class="line">  int new_lane = this-&gt;lane + lane_direction[state];</span><br><span class="line">  vector&lt;Vehicle&gt; trajectory;</span><br><span class="line">  Vehicle next_lane_vehicle;</span><br><span class="line">  // Check if a lane change is possible (check if another vehicle occupies </span><br><span class="line">  //   that spot).检测是否可以换道，检查是否有其他车辆占用那个点</span><br><span class="line">  for (map&lt;int, vector&lt;Vehicle&gt;&gt;::iterator it = predictions.begin(); </span><br><span class="line">       it != predictions.end(); ++it) &#123;//迭代对其他车辆的预测信息</span><br><span class="line">    next_lane_vehicle = it-&gt;second[0];//提取车辆</span><br><span class="line">    if (next_lane_vehicle.s == this-&gt;s &amp;&amp; next_lane_vehicle.lane == new_lane) &#123;</span><br><span class="line">      // If lane change is not possible, return empty trajectory.</span><br><span class="line">      return trajectory;//占据了新车道下的位置，代表不可以变道，直接返回空</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  //遍历完后还不返回空，代表可以变道</span><br><span class="line">  trajectory.push_back(Vehicle(this-&gt;lane, this-&gt;s, this-&gt;v, this-&gt;a, </span><br><span class="line">                               this-&gt;state));</span><br><span class="line">  vector&lt;float&gt; kinematics = get_kinematics(predictions, new_lane);</span><br><span class="line">  trajectory.push_back(Vehicle(new_lane, kinematics[0], kinematics[1], </span><br><span class="line">                               kinematics[2], state));</span><br><span class="line">  return trajectory;//返回两个新的轨迹点，代表是可以变道的</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Vehicle::increment(int dt = 1) &#123;</span><br><span class="line">  this-&gt;s = position_at(dt);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">float Vehicle::position_at(int t) &#123;//找出下一刻的坐标</span><br><span class="line">  return this-&gt;s + this-&gt;v*t + this-&gt;a*t*t/2.0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool Vehicle::get_vehicle_behind(map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions, </span><br><span class="line">                                 int lane, Vehicle &amp;rVehicle) &#123;//查找后方是否有车</span><br><span class="line">  // Returns a true if a vehicle is found behind the current vehicle, false </span><br><span class="line">  //   otherwise. The passed reference rVehicle is updated if a vehicle is found.</span><br><span class="line">  int max_s = -1;</span><br><span class="line">  bool found_vehicle = false;</span><br><span class="line">  Vehicle temp_vehicle;</span><br><span class="line">  for (map&lt;int, vector&lt;Vehicle&gt;&gt;::iterator it = predictions.begin(); </span><br><span class="line">       it != predictions.end(); ++it) &#123;</span><br><span class="line">    temp_vehicle = it-&gt;second[0];</span><br><span class="line">    if (temp_vehicle.lane == this-&gt;lane &amp;&amp; temp_vehicle.s &lt; this-&gt;s </span><br><span class="line">        &amp;&amp; temp_vehicle.s &gt; max_s) &#123;</span><br><span class="line">      max_s = temp_vehicle.s;</span><br><span class="line">      rVehicle = temp_vehicle;</span><br><span class="line">      found_vehicle = true;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return found_vehicle;</span><br><span class="line">&#125;</span><br><span class="line">// 获取前车的信息，返回前面是否发现车辆</span><br><span class="line">bool Vehicle::get_vehicle_ahead(map&lt;int, vector&lt;Vehicle&gt;&gt; &amp;predictions, </span><br><span class="line">                                int lane, Vehicle &amp;rVehicle) &#123;</span><br><span class="line">  // Returns a true if a vehicle is found ahead of the current vehicle, false </span><br><span class="line">  //   otherwise. The passed reference rVehicle is updated if a vehicle is found.</span><br><span class="line">  int min_s = this-&gt;goal_s;</span><br><span class="line">  bool found_vehicle = false;</span><br><span class="line">  Vehicle temp_vehicle;</span><br><span class="line">  for (map&lt;int, vector&lt;Vehicle&gt;&gt;::iterator it = predictions.begin(); </span><br><span class="line">       it != predictions.end(); ++it) &#123;//对每个车辆的预测信息开始循环</span><br><span class="line">    temp_vehicle = it-&gt;second[0];</span><br><span class="line">    if (temp_vehicle.lane == this-&gt;lane &amp;&amp; temp_vehicle.s &gt; this-&gt;s </span><br><span class="line">        &amp;&amp; temp_vehicle.s &lt; min_s) &#123;</span><br><span class="line">      min_s = temp_vehicle.s;</span><br><span class="line">      rVehicle = temp_vehicle;</span><br><span class="line">      found_vehicle = true;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return found_vehicle;</span><br><span class="line">&#125;</span><br><span class="line">//生成车辆的预测信息，这个使用是在road里使用的</span><br><span class="line">vector&lt;Vehicle&gt; Vehicle::generate_predictions(int horizon) &#123;</span><br><span class="line">  // Generates predictions for non-ego vehicles to be used in trajectory </span><br><span class="line">  //   generation for the ego vehicle.</span><br><span class="line">  vector&lt;Vehicle&gt; predictions;</span><br><span class="line">  for(int i = 0; i &lt; horizon; ++i) &#123;</span><br><span class="line">    float next_s = position_at(i);//当前车辆下一时间的位置</span><br><span class="line">    float next_v = 0;//当前车辆下一时间的速度</span><br><span class="line">    if (i &lt; horizon-1) &#123;</span><br><span class="line">      next_v = position_at(i+1) - s;</span><br><span class="line">    &#125;</span><br><span class="line">    predictions.push_back(Vehicle(this-&gt;lane, next_s, next_v, 0));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return predictions;</span><br><span class="line">&#125;</span><br><span class="line">//实现下一个状态</span><br><span class="line">void Vehicle::realize_next_state(vector&lt;Vehicle&gt; &amp;trajectory) &#123;</span><br><span class="line">  // Sets state and kinematics for ego vehicle using the last state of the trajectory.</span><br><span class="line">  Vehicle next_state = trajectory[1];</span><br><span class="line">  this-&gt;state = next_state.state;</span><br><span class="line">  this-&gt;lane = next_state.lane;</span><br><span class="line">  this-&gt;s = next_state.s;</span><br><span class="line">  this-&gt;v = next_state.v;</span><br><span class="line">  this-&gt;a = next_state.a;</span><br><span class="line">&#125;</span><br><span class="line">//汽车配置</span><br><span class="line">void Vehicle::configure(vector&lt;int&gt; &amp;road_data) &#123;</span><br><span class="line">  // Called by simulator before simulation begins. Sets various parameters which</span><br><span class="line">  //   will impact the ego vehicle.</span><br><span class="line">  target_speed = road_data[0];</span><br><span class="line">  lanes_available = road_data[1];</span><br><span class="line">  goal_s = road_data[2];</span><br><span class="line">  goal_lane = road_data[3];</span><br><span class="line">  max_acceleration = road_data[4];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+              <a href="/tags/udacity/" rel="tag"># udacity</a>
+              <a href="/tags/%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%88%92%E5%99%A8%E8%AE%BE%E8%AE%A1/" rel="tag"># 行为规划器设计</a>
+              <a href="/tags/vehicle-cpp-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="tag"># vehicle.cpp 代码解析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/15/udacity5_B_planner_code4/" rel="prev" title="Udacity 5.Behavior_Planning 4">
+      <i class="fa fa-chevron-left"></i> Udacity 5.Behavior_Planning 4
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/15/udacity5_B_planner_code6/" rel="next" title="Udacity 5.Behavior_Planning 6">
+      Udacity 5.Behavior_Planning 6 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#udacity5-Behavior-Planner-%E8%AE%BE%E8%AE%A15-vehicle-cpp-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">udacity5_Behavior_Planner 设计5 vehicle.cpp 代码解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vehicle-cpp-%E5%A4%B4%E6%96%87%E4%BB%B6%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">vehicle.cpp 头文件代码解析</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Udacity 3.朴素贝叶斯cpp代码解析 3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Udacity 3.朴素贝叶斯cpp代码解析 3">
+<meta property="og:url" content="http://example.com/2022/01/12/udacity3_navie_bayes3/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="Udacity 3.朴素贝叶斯cpp代码解析 3">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-12T18:35:57.000Z">
+<meta property="article:modified_time" content="2022-01-14T23:31:17.966Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="自动驾驶">
+<meta property="article:tag" content="udacity">
+<meta property="article:tag" content="朴素贝叶斯">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/12/udacity3_navie_bayes3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Udacity 3.朴素贝叶斯cpp代码解析 3 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/12/udacity3_navie_bayes3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Udacity 3.朴素贝叶斯cpp代码解析 3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-12 19:35:57" itemprop="dateCreated datePublished" datetime="2022-01-12T19:35:57+01:00">2022-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-15 00:31:17" itemprop="dateModified" datetime="2022-01-15T00:31:17+01:00">2022-01-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/udacity-%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" itemprop="url" rel="index"><span itemprop="name">udacity-自动驾驶</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Udacity-3-朴素贝叶斯cpp代码解析-3"><a href="#Udacity-3-朴素贝叶斯cpp代码解析-3" class="headerlink" title="Udacity 3.朴素贝叶斯cpp代码解析 3"></a>Udacity 3.朴素贝叶斯cpp代码解析 3</h2><span id="more"></span>
+<p>对类GNB()里面的代码进行分析：构造函数，析构函数，训练函数，预测函数<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;classifier.h&quot;//可以从.h文件里直接加载这个类，在这里对类里的函数进行构造</span><br><span class="line">#include &lt;math.h&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line"></span><br><span class="line">using Eigen::ArrayXd;</span><br><span class="line">using std::string;</span><br><span class="line">using std::vector;</span><br><span class="line"></span><br><span class="line">// Initializes GNB</span><br><span class="line">GNB::GNB() &#123;</span><br><span class="line">  /**</span><br><span class="line">   * TODO: Initialize GNB, if necessary. May depend on your implementation.</span><br><span class="line">   */</span><br><span class="line">  left_means = ArrayXd(4);//定义一个数组，一维四个，因为是s d ds dd, 然后是左转的平均值，就是都是左转的操作的四个变量的平均值,有点像python里的tensor</span><br><span class="line"></span><br><span class="line">  left_means &lt;&lt; 0,0,0,0;//初始化</span><br><span class="line">  </span><br><span class="line">  left_sds = ArrayXd(4);//对左转操作的四个变量的标准差进行计算</span><br><span class="line">  left_sds &lt;&lt; 0,0,0,0;//初始化标准差</span><br><span class="line">    </span><br><span class="line">  left_prior = 0; // probability of left</span><br><span class="line">    </span><br><span class="line">  keep_means = ArrayXd(4);</span><br><span class="line">  keep_means &lt;&lt; 0,0,0,0;</span><br><span class="line">  </span><br><span class="line">  keep_sds = ArrayXd(4);</span><br><span class="line">  keep_sds &lt;&lt; 0,0,0,0;</span><br><span class="line">  </span><br><span class="line">  keep_prior = 0;</span><br><span class="line">  </span><br><span class="line">  right_means = ArrayXd(4);</span><br><span class="line">  right_means &lt;&lt; 0,0,0,0;</span><br><span class="line">  </span><br><span class="line">  right_sds = ArrayXd(4);</span><br><span class="line">  right_sds &lt;&lt; 0,0,0,0;</span><br><span class="line">  </span><br><span class="line">  right_prior = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">GNB::~GNB() &#123;&#125;</span><br><span class="line"></span><br><span class="line">void GNB::train(const vector&lt;vector&lt;double&gt;&gt; &amp;data, </span><br><span class="line">                const vector&lt;string&gt; &amp;labels) &#123;</span><br><span class="line">  /**</span><br><span class="line">   * Trains the classifier with N data points and labels.</span><br><span class="line">   * @param data - array of N observations</span><br><span class="line">   *   - Each observation is a tuple with 4 values: s, d, s_dot and d_dot.</span><br><span class="line">   *   - Example : [[3.5, 0.1, 5.9, -0.02],</span><br><span class="line">   *                [8.0, -0.3, 3.0, 2.2],</span><br><span class="line">   *                 ...</span><br><span class="line">   *                ]</span><br><span class="line">   * @param labels - array of N labels</span><br><span class="line">   *   - Each label is one of &quot;left&quot;, &quot;keep&quot;, or &quot;right&quot;.</span><br><span class="line">   *</span><br><span class="line">   * TODO: Implement the training function for your classifier.</span><br><span class="line">   */</span><br><span class="line">  </span><br><span class="line">  // For each label, compute ArrayXd of means, one for each data class </span><br><span class="line">  //   (s, d, s_dot, d_dot).</span><br><span class="line">  // These will be used later to provide distributions for conditional </span><br><span class="line">  //   probabilites.</span><br><span class="line">  // Means are stored in an ArrayXd of size 4.</span><br><span class="line">  </span><br><span class="line">  float left_size = 0; //数量</span><br><span class="line">  float keep_size = 0;</span><br><span class="line">  float right_size = 0;</span><br><span class="line">  </span><br><span class="line">  // For each label, compute the numerators of the means for each class</span><br><span class="line">  //   and the total number of data points given with that label.</span><br><span class="line">  for (int i=0; i&lt;labels.size(); ++i) &#123;</span><br><span class="line">    if (labels[i] == &quot;left&quot;) &#123;</span><br><span class="line">      // conversion of data[i] to ArrayXd</span><br><span class="line">      left_means += ArrayXd::Map(data[i].data(), data[i].size());//创建一个data[i].size() 大小的ArrayXd，将data[i].data() 投射给这个数组，然后再与left平均值相加，这里还没开始求平均</span><br><span class="line">      left_size += 1;</span><br><span class="line">    &#125; else if (labels[i] == &quot;keep&quot;) &#123;</span><br><span class="line">      keep_means += ArrayXd::Map(data[i].data(), data[i].size());</span><br><span class="line">      keep_size += 1;</span><br><span class="line">    &#125; else if (labels[i] == &quot;right&quot;) &#123;</span><br><span class="line">      right_means += ArrayXd::Map(data[i].data(), data[i].size());</span><br><span class="line">      right_size += 1;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Compute the means. Each result is a ArrayXd of means </span><br><span class="line">  //   (4 means, one for each class)</span><br><span class="line">  left_means = left_means/left_size; //这里开始求得平均值</span><br><span class="line">  keep_means = keep_means/keep_size;</span><br><span class="line">  right_means = right_means/right_size;</span><br><span class="line">  </span><br><span class="line">  // Begin computation of standard deviations for each class/label combination.</span><br><span class="line">  ArrayXd data_point;</span><br><span class="line">  </span><br><span class="line">  // Compute numerators of the standard deviations.</span><br><span class="line">  for (int i=0; i&lt;labels.size(); ++i) &#123;</span><br><span class="line">    data_point = ArrayXd::Map(data[i].data(), data[i].size());</span><br><span class="line">    if (labels[i] == &quot;left&quot;)&#123;</span><br><span class="line">      left_sds += (data_point - left_means)*(data_point - left_means);//计算标准差的分子</span><br><span class="line">    &#125; else if (labels[i] == &quot;keep&quot;) &#123;</span><br><span class="line">      keep_sds += (data_point - keep_means)*(data_point - keep_means);</span><br><span class="line">    &#125; else if (labels[i] == &quot;right&quot;) &#123;</span><br><span class="line">      right_sds += (data_point - right_means)*(data_point - right_means);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // compute standard deviations</span><br><span class="line">  left_sds = (left_sds/left_size).sqrt();//分子除以size 再开根号，就是标准差</span><br><span class="line">  keep_sds = (keep_sds/keep_size).sqrt();</span><br><span class="line">  right_sds = (right_sds/right_size).sqrt();</span><br><span class="line">    </span><br><span class="line">  //Compute the probability of each label</span><br><span class="line">  left_prior = left_size/labels.size();//得到这么多数据里每一个label占的概率</span><br><span class="line">  keep_prior = keep_size/labels.size();</span><br><span class="line">  right_prior = right_size/labels.size();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">string GNB::predict(const vector&lt;double&gt; &amp;sample) &#123;</span><br><span class="line">  /**</span><br><span class="line">   * Once trained, this method is called and expected to return </span><br><span class="line">   *   a predicted behavior for the given observation.</span><br><span class="line">   * @param observation - a 4 tuple with s, d, s_dot, d_dot.</span><br><span class="line">   *   - Example: [3.5, 0.1, 8.5, -0.2]</span><br><span class="line">   * @output A label representing the best guess of the classifier. Can</span><br><span class="line">   *   be one of &quot;left&quot;, &quot;keep&quot; or &quot;right&quot;.</span><br><span class="line">   *</span><br><span class="line">   * TODO: Complete this function to return your classifier&#x27;s prediction</span><br><span class="line">   */</span><br><span class="line">  //从 train之后可以得到 计算高斯贝叶斯的公式参数，公有变量</span><br><span class="line">  // Calculate product of conditional probabilities for each label.</span><br><span class="line">  double left_p = 1.0;</span><br><span class="line">  double keep_p = 1.0;</span><br><span class="line">  double right_p = 1.0; </span><br><span class="line"></span><br><span class="line">  for (int i=0; i&lt;4; ++i) &#123;//从s d s_pot d_pot开始循环计算，最后相乘</span><br><span class="line">    left_p *= (1.0/sqrt(2.0 * M_PI * pow(left_sds[i], 2))) </span><br><span class="line">            * exp(-0.5*pow(sample[i] - left_means[i], 2)/pow(left_sds[i], 2));// 计算出左转的条件概率并且相乘</span><br><span class="line">    keep_p *= (1.0/sqrt(2.0 * M_PI * pow(keep_sds[i], 2)))</span><br><span class="line">            * exp(-0.5*pow(sample[i] - keep_means[i], 2)/pow(keep_sds[i], 2));// 计算出保持的条件概率并且相乘</span><br><span class="line">    right_p *= (1.0/sqrt(2.0 * M_PI * pow(right_sds[i], 2))) </span><br><span class="line">            * exp(-0.5*pow(sample[i] - right_means[i], 2)/pow(right_sds[i], 2));// 计算出右转的条件概率并且相乘</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Multiply each by the prior //再乘以这个label发生的概率</span><br><span class="line">  left_p *= left_prior;</span><br><span class="line">  keep_p *= keep_prior;</span><br><span class="line">  right_p *= right_prior;</span><br><span class="line">    </span><br><span class="line">  double probs[3] = &#123;left_p, keep_p, right_p&#125;;//将这三个数放到一个数组里，比较求得最大的那个数</span><br><span class="line">  double max = left_p;</span><br><span class="line">  double max_index = 0;</span><br><span class="line"></span><br><span class="line">  for (int i=1; i&lt;3; ++i) &#123;//比较得到最大的概率</span><br><span class="line">    if (probs[i] &gt; max) &#123;</span><br><span class="line">      max = probs[i];</span><br><span class="line">      max_index = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return this -&gt; possible_labels[max_index];//返回标签</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+              <a href="/tags/udacity/" rel="tag"># udacity</a>
+              <a href="/tags/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="tag"># 朴素贝叶斯</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/12/udacity3_navie_bayes2/" rel="prev" title="Udacity 3.朴素贝叶斯cpp代码解析 2">
+      <i class="fa fa-chevron-left"></i> Udacity 3.朴素贝叶斯cpp代码解析 2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/14/udacity4_Behavior_Planning/" rel="next" title="Udacity 4.Behavior_Planning 1">
+      Udacity 4.Behavior_Planning 1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Udacity-3-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFcpp%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90-3"><span class="nav-number">1.</span> <span class="nav-text">Udacity 3.朴素贝叶斯cpp代码解析 3</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
