@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="udacity_highway04">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Udacity 6.udacity_highway04">
+<meta property="og:url" content="http://example.com/2022/01/25/udacity_highway04/index.html">
+<meta property="og:site_name" content="长安的花">
+<meta property="og:description" content="udacity_highway04">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-24T23:13:57.000Z">
+<meta property="article:modified_time" content="2022-01-25T21:21:24.898Z">
+<meta property="article:author" content="MZChen">
+<meta property="article:tag" content="路径规划">
+<meta property="article:tag" content="自动驾驶">
+<meta property="article:tag" content="udacity">
+<meta property="article:tag" content="高速行为规划器">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/25/udacity_highway04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Udacity 6.udacity_highway04 | 长安的花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">长安的花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">当学问走过漫漫古道<br>凿刻入千窟，心也从愚昧中苏醒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/udacity_highway04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="MZChen">
+      <meta itemprop="description" content="不知古道上的风从何处起<br>可它去往的是故里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长安的花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Udacity 6.udacity_highway04
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-25 00:13:57 / 修改时间：22:21:24" itemprop="dateCreated datePublished" datetime="2022-01-25T00:13:57+01:00">2022-01-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/udacity-%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" itemprop="url" rel="index"><span itemprop="name">udacity-自动驾驶</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>udacity_highway04<br><span id="more"></span></p>
+<h2 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h2><h3 id="从csv文件里读入数据"><a href="#从csv文件里读入数据" class="headerlink" title="从csv文件里读入数据"></a>从csv文件里读入数据</h3><p>csv文件数据格式<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">784.6001 1135.571 0 -0.02359831 -0.9997216</span><br><span class="line">815.2679 1134.93 30.6744785308838 -0.01099479 -0.9999396</span><br><span class="line">844.6398 1134.911 60.0463714599609 -0.002048373 -0.9999979</span><br><span class="line">875.0436 1134.808 90.4504146575928 -0.001847863 -0.9999983</span><br><span class="line">905.283 1134.799 120.689735412598 0.004131136 -0.9999915</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>建立五个向量<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;double&gt; map_waypoints_x;</span><br><span class="line">vector&lt;double&gt; map_waypoints_y;</span><br><span class="line">vector&lt;double&gt; map_waypoints_s;</span><br><span class="line">vector&lt;double&gt; map_waypoints_dx;</span><br><span class="line">vector&lt;double&gt; map_waypoints_dy;</span><br></pre></td></tr></table></figure>
+创建路径 字符串<br><code>string map_file_ = &quot;../data/highway_map.csv&quot;;</code></li>
+</ol>
+<p>使用头文件<code>#include &lt;fstream&gt;</code> 创建一个输入流</p>
+<p><code>ifstream in_map_(map_file_.c_str(), ifstream::in);</code></p>
+<p>开始逐行获取数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">string line;</span><br><span class="line"> while (getline(in_map_, line)) &#123;//逐行获取文件里的数据</span><br><span class="line"> 	istringstream iss(line);//获取数据string，中间是空格的会去除</span><br><span class="line"> 	double x;</span><br><span class="line"> 	double y;</span><br><span class="line"> 	float s;</span><br><span class="line"> 	float d_x;</span><br><span class="line"> 	float d_y;</span><br><span class="line"> 	iss &gt;&gt; x;</span><br><span class="line"> 	iss &gt;&gt; y;</span><br><span class="line"> 	iss &gt;&gt; s;</span><br><span class="line"> 	iss &gt;&gt; d_x;</span><br><span class="line"> 	iss &gt;&gt; d_y;</span><br><span class="line"> 	map_waypoints_x.push_back(x);</span><br><span class="line"> 	map_waypoints_y.push_back(y);</span><br><span class="line"> 	map_waypoints_s.push_back(s);</span><br><span class="line"> 	map_waypoints_dx.push_back(d_x);</span><br><span class="line"> 	map_waypoints_dy.push_back(d_y);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>定义初始所在的道路和速度<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Start on lane 1 </span><br><span class="line">  int lane = 1;</span><br><span class="line">// Reference velocity (mph)</span><br><span class="line">  double ref_vel = 0.0; </span><br></pre></td></tr></table></figure></p>
+<p>uWebSockets将事件循环集成到一个线程中<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line">h.onMessage([&amp;map_waypoints_x,&amp;map_waypoints_y,&amp;map_waypoints_s,&amp;map_waypoints_dx,&amp;map_waypoints_dy,&amp;ref_vel, &amp;lane](uWS::WebSocket&lt;uWS::SERVER&gt; ws, char *data, size_t length,</span><br><span class="line">                     uWS::OpCode opCode) &#123;//使用这些数据</span><br><span class="line">    // &quot;42&quot; at the start of the message means there&#x27;s a websocket message event.</span><br><span class="line">    // The 4 signifies a websocket message</span><br><span class="line">    // The 2 signifies a websocket event</span><br><span class="line">    //auto sdata = string(data).substr(0, length);</span><br><span class="line">    //cout &lt;&lt; sdata &lt;&lt; endl;</span><br><span class="line">    if (length &amp;&amp; length &gt; 2 &amp;&amp; data[0] == &#x27;4&#x27; &amp;&amp; data[1] == &#x27;2&#x27;) &#123;//先验证输入的数据是否正确</span><br><span class="line"></span><br><span class="line">      auto s = hasData(data);// Checks if the SocketIO event has JSON data</span><br><span class="line"></span><br><span class="line">      if (s != &quot;&quot;) &#123;</span><br><span class="line">        json j = json::parse(s);</span><br><span class="line">        </span><br><span class="line">        string event = j[0].get&lt;string&gt;();</span><br><span class="line">        </span><br><span class="line">        if (event == &quot;telemetry&quot;) &#123;</span><br><span class="line">          // j[1] is the data JSON object</span><br><span class="line">          </span><br><span class="line">        	// Main car&#x27;s localization data</span><br><span class="line">          	double car_x	 = j[1][&quot;x&quot;];</span><br><span class="line">          	double car_y	 = j[1][&quot;y&quot;];</span><br><span class="line">          	double car_s	 = j[1][&quot;s&quot;];</span><br><span class="line">          	double car_d	 = j[1][&quot;d&quot;];</span><br><span class="line">          	double car_yaw	 = j[1][&quot;yaw&quot;];</span><br><span class="line">          	double car_speed = j[1][&quot;speed&quot;];</span><br><span class="line"></span><br><span class="line">          	// Previous path data given to the Planner</span><br><span class="line">          	auto previous_path_x = j[1][&quot;previous_path_x&quot;];</span><br><span class="line">          	auto previous_path_y = j[1][&quot;previous_path_y&quot;];</span><br><span class="line">			//判断previous_path_x[-1] 变换后是否等于end_path_s</span><br><span class="line">          	// Previous path&#x27;s end `s` and `d` values </span><br><span class="line">          	double end_path_s = j[1][&quot;end_path_s&quot;];</span><br><span class="line">          	double end_path_d = j[1][&quot;end_path_d&quot;];</span><br><span class="line"></span><br><span class="line">          	// Sensor Fusion data - a list of all other cars on the same side of the road.在同一侧的所有其他车辆的列表，里面存放的是类对象车</span><br><span class="line">          	auto sensor_fusion = j[1][&quot;sensor_fusion&quot;];</span><br><span class="line">			</span><br><span class="line">			int prev_size = previous_path_x.size();</span><br><span class="line"></span><br><span class="line">			if (prev_size &gt; 0)</span><br><span class="line">				car_s = end_path_s;</span><br><span class="line">            //用于转弯的信息</span><br><span class="line">			bool is_too_close			 = false;</span><br><span class="line">			bool prepare_for_lane_change = false;</span><br><span class="line">			bool ready_for_lane_change   = false;</span><br><span class="line">			bool is_left_lane_free		 = true;</span><br><span class="line">			bool is_right_lane_free		 = true;</span><br><span class="line"></span><br><span class="line">			for (size_t i = 0; i &lt; sensor_fusion.size(); ++i) &#123;</span><br><span class="line"></span><br><span class="line">				Vehicle vehicle(sensor_fusion[i]);//初始化附近的第i个车辆</span><br><span class="line">				//只要出现在同一车道，0.02s后这辆车还在本车前，且与本车的end_path距离小于安全距离</span><br><span class="line">				if (is_in_lane(vehicle.d, lane)) &#123;//判断传感器里的车辆是否和本车辆同一个车道</span><br><span class="line">					//如果是，则对这辆车进行预测，</span><br><span class="line">					vehicle.s += (double)prev_size * 0.02 * vehicle.speed; // 获取0.02s预测后的距离use previous points to project s value onward</span><br><span class="line"></span><br><span class="line">					bool is_in_front_of_us = vehicle.s &gt; car_s;//预测后的距离与现在车辆进行比较，查看是否在本车前</span><br><span class="line">					//查看预测后的end_path的距离是否是安全距离</span><br><span class="line">					bool is_closer_than_safety_margin = vehicle.s - car_s &lt; safety_margin;</span><br><span class="line"></span><br><span class="line">					if (is_in_front_of_us &amp;&amp; is_closer_than_safety_margin) &#123;</span><br><span class="line">						//在我们前面，且和本车的end_path小于安全距离，就表明很近</span><br><span class="line">						is_too_close = true;</span><br><span class="line">						prepare_for_lane_change = true;//就可以准备变道</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			if (prepare_for_lane_change) &#123;//如果开始直行变道</span><br><span class="line">				int num_vehicles_left  = 0;//记录左侧车道的车辆</span><br><span class="line">				int num_vehicles_right = 0;//记录右侧车道的车辆</span><br><span class="line">				// Check if left and right lanes are free 检查左侧或者右侧车道是都空闲</span><br><span class="line">				for (size_t i = 0; i &lt; sensor_fusion.size(); ++i) &#123;</span><br><span class="line">					Vehicle vehicle(sensor_fusion[i]);//从传感器里取出车辆</span><br><span class="line">					// Check left lane 检查是不是在左侧</span><br><span class="line">					if (is_in_lane(vehicle.d, lane - 1)) &#123;</span><br><span class="line">						++num_vehicles_left;//如果在左侧</span><br><span class="line">						vehicle.s += (double)prev_size * 0.02 * vehicle.speed;</span><br><span class="line">						//检查左侧的车辆在相同的end时间 prev_size * 0.02s后的预测地点和车辆目前规划的路径的终点是否太近</span><br><span class="line">						//太近不能变道的条件</span><br><span class="line">						// 1. 汽车的终点的距离减去一半的安全距离，小于预测距离</span><br><span class="line">						// 2. 汽车终点距离加上一半安全距离，大于预测距离</span><br><span class="line">						bool too_close_to_change = (vehicle.s &gt; car_s - safety_margin / 2) &amp;&amp; (vehicle.s &lt; car_s + safety_margin / 2);</span><br><span class="line">						if (too_close_to_change)</span><br><span class="line">							is_left_lane_free = false;</span><br><span class="line">					&#125;</span><br><span class="line">					// Check right lane </span><br><span class="line">					else if (is_in_lane(vehicle.d, lane + 1)) &#123;</span><br><span class="line">						++num_vehicles_right;</span><br><span class="line">						vehicle.s += (double)prev_size * 0.02 * vehicle.speed;</span><br><span class="line">						bool too_close_to_change = (vehicle.s &gt; car_s - safety_margin / 2) &amp;&amp; (vehicle.s &lt; car_s + safety_margin / 2);</span><br><span class="line">						if (too_close_to_change)</span><br><span class="line">							is_right_lane_free = false;</span><br><span class="line">					&#125;</span><br><span class="line">					//如果两个有一个可以变道，就说明可以转</span><br><span class="line">					if (is_left_lane_free || is_right_lane_free)</span><br><span class="line">						ready_for_lane_change = true;</span><br><span class="line">				&#125;//输出左侧和右侧车辆个数</span><br><span class="line">				cout &lt;&lt; &quot;LEFT &quot; &lt;&lt; num_vehicles_left &lt;&lt; &quot;RIGHT &quot; &lt;&lt; num_vehicles_right &lt;&lt; endl;</span><br><span class="line">			&#125;</span><br><span class="line">    		// Actually perform lane change 开始实行变道</span><br><span class="line">			if (ready_for_lane_change &amp;&amp; is_left_lane_free &amp;&amp; lane &gt; 0)</span><br><span class="line">				lane -= 1;//左侧可以变道，就将变道放到左侧</span><br><span class="line">			else if (ready_for_lane_change &amp;&amp; is_right_lane_free &amp;&amp; lane &lt; 2)</span><br><span class="line">				lane += 1;//右侧可以变道，就将车辆lane加1</span><br><span class="line">					</span><br><span class="line">			// Eventually slow down if too close the car before</span><br><span class="line">			if (is_too_close) //如果当前车辆的前车很近，就开始减速 加速度5，增加速度0.224</span><br><span class="line">				ref_vel -= 0.224;					// deceleration around 5 m/s^2</span><br><span class="line">			else if (ref_vel &lt; max_safe_speed)//如果当前车辆的前车不近，就开始加速</span><br><span class="line">				ref_vel += 0.224;</span><br><span class="line"></span><br><span class="line">			// List of widely spaced (x, y) waypoints. These will be later interpolated 开始使用插值法对路径进行平滑</span><br><span class="line">			// with a spline, filling it with more points which control speed.</span><br><span class="line">			// 用插值法添加更多的点</span><br><span class="line">			vector&lt;double&gt; pts_x;</span><br><span class="line">			vector&lt;double&gt; pts_y;</span><br><span class="line"></span><br><span class="line">			// Reference x, y, yaw state </span><br><span class="line">			//插值法填入的速度和角度信息</span><br><span class="line">			double ref_x = car_x;</span><br><span class="line">			double ref_y = car_y;</span><br><span class="line">			double ref_yaw = deg2rad(car_yaw);</span><br><span class="line"></span><br><span class="line">			// If previous size is almost empty, use the car as a starting reference</span><br><span class="line">			// 如果之间的道路的size都差不多是空的，就使用汽车现状作为初始参考</span><br><span class="line">			if (prev_size &lt; 2) &#123; //如果以前的路径的节点小于2</span><br><span class="line">				double prev_car_x = car_x - cos(car_yaw);//汽车以前路径的终点减去一个汽车转角的cos乘以单位1</span><br><span class="line">				double prev_car_y = car_y - sin(car_yaw);</span><br><span class="line">				将这两个点都放到需要做插值的向量里</span><br><span class="line">				pts_x.push_back(prev_car_x); pts_x.push_back(car_x);</span><br><span class="line">				pts_y.push_back(prev_car_y); pts_y.push_back(car_y);</span><br><span class="line">			&#125;</span><br><span class="line">			// Use the previous path&#x27;s end points as starting reference</span><br><span class="line">			else &#123;//如果之前规划的路径的点很多，参考点就设置成之前路径的终点</span><br><span class="line">				ref_x = previous_path_x[prev_size - 1];</span><br><span class="line">				ref_y = previous_path_y[prev_size - 1];</span><br><span class="line">				//参考点前面的一个点就设置成之前路径的终点前一个点</span><br><span class="line">				double ref_x_prev = previous_path_x[prev_size - 2];</span><br><span class="line">				double ref_y_prev = previous_path_y[prev_size - 2];</span><br><span class="line">				ref_yaw = atan2(ref_y - ref_y_prev, ref_x - ref_x_prev);</span><br><span class="line">				//参考角度就是最后两个点之间的转角</span><br><span class="line">				pts_x.push_back(ref_x_prev); pts_x.push_back(ref_x);</span><br><span class="line">				pts_y.push_back(ref_y_prev); pts_y.push_back(ref_y);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// In Frenet coordinates, add evenly 30m spaced points ahead of the starting reference 在起始点之后每30m处添加间隔的点</span><br><span class="line">			//frenet_to_cartesian(s,d,向量地图里所有s,向量地图里所有x,向量地图里所有y) 坐标系变换 下一个路径点</span><br><span class="line">			//car_s + 30 </span><br><span class="line">			vector&lt;double&gt; next_wp0 = frenet_to_cartesian(car_s + 30, (lane_width * lane + lane_width / 2), map_waypoints_s, map_waypoints_x, map_waypoints_y);</span><br><span class="line">			vector&lt;double&gt; next_wp1 = frenet_to_cartesian(car_s + 60, (lane_width * lane + lane_width / 2), map_waypoints_s, map_waypoints_x, map_waypoints_y);</span><br><span class="line">			vector&lt;double&gt; next_wp2 = frenet_to_cartesian(car_s + 90, (lane_width * lane + lane_width / 2), map_waypoints_s, map_waypoints_x, map_waypoints_y);</span><br><span class="line">		 	//将30米一个距离的点放入pt里</span><br><span class="line">			pts_x.push_back(next_wp0[0]); pts_x.push_back(next_wp1[0]); pts_x.push_back(next_wp2[0]);</span><br><span class="line">			pts_y.push_back(next_wp0[1]); pts_y.push_back(next_wp1[1]); pts_y.push_back(next_wp2[1]);</span><br><span class="line"></span><br><span class="line">			// Rototranslate into car&#x27;s reference system to make the math easier</span><br><span class="line">			//旋转到汽车参考系</span><br><span class="line">			for (size_t i = 0; i &lt; pts_x.size(); ++i) &#123;//将pt里的点转到汽车坐标系</span><br><span class="line">				double shift_x = pts_x[i] - ref_x;//原来汽车的终点作为圆点</span><br><span class="line">				double shift_y = pts_y[i] - ref_y;</span><br><span class="line">				pts_x[i] = shift_x * cos(0 - ref_yaw) - shift_y * sin(0 - ref_yaw);</span><br><span class="line">				pts_y[i] = shift_x * sin(0 - ref_yaw) + shift_y * cos(0 - ref_yaw);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// Create a spline</span><br><span class="line">			//建立插值</span><br><span class="line">			tk::spline s;</span><br><span class="line">			s.set_points(pts_x, pts_y);</span><br><span class="line">			</span><br><span class="line">			// Define he actual (x, y) points will be used for the planner</span><br><span class="line">			vector&lt;double&gt; next_x_vals;</span><br><span class="line">			vector&lt;double&gt; next_y_vals;</span><br><span class="line"></span><br><span class="line">			// Start with all previous points from last time</span><br><span class="line">			for (size_t i = 0; i &lt; previous_path_x.size(); ++i) &#123;</span><br><span class="line">				next_x_vals.push_back(previous_path_x[i]);</span><br><span class="line">				next_y_vals.push_back(previous_path_y[i]);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// Calculate how to break up spline points to travel at reference velocity</span><br><span class="line">			double target_x = 30.0;</span><br><span class="line">			double target_y = s(target_y);</span><br><span class="line">			double target_dist = sqrt(target_x * target_x + target_y * target_y);</span><br><span class="line"></span><br><span class="line">			double x_add_on = 0.0;</span><br><span class="line"></span><br><span class="line">			for (size_t i = 1; i &lt;= 50 - previous_path_x.size(); ++i) &#123;</span><br><span class="line">				//1 m/s = 2.24mph</span><br><span class="line">				double N = target_dist / (0.02 * ref_vel / 2.24);</span><br><span class="line">				double x_point = x_add_on + target_x / N;</span><br><span class="line">				double y_point = s(x_point);</span><br><span class="line"></span><br><span class="line">				x_add_on = x_point;</span><br><span class="line"></span><br><span class="line">				double x_ref = x_point;</span><br><span class="line">				double y_ref = y_point;</span><br><span class="line"></span><br><span class="line">				// Rotate back into previous coordinate system</span><br><span class="line">				//在转到笛卡尔坐标系</span><br><span class="line">				x_point = x_ref * cos(ref_yaw) - y_ref * sin(ref_yaw);</span><br><span class="line">				y_point = x_ref * sin(ref_yaw) + y_ref * cos(ref_yaw);</span><br><span class="line"></span><br><span class="line">				x_point += ref_x;</span><br><span class="line">				y_point += ref_y;</span><br><span class="line"></span><br><span class="line">				next_x_vals.push_back(x_point);</span><br><span class="line">				next_y_vals.push_back(y_point);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// Prepare message and send it to the simulator</span><br><span class="line">          	json msgJson;</span><br><span class="line">          	msgJson[&quot;next_x&quot;] = next_x_vals;</span><br><span class="line">          	msgJson[&quot;next_y&quot;] = next_y_vals;</span><br><span class="line">          	auto msg = &quot;42[\&quot;control\&quot;,&quot;+ msgJson.dump()+&quot;]&quot;;</span><br><span class="line">          	ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        // Manual driving</span><br><span class="line">        std::string msg = &quot;42[\&quot;manual\&quot;,&#123;&#125;]&quot;;</span><br><span class="line">        ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="MZChen 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" rel="tag"># 路径规划</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+              <a href="/tags/udacity/" rel="tag"># udacity</a>
+              <a href="/tags/%E9%AB%98%E9%80%9F%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%88%92%E5%99%A8/" rel="tag"># 高速行为规划器</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/25/udacity_highway03/" rel="prev" title="Udacity 6.udacity_highway03">
+      <i class="fa fa-chevron-left"></i> Udacity 6.udacity_highway03
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/25/udacity_highway05/" rel="next" title="Udacity 6.udacity_highway05">
+      Udacity 6.udacity_highway05 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">代码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8Ecsv%E6%96%87%E4%BB%B6%E9%87%8C%E8%AF%BB%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">从csv文件里读入数据</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MZChen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">MZChen</p>
+  <div class="site-description" itemprop="description">不知古道上的风从何处起<br>可它去往的是故里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MZChen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
